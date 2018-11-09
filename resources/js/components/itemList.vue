@@ -24,15 +24,14 @@
 <script>
 module.exports = {
   props: ["items"],
-  methods: {
-  }
+  methods: {}
 };
 </script>
 
 <style scoped>
 img {
-    border-radius: 3px;
-    width: 125px;
+  border-radius: 3px;
+  width: 125px;
 }
 </style>
 
