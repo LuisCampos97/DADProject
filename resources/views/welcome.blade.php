@@ -9,7 +9,7 @@
         </div>
     </div>
 </div>
-<item-list :items="items"></item-list>
+<item-list></item-list>
 @endsection
  
 @section('pagescript')

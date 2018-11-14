@@ -23,8 +23,21 @@
 
 <script>
 module.exports = {
-  props: ["items"],
-  methods: {}
+  data: function() {
+    return {
+      items: []
+    };
+  },
+  methods: {
+    getItems: function() {
+      axios.get("api/items").then(response => {
+        this.items = response.data.data;
+      });
+    }
+  },
+  mounted() {
+      this.getItems();
+  },
 };
 </script>
 

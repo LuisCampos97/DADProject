@@ -9,18 +9,10 @@ const itemList = Vue.component('item-list', require('./components/itemList.vue')
 const app = new Vue({
     el: '#app',
     data: {
-        title: 'Menu List',
-        items: [],
+        title: 'Menu List'
     },
     methods: {
-        getItems: function () {
-            axios.get('api/items')
-                .then(response => {
-                    this.items = response.data.data;
-                });
-        }
     },
     mounted() {
-        this.getItems();
     }
 });
