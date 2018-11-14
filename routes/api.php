@@ -19,3 +19,5 @@ use Illuminate\Http\Request;
 
 Route::get('items', 'ItemController@index');
 Route::get('items/{id}', 'ItemController@show');
+Route::post('login', 'LoginControllerAPI@login');
+Route::middleware('auth:api')->post('logout','LoginControllerAPI@logout');
