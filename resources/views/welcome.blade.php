@@ -1,5 +1,4 @@
 @extends('master') 
-@section('title', 'Vue.js App') 
 @section('content')
 
 <div class="content-header">

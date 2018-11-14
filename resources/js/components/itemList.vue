@@ -36,8 +36,8 @@ module.exports = {
     }
   },
   mounted() {
-      this.getItems();
-  },
+    this.getItems();
+  }
 };
 </script>
 
