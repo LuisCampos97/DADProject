@@ -31,5 +31,12 @@ class LoginControllerAPI extends Controller
             return response()->json(
                 ['msg' => 'User credentials are invalid'], $errorCode);
         }
+    }    
+
+    public function logout()
+    {
+        \Auth::guard('api')->user()->token()->revoke();
+        \Auth::guard('api')->user()->token()->delete();
+        return response()->json(['msg' => 'Token revoked'], 200);
     }
 }
