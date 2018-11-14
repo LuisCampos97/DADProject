@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Http\Resources\Item as ItemResource;
+use App\Http\Resources\ItemResource;
 use App\Item;
 
 class ItemController extends Controller
