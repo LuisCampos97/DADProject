@@ -4,9 +4,9 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-define('YOUR_SERVER_URL', 'http://dad.project');
+define('YOUR_SERVER_URL', 'http://project.dad');
 define('CLIENT_ID', '2');
-define('CLIENT_SECRET', '5K7bH6d5UjByIB7nVHfik4FdajFyYFKeBwvmMZvS');
+define('CLIENT_SECRET', 'lMm24MCvKoyqR4YGdaQiV2aDr5NPcPPVHqZL9nZe');
 
 class LoginControllerAPI extends Controller
 {    
