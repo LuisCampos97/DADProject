@@ -17,6 +17,7 @@ const itemList = Vue.component('item-list', require('./components/itemList.vue')
 const login = Vue.component('login', require('./components/auth/login.vue'));
 const logout = Vue.component('logout', require('./components/auth/logout.vue'));
 const dashboard = Vue.component('dashboard', require('./components/dashboard.vue'));
+const profile = Vue.component('profile', require('./components/profile.vue'));
 
 const routes = [{
         path: '/',
@@ -37,6 +38,11 @@ const routes = [{
         path: '/dashboard',
         component: dashboard,
         name: 'dashboard'
+    },
+    {
+        path: '/profile',
+        component: profile,
+        name: 'profile'
     }
 ];
 
