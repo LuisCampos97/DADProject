@@ -51040,6 +51040,33 @@ module.exports = Component.exports
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 module.exports = {
   name: "profile",
@@ -51057,7 +51084,7 @@ module.exports = {
   },
 
   methods: {
-    profile: function profile() {
+    profiles: function profiles() {
       this.showMessage = false;
     }
   }
@@ -51071,14 +51098,61 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c("div", [
+    _vm._m(0),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-striped" }, [
+      _vm._m(1),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.profiles, function(profile) {
+          return _c("tr", { key: profile.id }, [
+            _c("td", [
+              _c("img", {
+                attrs: { src: "/storage/profiles/" + profile.photo_url }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(profile.username))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(profile.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(profile.email))])
+          ])
+        })
+      )
+    ])
+  ])
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", [_c("h1", [_vm._v("Profile test")])])
+    return _c("div", { staticClass: "content-header" }, [
+      _c("div", { staticClass: "row mb-2" }, [
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c("h1", { staticClass: "text-dark" }, [_vm._v("Profile")])
+        ])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Photo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("User name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Full name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Email")])
+      ])
+    ])
   }
 ]
 render._withStripped = true

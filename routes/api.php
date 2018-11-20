@@ -21,3 +21,4 @@ Route::get('items', 'ItemController@index');
 Route::get('items/{id}', 'ItemController@show');
 Route::post('login', 'LoginControllerAPI@login')->name('login');
 Route::middleware('auth:api')->post('logout','LoginControllerAPI@logout');
+Route::get('profile/{id}', 'UserControllerAPI@getProfile')->name('profile');
