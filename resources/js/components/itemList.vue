@@ -1,4 +1,13 @@
 <template>
+<div>
+  <div class="content-header">
+    <div class="row mb-2">
+        <div class="col-sm-6">
+            <h1 class="text-dark">{{ title }}</h1>
+        </div>
+    </div>
+</div>
+
    <table class="table table-striped">
     <thead>
         <tr>
@@ -19,13 +28,15 @@
         </tr>
     </tbody>
 </table>
+</div>
 </template>
 
 <script>
 module.exports = {
   data: function() {
     return {
-      items: []
+      items: [],
+      title: "Menu Title"
     };
   },
   methods: {
