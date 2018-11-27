@@ -14,6 +14,7 @@ use Hash;
 
 class UserControllerAPI extends Controller
 {
+<<<<<<< HEAD
     public function index(Request $request)
     {
         if ($request->has('page')) {
@@ -80,5 +81,10 @@ class UserControllerAPI extends Controller
     public function myProfile(Request $request)
     {
         return new UserResource($request->user());
+=======
+    public function getProfile($id)
+    {
+        return new ItemResource(Item::find($id));
+>>>>>>> 64d67ff05ee676b4386bf6c75a78b78928328763
     }
 }

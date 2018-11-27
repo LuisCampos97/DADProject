@@ -28,7 +28,10 @@ scratch. This page gets rid of all links and provides the needed markup only.
                         </li>
                         <li v-if="loggedIn">
                                 <router-link :to="{ name: 'dashboard' }">Dasboard</router-link>
-                            </li>
+                        </li>
+                        <li v-if="loggedIn">
+                                <router-link :to="{ name: 'profile' }">Profile</router-link>
+                        </li>
                         <li v-if="!loggedIn">
                             <router-link :to="{ name: 'login' }">Login</router-link>
                         </li>
