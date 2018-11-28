@@ -63,7 +63,6 @@ module.exports = {
           this.typeofmsg = "alert-danger";
           this.message = "Invalid credentials";
           this.showMessage = true;
-          console.log(error);
         });
     }
   }
