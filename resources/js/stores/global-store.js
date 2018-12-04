@@ -2,16 +2,21 @@
 
 import Vue from 'vue';
 import Vuex from 'vuex';
+import axios from 'axios';
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-    state: { 
+    state: {
         token: "",
-        user: null, 
-        departments: []       
-    },  
-    mutations: { 
+        user: null
+    },
+    getters: {
+        loggedIn(state) {
+            return state.token !== "";
+        }
+    },
+    mutations: {
         clearUserAndToken: (state) => {
             state.user = null;
             state.token = "";
@@ -29,11 +34,11 @@ export default new Vuex.Store({
             axios.defaults.headers.common.Authorization = undefined;
         },
         setUser: (state, user) => {
-            state.user =  user;
+            state.user = user;
             sessionStorage.setItem('user', JSON.stringify(user));
         },
         setToken: (state, token) => {
-            state.token= token;
+            state.token = token;
             sessionStorage.setItem('token', token);
             axios.defaults.headers.common.Authorization = "Bearer " + token;
         },
@@ -50,5 +55,5 @@ export default new Vuex.Store({
                 state.user = JSON.parse(user);
             }
         }
-    } 
+    }
 });

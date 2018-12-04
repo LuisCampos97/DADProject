@@ -1,11 +1,5 @@
 /*jshint esversion: 6 */
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
-
 require('./bootstrap');
 
 window.Vue = require('vue');
@@ -14,72 +8,37 @@ import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
 import store from './stores/global-store';
+import routes from './routes';
 
-const itemList = Vue.component('item-list', require('./components/itemList.vue'));
-const login = Vue.component('login', require('./components/auth/login.vue'));
-const logout = Vue.component('logout', require('./components/auth/logout.vue'));
-const dashboard = Vue.component('dashboard', require('./components/dashboard.vue'));
-const profile = Vue.component('profile', require('./components/profile.vue'));
-
-<<<<<<< HEAD
-const routes = [
-    { path: '/', component: itemList, name: 'index' },
-    { path: '/login', component: login, name: 'login' },
-    { path: '/logout', component: logout, name: 'logout' },
-    { path: '/dashboard', component: dashboard, name: 'dashboard' },
-=======
-const routes = [{
-        path: '/',
-        component: itemList,
-        name: 'index'
-    },
-    {
-        path: '/login',
-        component: login,
-        name: 'login'
-    },
-    {
-        path: '/logout',
-        component: logout,
-        name: 'logout'
-    },
-    {
-        path: '/dashboard',
-        component: dashboard,
-        name: 'dashboard'
-    },
-    {
-        path: '/profile',
-        component: profile,
-        name: 'profile'
-    }
->>>>>>> 64d67ff05ee676b4386bf6c75a78b78928328763
-];
+Vue.component('master', require('./components/Master.vue'));
+Vue.component('item-list', require('./components/ItemList.vue'));
+Vue.component('login', require('./components/auth/Login.vue'));
+Vue.component('logout', require('./components/auth/Logout.vue'));
+Vue.component('dashboard', require('./components/Dashboard.vue'));
+Vue.component('profile', require('./components/Profile.vue'));
 
 const router = new VueRouter({
-    routes: routes
+    routes
 });
 
 router.beforeEach((to, from, next) => {
-    if ((to.name == 'profile') || (to.name == 'logout')) {
-        if (!store.state.user) {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+        //Check if logged in
+        if (!store.getters.loggedIn) {
             next("/login");
-            return;
+        } else {
+            next();
         }
+    } else {
+        next();
     }
-    next();
 });
 
-const app = new Vue({
+new Vue({
     router,
-    data: {
-        loggedIn: undefined,
-    },
     store,
     created() {
-        console.log('-----');
-        console.log(this.$store.state.user);
         this.$store.commit('loadTokenAndUserFromSession');
-        console.log(this.$store.state.user);
-    }
+    },
+    template: '<master/>'
 }).$mount('#app');

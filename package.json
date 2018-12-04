@@ -23,7 +23,6 @@
         "@fortawesome/fontawesome-free": "^5.5.0",
         "admin-lte": "^3.0.0-alpha.2",
         "vue-router": "^3.0.1",
-        "vue-spinners": "^1.0.2",
         "vuex": "^3.0.1"
     }
 }
