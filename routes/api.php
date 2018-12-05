@@ -39,4 +39,6 @@ Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
 Route::post('login', 'LoginControllerAPI@login')->name('login');
  
 Route::middleware('auth:api')->post('logout', 'LoginControllerAPI@logout');
+
+Route::get('profiles', 'UserControllerAPI@index')->name('profile');
 Route::get('profile/{id}', 'UserControllerAPI@getProfile')->name('profile');
