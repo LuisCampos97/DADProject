@@ -11,7 +11,7 @@ use Illuminate\Http\Request;
 | routes are loaded by the RouteServiceProvider within a group which
 | is assigned the "api" middleware group. Enjoy building your API!
 |
-*/
+ */
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -25,6 +25,7 @@ Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
 
 Route::get('users/{id}', 'UserControllerAPI@show');
 Route::post('users', 'UserControllerAPI@store');
+Route::post('users/{id}', 'UserControllerAPI@postPhoto');
 Route::put('users/{id}', 'UserControllerAPI@update');
 Route::delete('users/{id}', 'UserControllerAPI@destroy');
 
@@ -34,9 +35,9 @@ NOTA: neste caso, o parâmetro a receber nos métodos do controlador é user e n
 
 Route::apiResource('users','UserControllerAPI');
 Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
-*/
+ */
 
 Route::post('login', 'LoginControllerAPI@login')->name('login');
- 
+
 Route::middleware('auth:api')->post('logout', 'LoginControllerAPI@logout');
 Route::get('profile/{id}', 'UserControllerAPI@getProfile')->name('profile');

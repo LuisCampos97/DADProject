@@ -7,7 +7,12 @@
             <img :src="'/storage/profiles/' + user.photo_url">
             <div class="file btn btn-lg btn-primary">
               Change Photo
-              <input type="file" name="file">
+              <input
+                type="file"
+                name="file"
+                ref="file"
+                v-on:change="handleFileUpload()"
+              >
             </div>
           </div>
         </div>
@@ -19,7 +24,13 @@
           </div>
         </div>
         <div class="col-md-2">
-          <input type="submit" class="profile-edit-btn" name="btnAddMore" value="Edit Profile">
+          <input
+            type="submit"
+            class="profile-edit-btn"
+            name="btnAddMore"
+            value="Edit Profile"
+            v-on:click.prevent="editUser(user)"
+          >
         </div>
         <div class="col-md-4"></div>
         <div class="col-md-8">
@@ -50,6 +61,23 @@
         </div>
       </div>
     </div>
+    <br>
+    <div
+      class="alert"
+      :class="{'alert-success':showSuccess, 'alert-danger':showFailure}"
+      v-if="showSuccess || showFailure"
+    >
+      <button type="button" class="close-btn" @click="showSuccess=false; showFailure=false;">&times;</button>
+      <strong>{{(showSuccess)?successMessage:failMessage}}</strong>
+    </div>
+
+    <edit-user
+      :current-user="currentUser"
+      :editing-user="editingUser"
+      @cancel-edit="cancelEdit"
+      @save-user="saveUser"
+      @submit-file="submitFile"
+    ></edit-user>
   </div>
 </template>
 
@@ -62,12 +90,77 @@ module.exports = {
       typeofmsg: "alert-success",
       showMessage: false,
       message: "",
-      loggedIn: false
+      loggedIn: false,
+      file: "",
+      editingUser: false,
+      currentUser: {},
+      successMessage: "",
+      failMessage: "",
+      showSuccess: false,
+      showFailure: false
     };
   },
   methods: {
-    profiles() {
+    profiles: function() {
       this.showMessage = false;
+    },
+    submitFile: function() {
+      //Submete a foto para o servidor
+      let formData = new FormData(); //inicializa os dados do form
+      formData.append("file", this.file); //adiciona os dados do form que vamos submeter
+      const user = this.currentUser;
+
+      axios
+        .post(
+          "/api/users/" + user.id, //fazemos um request para submeter (POST) no URL profile/photo
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data"
+            }
+          }
+        )
+        .then(function() {
+          console.log("Profile photo updated!");
+        })
+        .catch(function() {
+          console.log("Error: Profile photo NOT updated.");
+        });
+    },
+    handleFileUpload: function() {
+      //lida com mudanças no upload da foto
+      this.file = this.$refs.file.files[0];
+    },
+    editUser: function(user) {
+      this.editingUser = true;
+      this.currentUser = Object.assign({}, user);
+    },
+    cancelEdit: function() {
+      this.editingUser = false;
+    },
+    saveUser: function() {
+      const user = this.currentUser;
+      axios
+        .put("/api/users/" + user.id, user)
+        .then(response => {
+          this.showSuccess = true;
+          this.showFailure = false;
+          this.successMessage = "User updated";
+
+          Vue.set(this.user, response.data.data);
+          this.editingUser = false;
+          this.$store.commit("setUser", response.data.data); //TO DO: atualizar o user para que depois de fazer save seja visto o novo username e name...
+          setTimeout(() => {
+            this.showFailure = false;
+            this.showSuccess = false;
+          }, 2000);
+        })
+        .catch(error => {
+          this.showFailure = true;
+          this.showSuccess = false;
+          this.failMessage = error.response.data.message;
+          console.dir(error);
+        });
     }
   }
 };
@@ -133,7 +226,7 @@ body {
   border: none;
   border-radius: 1.5rem;
   width: 70%;
-  padding: 2%;  
+  padding: 2%;
   font-weight: 600;
   color: #6c757d;
   cursor: pointer;
