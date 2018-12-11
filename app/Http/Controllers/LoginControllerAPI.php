@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 define('YOUR_SERVER_URL', 'http://project.dad');
 define('CLIENT_ID', '2');
-define('CLIENT_SECRET', 'lMm24MCvKoyqR4YGdaQiV2aDr5NPcPPVHqZL9nZe');
+define('CLIENT_SECRET', 'GrzjoV8I9YuQUXTV6wQfLjqEscDKgr8jxm5eawDF');
 
 class LoginControllerAPI extends Controller
 {
