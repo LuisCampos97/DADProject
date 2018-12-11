@@ -6,8 +6,8 @@ module.exports = {
     logout() {
       axios.post("api/logout")
         .then(response => {
-          this.$router.push({ name: "home" });
           this.$store.commit("clearUserAndToken");
+          this.$router.push({ name: "home" });
         })
         .catch(error => {
           this.$store.commit("clearUserAndToken");

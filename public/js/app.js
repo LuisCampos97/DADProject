@@ -25509,7 +25509,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(22);
-module.exports = __webpack_require__(70);
+module.exports = __webpack_require__(73);
 
 
 /***/ }),
@@ -25533,23 +25533,22 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 
 
 
-Vue.component('master', __webpack_require__(65));
+Vue.component('master', __webpack_require__(68));
 Vue.component('item-list', __webpack_require__(14));
 Vue.component('login', __webpack_require__(17));
 Vue.component('logout', __webpack_require__(18));
 Vue.component('dashboard', __webpack_require__(19));
 Vue.component('profile', __webpack_require__(20));
+Vue.component('registerWorker', __webpack_require__(65));
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
     routes: __WEBPACK_IMPORTED_MODULE_2__routes__["a" /* default */]
 });
 
-router.beforeEach(function (to, from, next) {
-    if (to.matched.some(function (record) {
-        return record.meta.requiresAuth;
-    })) {
+/*router.beforeEach((to, from, next) => {
+    if (to.matched.some(record => record.meta.requiresAuth)) {
         //Check if logged in
-        if (!__WEBPACK_IMPORTED_MODULE_1__stores_global_store__["a" /* default */].getters.loggedIn) {
+        if (!store.getters.loggedIn) {
             next("/login");
         } else {
             next();
@@ -25557,7 +25556,7 @@ router.beforeEach(function (to, from, next) {
     } else {
         next();
     }
-});
+}); */
 
 new Vue({
     router: router,
@@ -51541,7 +51540,10 @@ var index_esm = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Dashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Dashboard_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Profile_vue__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_Profile_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_RegisterWorker_vue__ = __webpack_require__(65);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_RegisterWorker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_RegisterWorker_vue__);
 /*jshint esversion: 6 */
+
 
 
 
@@ -51578,6 +51580,13 @@ var routes = [{
     path: '/profile',
     component: __WEBPACK_IMPORTED_MODULE_4__components_Profile_vue___default.a,
     name: 'profile',
+    meta: {
+        requiresAuth: true
+    }
+}, {
+    path: '/registerWorker',
+    component: __WEBPACK_IMPORTED_MODULE_5__components_RegisterWorker_vue___default.a,
+    name: 'registerWorker',
     meta: {
         requiresAuth: true
     }
@@ -51844,10 +51853,10 @@ module.exports = {
       this.showMessage = false;
       axios.post("api/login", this.user).then(function (response) {
         _this.$store.commit("setToken", response.data.access_token);
-        _this.$router.push({ name: "dashboard" });
         return axios.get("api/users/me");
       }).then(function (response) {
         _this.$store.commit("setUser", response.data.data);
+        _this.$router.push({ name: "dashboard" });
       }).catch(function (error) {
         _this.$store.commit("clearUserAndToken");
       });
@@ -51974,8 +51983,8 @@ module.exports = {
       var _this = this;
 
       axios.post("api/logout").then(function (response) {
-        _this.$router.push({ name: "home" });
         _this.$store.commit("clearUserAndToken");
+        _this.$router.push({ name: "home" });
       }).catch(function (error) {
         _this.$store.commit("clearUserAndToken");
         console.log(error);
@@ -52019,11 +52028,11 @@ if (false) {
 //
 
 module.exports = {
-   data: function data() {
-      return {
-         user: this.$store.state.user
-      };
-   }
+  computed: {
+    user: function user() {
+      return this.$store.state.user;
+    }
+  }
 };
 
 /***/ }),
@@ -52185,15 +52194,326 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(66)
+/* template */
+var __vue_template__ = __webpack_require__(67)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/RegisterWorker.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-60232aac", Component.options)
+  } else {
+    hotAPI.reload("data-v-60232aac", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 66 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+  data: function data() {
+    return {
+      user: {
+        email: "",
+        username: "",
+        name: "",
+        type: ""
+      },
+      options: [{ text: "Manager", value: "manager" }, { text: "Waiter", value: "waiter" }, { text: "Cook", value: "cook" }, { text: "Cashier", value: "cashier" }]
+    };
+  },
+
+  methods: {
+    register: function register() {
+      axios.post("api/register", this.user).then(function (response) {
+        console.log('response', response);
+      }).catch(function (response) {});
+    }
+  }
+};
+
+/***/ }),
+/* 67 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "container" }, [
+      _c("h2", [_vm._v("Register Worker")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "inputEmail" } }, [_vm._v("Email")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model.trim",
+              value: _vm.user.email,
+              expression: "user.email",
+              modifiers: { trim: true }
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "email",
+            name: "email",
+            id: "inputEmail",
+            placeholder: "Enter email address"
+          },
+          domProps: { value: _vm.user.email },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.user, "email", $event.target.value.trim())
+            },
+            blur: function($event) {
+              _vm.$forceUpdate()
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "inputUsername" } }, [_vm._v("Username")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.user.username,
+              expression: "user.username"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            name: "username",
+            id: "inputUsername",
+            placeholder: "Enter username"
+          },
+          domProps: { value: _vm.user.username },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.user, "username", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "inputName" } }, [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.user.name,
+              expression: "user.name"
+            }
+          ],
+          staticClass: "form-control",
+          attrs: {
+            type: "text",
+            name: "name",
+            id: "inputName",
+            placeholder: "Enter full name"
+          },
+          domProps: { value: _vm.user.name },
+          on: {
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.$set(_vm.user, "name", $event.target.value)
+            }
+          }
+        })
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c("label", { attrs: { for: "inputType" } }, [_vm._v("Type")]),
+        _vm._v(" "),
+        _c(
+          "select",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.user.type,
+                expression: "user.type"
+              }
+            ],
+            staticClass: "form-control",
+            attrs: { name: "inputType" },
+            on: {
+              change: function($event) {
+                var $$selectedVal = Array.prototype.filter
+                  .call($event.target.options, function(o) {
+                    return o.selected
+                  })
+                  .map(function(o) {
+                    var val = "_value" in o ? o._value : o.value
+                    return val
+                  })
+                _vm.$set(
+                  _vm.user,
+                  "type",
+                  $event.target.multiple ? $$selectedVal : $$selectedVal[0]
+                )
+              }
+            }
+          },
+          [
+            _c("option", { attrs: { disabled: "", value: "" } }, [
+              _vm._v("-- Please select one --")
+            ]),
+            _vm._v(" "),
+            _vm._l(_vm.options, function(option) {
+              return _c("option", { domProps: { value: option.value } }, [
+                _vm._v(_vm._s(option.text))
+              ])
+            })
+          ],
+          2
+        )
+      ]),
+      _vm._v(" "),
+      _c("div", { staticClass: "form-group" }, [
+        _c(
+          "a",
+          {
+            staticClass: "btn btn-primary",
+            on: {
+              click: function($event) {
+                $event.preventDefault()
+                return _vm.register($event)
+              }
+            }
+          },
+          [_vm._v("Register")]
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-60232aac", module.exports)
+  }
+}
+
+/***/ }),
+/* 68 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(66)
+  __webpack_require__(69)
 }
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(68)
+var __vue_script__ = __webpack_require__(71)
 /* template */
-var __vue_template__ = __webpack_require__(69)
+var __vue_template__ = __webpack_require__(72)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -52232,13 +52552,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 66 */
+/* 69 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(67);
+var content = __webpack_require__(70);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -52258,7 +52578,7 @@ if(false) {
 }
 
 /***/ }),
-/* 67 */
+/* 70 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(15)(false);
@@ -52272,9 +52592,10 @@ exports.push([module.i, "\n* {\r\n  -webkit-box-sizing: border-box;\r\n         
 
 
 /***/ }),
-/* 68 */
+/* 71 */
 /***/ (function(module, exports) {
 
+//
 //
 //
 //
@@ -52295,12 +52616,15 @@ module.exports = {
   computed: {
     loggedIn: function loggedIn() {
       return this.$store.getters.loggedIn;
+    },
+    currentUser: function currentUser() {
+      return this.$store.state.user;
     }
   }
 };
 
 /***/ }),
-/* 69 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -52314,6 +52638,18 @@ var render = function() {
         [_c("router-link", { attrs: { to: "/" } }, [_vm._v("Home")])],
         1
       ),
+      _vm._v(" "),
+      _vm.loggedIn && _vm.currentUser.type == "manager"
+        ? _c(
+            "li",
+            [
+              _c("router-link", { attrs: { to: "/registerWorker" } }, [
+                _vm._v("Register Worker")
+              ])
+            ],
+            1
+          )
+        : _vm._e(),
       _vm._v(" "),
       _vm.loggedIn
         ? _c(
@@ -52374,7 +52710,7 @@ if (false) {
 }
 
 /***/ }),
-/* 70 */
+/* 73 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

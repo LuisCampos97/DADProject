@@ -48,11 +48,11 @@ module.exports = {
         .post("api/login", this.user)
         .then(response => {
           this.$store.commit("setToken", response.data.access_token);
-          this.$router.push({ name: "dashboard" });
           return axios.get("api/users/me");
         })
         .then(response => {
           this.$store.commit("setUser", response.data.data);
+          this.$router.push({ name: "dashboard" });
         })
         .catch(error => {
           this.$store.commit("clearUserAndToken");

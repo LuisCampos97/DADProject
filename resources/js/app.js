@@ -16,12 +16,13 @@ Vue.component('login', require('./components/auth/Login.vue'));
 Vue.component('logout', require('./components/auth/Logout.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('profile', require('./components/Profile.vue'));
+Vue.component('registerWorker', require('./components/RegisterWorker.vue'));
 
 const router = new VueRouter({
     routes
 });
 
-router.beforeEach((to, from, next) => {
+/*router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.requiresAuth)) {
         //Check if logged in
         if (!store.getters.loggedIn) {
@@ -32,7 +33,7 @@ router.beforeEach((to, from, next) => {
     } else {
         next();
     }
-});
+}); */
 
 new Vue({
     router,
