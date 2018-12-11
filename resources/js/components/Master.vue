@@ -2,6 +2,7 @@
   <div id="id">
     <nav>
       <li><router-link to="/">Home</router-link></li>
+      <li v-if="loggedIn && currentUser.type == 'manager'"><router-link to="/registerWorker">Register Worker</router-link></li>
       <li v-if="loggedIn"><router-link to="/dashboard">Dashboard</router-link></li>
       <li v-if="loggedIn"><router-link to="/profile">Profile</router-link></li>
       <li v-if="loggedIn"><router-link to="/logout">Logout</router-link></li>
@@ -17,7 +18,10 @@
 module.exports = {
   computed: {
     loggedIn() {
-      return this.$store.getters.loggedIn;
+      return this.$store.getters.loggedIn
+    },
+    currentUser() {
+      return this.$store.state.user;
     }
   }
 };

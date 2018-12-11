@@ -37,6 +37,8 @@ Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
 */
 
 Route::post('login', 'LoginControllerAPI@login')->name('login');
+
+Route::post('register', 'Auth\RegisterController@create');
  
 Route::middleware('auth:api')->post('logout', 'LoginControllerAPI@logout');
 
