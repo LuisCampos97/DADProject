@@ -52180,11 +52180,6 @@ exports.push([module.i, "\nbody {\r\n  background: rgb(75, 75, 75);\n}\n.jumbotr
 //
 //
 //
-//
-//
-//
-//
-//
 
 module.exports = {
   name: "profile",
@@ -52221,9 +52216,21 @@ module.exports = {
           "Content-Type": "multipart/form-data"
         }
       }).then(function () {
-        console.log("Profile photo updated!");
+        var _this = this;
+
+        this.showSuccess = true;
+        this.showFailure = false;
+        this.successMessage = "Profile photo changed!";
+        this.editingUser = false;
+        setTimeout(function () {
+          _this.showFailure = false;
+          _this.showSuccess = false;
+        }, 2000);
       }).catch(function () {
-        console.log("Error: Profile photo NOT updated.");
+        this.showFailure = true;
+        this.showSuccess = false;
+        this.failMessage = error.response.data.message;
+        console.dir(error);
       });
     },
     handleFileUpload: function handleFileUpload() {
@@ -52238,25 +52245,26 @@ module.exports = {
       this.editingUser = false;
     },
     saveUser: function saveUser() {
-      var _this = this;
+      var _this2 = this;
 
       var user = this.currentUser;
       axios.put("/api/users/" + user.id, user).then(function (response) {
-        _this.showSuccess = true;
-        _this.showFailure = false;
-        _this.successMessage = "User updated";
+        _this2.showSuccess = true;
+        _this2.showFailure = false;
+        _this2.successMessage = "User updated";
 
-        Vue.set(_this.user, response.data.data);
-        _this.editingUser = false;
-        _this.$store.commit("setUser", response.data.data); //TO DO: atualizar o user para que depois de fazer save seja visto o novo username e name...
+        Vue.set(_this2.user, response.data.data);
+        _this2.editingUser = false;
+        _this2.$store.commit("setUser", response.data.data); //TO DO: atualizar o user, para que depois de fazer save seja visto
+        // o novo username e name (pq agora só atualiza se fizermos F5)
         setTimeout(function () {
-          _this.showFailure = false;
-          _this.showSuccess = false;
+          _this2.showFailure = false;
+          _this2.showSuccess = false;
         }, 2000);
       }).catch(function (error) {
-        _this.showFailure = true;
-        _this.showSuccess = false;
-        _this.failMessage = error.response.data.message;
+        _this2.showFailure = true;
+        _this2.showSuccess = false;
+        _this2.failMessage = error.response.data.message;
         console.dir(error);
       });
     }
@@ -52287,7 +52295,7 @@ var render = function() {
                 _vm._v("\n            Change Photo\n            "),
                 _c("input", {
                   ref: "file",
-                  attrs: { type: "file", name: "file" },
+                  attrs: { type: "file", id: "file" },
                   on: {
                     change: function($event) {
                       _vm.handleFileUpload()

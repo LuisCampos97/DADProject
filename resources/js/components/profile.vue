@@ -7,12 +7,7 @@
             <img :src="'/storage/profiles/' + user.photo_url">
             <div class="file btn btn-lg btn-primary">
               Change Photo
-              <input
-                type="file"
-                name="file"
-                ref="file"
-                v-on:change="handleFileUpload()"
-              >
+              <input type="file" id="file" ref="file" v-on:change="handleFileUpload()">
             </div>
           </div>
         </div>
@@ -121,10 +116,20 @@ module.exports = {
           }
         )
         .then(function() {
-          console.log("Profile photo updated!");
+          this.showSuccess = true;
+          this.showFailure = false;
+          this.successMessage = "Profile photo changed!";
+          this.editingUser = false;
+          setTimeout(() => {
+            this.showFailure = false;
+            this.showSuccess = false;
+          }, 2000);
         })
         .catch(function() {
-          console.log("Error: Profile photo NOT updated.");
+          this.showFailure = true;
+          this.showSuccess = false;
+          this.failMessage = error.response.data.message;
+          console.dir(error);
         });
     },
     handleFileUpload: function() {
@@ -149,7 +154,8 @@ module.exports = {
 
           Vue.set(this.user, response.data.data);
           this.editingUser = false;
-          this.$store.commit("setUser", response.data.data); //TO DO: atualizar o user para que depois de fazer save seja visto o novo username e name...
+          this.$store.commit("setUser", response.data.data);  //TO DO: atualizar o user, para que depois de fazer save seja visto
+                                                              // o novo username e name (pq agora só atualiza se fizermos F5)
           setTimeout(() => {
             this.showFailure = false;
             this.showSuccess = false;
