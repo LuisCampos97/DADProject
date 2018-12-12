@@ -12,4 +12,4 @@ npm-debug.log
 yarn-error.log
 .env
 .phpunit.result.cache
-/app/Http/Controllers/LoginControllerAPI.php
+app/Http/Controllers/LoginControllerAPI.php
