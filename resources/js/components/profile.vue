@@ -78,8 +78,7 @@
 
 <script>
 module.exports = {
-  name: "profile",
-  data() {
+  data: function(){
     return {
       user: this.$store.state.user,
       typeofmsg: "alert-success",
@@ -168,6 +167,9 @@ module.exports = {
           console.dir(error);
         });
     }
+  },
+  mounted() {
+    this.getProfile();
   }
 };
 </script>

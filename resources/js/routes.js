@@ -10,6 +10,7 @@ import Login from './components/auth/Login.vue';
 import Logout from './components/auth/Logout.vue';
 import Dashboard from './components/Dashboard.vue';
 import Profile from './components/Profile.vue';
+import RegisterWorker from './components/RegisterWorker.vue';
 
 const editUser = Vue.component('edit-user', require('./components/userEdit.vue'))
 
