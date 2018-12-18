@@ -10,6 +10,17 @@
               <input type="file" id="file" ref="file" v-on:change="handleFileUpload()">
             </div>
           </div>
+          <div class="row">
+            <div class="profile-shift">
+              <p>Last Shift</p>
+              <a>Start: {{ user.last_shift_start }}</a>
+              <br>
+              <a>End: {{ user.last_shift_end }}</a>
+              <br>
+              <button v-if="user.shift_active == '0'" class="profile-shift-btn" @click.prevent="shiftStart()">Start</button>
+              <button v-if="user.shift_active == '1'" class="profile-shift-btn" @click.prevent="shiftQuit()">Quit</button>
+            </div>
+          </div>
         </div>
         <div class="col-md-6">
           <div class="profile-head">
@@ -27,8 +38,8 @@
             v-on:click.prevent="editUser(user)"
           >
         </div>
-        <div class="col-md-4"></div>
-        <div class="col-md-8">
+
+        <div class="col-md-8 profile-info">
           <div class="row">
             <div class="col-md-6">
               <label>User Id</label>
@@ -78,7 +89,7 @@
 
 <script>
 module.exports = {
-  data: function(){
+  data: function() {
     return {
       user: this.$store.state.user,
       typeofmsg: "alert-success",
@@ -139,6 +150,12 @@ module.exports = {
       this.editingUser = true;
       this.currentUser = Object.assign({}, user);
     },
+    shiftStart: function() {
+      this.currentUser.shift_active = 1;
+    },
+    shiftQuit: function() {
+      this.currentUser.shift_active = 0;
+    },
     cancelEdit: function() {
       this.editingUser = false;
     },
@@ -153,8 +170,8 @@ module.exports = {
 
           Vue.set(this.user, response.data.data);
           this.editingUser = false;
-          this.$store.commit("setUser", response.data.data);  //TO DO: atualizar o user, para que depois de fazer save seja visto
-                                                              // o novo username e name (pq agora só atualiza se fizermos F5)
+          this.$store.commit("setUser", response.data.data); //TO DO: atualizar o user, para que depois de fazer save seja visto
+          // o novo username e name (pq agora só atualiza se fizermos F5)
           setTimeout(() => {
             this.showFailure = false;
             this.showSuccess = false;
@@ -169,14 +186,13 @@ module.exports = {
     }
   },
   mounted() {
-    this.getProfile();
   }
 };
 </script>
 
 <style>
 body {
-  background: rgb(75, 75, 75);
+  background: #00c6ff;
 }
 
 .jumbotron {
@@ -192,8 +208,8 @@ body {
 }
 
 .profile-img img {
-  width: 70%;
-  height: 100%;
+  width: 60%;
+  height: 90%;
 }
 
 .profile-img .file {
@@ -240,49 +256,45 @@ body {
   cursor: pointer;
 }
 
-.profile-head .nav-tabs {
-  margin-bottom: 5%;
-}
-
-.profile-head .nav-tabs .nav-link {
+.profile-shift-btn {
+  border: none;
+  border-radius: 1.5rem;
+  width: 30%;
+  margin-top: 4%;
+  padding: 2%;
   font-weight: 600;
-  border: none;
+  color: #6c757d;
+  cursor: pointer;
 }
 
-.profile-head .nav-tabs .nav-link.active {
-  border: none;
-  border-bottom: 2px solid #0062cc;
-}
-
-.profile-work {
+.profile-shift {
   padding: 14%;
   margin-top: -15%;
+  text-align: center;
 }
 
-.profile-work p {
-  font-size: 12px;
-  color: #818182;
+.profile-shift p {
+  font-size: 16px;
   font-weight: 600;
-  margin-top: 10%;
+  margin-top: 7%;
+  text-align: center;
 }
 
-.profile-work a {
+.profile-shift a {
   text-decoration: none;
-  color: #495057;
+  color: #212529b8;
   font-weight: 600;
-  font-size: 14px;
+  font-size: 13px;
 }
 
-.profile-work ul {
-  list-style: none;
+.profile-info {
+  padding: 2%;
 }
 
-.profile-tab label {
+.profile-info p {
+  font-size: 15px;
+  color: #212529b8;
   font-weight: 600;
-}
-
-.profile-tab p {
-  font-weight: 600;
-  color: #0062cc;
+  text-align: center;
 }
 </style>

@@ -52095,7 +52095,7 @@ exports = module.exports = __webpack_require__(5)(false);
 
 
 // module
-exports.push([module.i, "\nbody {\r\n  background: rgb(75, 75, 75);\n}\n.jumbotron {\r\n  padding: 3%;\r\n  margin-top: 3%;\r\n  margin-bottom: 3%;\r\n  border-radius: 0.5rem;\r\n  background: #fff;\n}\n.profile-img {\r\n  text-align: center;\n}\n.profile-img img {\r\n  width: 70%;\r\n  height: 100%;\n}\n.profile-img .file {\r\n  position: relative;\r\n  overflow: hidden;\r\n  margin-top: -20%;\r\n  width: 70%;\r\n  border: none;\r\n  border-radius: 0;\r\n  font-size: 15px;\r\n  background: #212529b8;\n}\n.profile-img .file input {\r\n  position: absolute;\r\n  opacity: 0;\r\n  right: 0;\r\n  top: 0;\n}\n.profile-head h3 {\r\n  color: #333;\n}\n.profile-head h4 {\r\n  color: #0062cc;\n}\n.profile-img:hover .btn-lg {\r\n  opacity: 1;\n}\n.btn-lg {\r\n  opacity: 0;\n}\n.profile-edit-btn {\r\n  border: none;\r\n  border-radius: 1.5rem;\r\n  width: 70%;\r\n  padding: 2%;\r\n  font-weight: 600;\r\n  color: #6c757d;\r\n  cursor: pointer;\n}\n.profile-head .nav-tabs {\r\n  margin-bottom: 5%;\n}\n.profile-head .nav-tabs .nav-link {\r\n  font-weight: 600;\r\n  border: none;\n}\n.profile-head .nav-tabs .nav-link.active {\r\n  border: none;\r\n  border-bottom: 2px solid #0062cc;\n}\n.profile-work {\r\n  padding: 14%;\r\n  margin-top: -15%;\n}\n.profile-work p {\r\n  font-size: 12px;\r\n  color: #818182;\r\n  font-weight: 600;\r\n  margin-top: 10%;\n}\n.profile-work a {\r\n  text-decoration: none;\r\n  color: #495057;\r\n  font-weight: 600;\r\n  font-size: 14px;\n}\n.profile-work ul {\r\n  list-style: none;\n}\n.profile-tab label {\r\n  font-weight: 600;\n}\n.profile-tab p {\r\n  font-weight: 600;\r\n  color: #0062cc;\n}\r\n", ""]);
+exports.push([module.i, "\nbody {\r\n  background: #00c6ff;\n}\n.jumbotron {\r\n  padding: 3%;\r\n  margin-top: 3%;\r\n  margin-bottom: 3%;\r\n  border-radius: 0.5rem;\r\n  background: #fff;\n}\n.profile-img {\r\n  text-align: center;\n}\n.profile-img img {\r\n  width: 60%;\r\n  height: 90%;\n}\n.profile-img .file {\r\n  position: relative;\r\n  overflow: hidden;\r\n  margin-top: -20%;\r\n  width: 70%;\r\n  border: none;\r\n  border-radius: 0;\r\n  font-size: 15px;\r\n  background: #212529b8;\n}\n.profile-img .file input {\r\n  position: absolute;\r\n  opacity: 0;\r\n  right: 0;\r\n  top: 0;\n}\n.profile-head h3 {\r\n  color: #333;\n}\n.profile-head h4 {\r\n  color: #0062cc;\n}\n.profile-img:hover .btn-lg {\r\n  opacity: 1;\n}\n.btn-lg {\r\n  opacity: 0;\n}\n.profile-edit-btn {\r\n  border: none;\r\n  border-radius: 1.5rem;\r\n  width: 70%;\r\n  padding: 2%;\r\n  font-weight: 600;\r\n  color: #6c757d;\r\n  cursor: pointer;\n}\n.profile-shift-btn {\r\n  border: none;\r\n  border-radius: 1.5rem;\r\n  width: 30%;\r\n  margin-top: 4%;\r\n  padding: 2%;\r\n  font-weight: 600;\r\n  color: #6c757d;\r\n  cursor: pointer;\n}\n.profile-shift {\r\n  padding: 14%;\r\n  margin-top: -15%;\r\n  text-align: center;\n}\n.profile-shift p {\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n  margin-top: 7%;\r\n  text-align: center;\n}\n.profile-shift a {\r\n  text-decoration: none;\r\n  color: #212529b8;\r\n  font-weight: 600;\r\n  font-size: 13px;\n}\n.profile-info {\r\n  padding: 2%;\n}\n.profile-info p {\r\n  font-size: 15px;\r\n  color: #212529b8;\r\n  font-weight: 600;\r\n  text-align: center;\n}\r\n", ""]);
 
 // exports
 
@@ -52104,6 +52104,17 @@ exports.push([module.i, "\nbody {\r\n  background: rgb(75, 75, 75);\n}\n.jumbotr
 /* 65 */
 /***/ (function(module, exports) {
 
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -52241,6 +52252,12 @@ module.exports = {
       this.editingUser = true;
       this.currentUser = Object.assign({}, user);
     },
+    shiftStart: function shiftStart() {
+      this.currentUser.shift_active = 1;
+    },
+    shiftQuit: function shiftQuit() {
+      this.currentUser.shift_active = 0;
+    },
     cancelEdit: function cancelEdit() {
       this.editingUser = false;
     },
@@ -52269,9 +52286,7 @@ module.exports = {
       });
     }
   },
-  mounted: function mounted() {
-    this.getProfile();
-  }
+  mounted: function mounted() {}
 };
 
 /***/ }),
@@ -52305,6 +52320,54 @@ var render = function() {
                     }
                   }
                 })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "profile-shift" }, [
+                _c("p", [_vm._v("Last Shift")]),
+                _vm._v(" "),
+                _c("a", [
+                  _vm._v("Start: " + _vm._s(_vm.user.last_shift_start))
+                ]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _vm.user.shift_active == "0"
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "profile-shift-btn",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.shiftStart()
+                          }
+                        }
+                      },
+                      [_vm._v("Start")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.user.shift_active == "1"
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "profile-shift-btn",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.shiftQuit()
+                          }
+                        }
+                      },
+                      [_vm._v("Quit")]
+                    )
+                  : _vm._e()
               ])
             ])
           ]),
@@ -52343,9 +52406,7 @@ var render = function() {
             })
           ]),
           _vm._v(" "),
-          _c("div", { staticClass: "col-md-4" }),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-8" }, [
+          _c("div", { staticClass: "col-md-8 profile-info" }, [
             _c("div", { staticClass: "row" }, [
               _vm._m(0),
               _vm._v(" "),
@@ -52773,6 +52834,8 @@ exports.push([module.i, "\n* {\r\n  -webkit-box-sizing: border-box;\r\n         
 //
 //
 //
+//
+//
 
 module.exports = {
   computed: {
@@ -52795,6 +52858,32 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { attrs: { id: "id" } }, [
     _c("nav", [
+      _vm.loggedIn && _vm.currentUser.shift_active == "1"
+        ? _c(
+            "i",
+            { staticClass: "fas fa-utensils" },
+            [
+              _c("router-link", { attrs: { to: "/profile" } }, [
+                _vm._v("On Shift")
+              ])
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.loggedIn && _vm.currentUser.shift_active == "0"
+        ? _c(
+            "i",
+            { staticClass: "fas fa-utensils" },
+            [
+              _c("router-link", { attrs: { to: "/profile" } }, [
+                _vm._v("Off Shift")
+              ])
+            ],
+            1
+          )
+        : _vm._e(),
+      _vm._v(" "),
       _c(
         "li",
         [_c("router-link", { attrs: { to: "/" } }, [_vm._v("Home")])],
@@ -52807,18 +52896,6 @@ var render = function() {
             [
               _c("router-link", { attrs: { to: "/registerWorker" } }, [
                 _vm._v("Register Worker")
-              ])
-            ],
-            1
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.loggedIn
-        ? _c(
-            "li",
-            [
-              _c("router-link", { attrs: { to: "/dashboard" } }, [
-                _vm._v("Dashboard")
               ])
             ],
             1
@@ -52858,7 +52935,17 @@ var render = function() {
         : _vm._e()
     ]),
     _vm._v(" "),
-    _c("div", { staticClass: "container" }, [_c("router-view")], 1)
+    _c("div", { staticClass: "container" }, [_c("router-view")], 1),
+    _vm._v(" "),
+    _c("link", {
+      attrs: {
+        rel: "stylesheet",
+        href: "https://use.fontawesome.com/releases/v5.6.1/css/all.css",
+        integrity:
+          "sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP",
+        crossorigin: "anonymous"
+      }
+    })
   ])
 }
 var staticRenderFns = []

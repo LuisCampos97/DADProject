@@ -1,9 +1,10 @@
 <template>
   <div id="id">
     <nav>
+      <i v-if="loggedIn && currentUser.shift_active == '1'" class="fas fa-utensils"><router-link to="/profile">On Shift</router-link></i>
+      <i v-if="loggedIn && currentUser.shift_active == '0'" class="fas fa-utensils"><router-link to="/profile">Off Shift</router-link></i>
       <li><router-link to="/">Home</router-link></li>
       <li v-if="loggedIn && currentUser.type == 'manager'"><router-link to="/registerWorker">Register Worker</router-link></li>
-      <li v-if="loggedIn"><router-link to="/dashboard">Dashboard</router-link></li>
       <li v-if="loggedIn"><router-link to="/profile">Profile</router-link></li>
       <li v-if="loggedIn"><router-link to="/logout">Logout</router-link></li>
       <li v-if="!loggedIn"><router-link to="/login">Login</router-link></li>
@@ -11,6 +12,7 @@
     <div class="container">
       <router-view></router-view>
     </div>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.6.1/css/all.css" integrity="sha384-gfdkjb5BdAXd+lj+gudLWI+BXq4IuLW5IT+brZEZsLFm++aCMlF1V92rMkPaX4PP" crossorigin="anonymous">
   </div>
 </template>
 
