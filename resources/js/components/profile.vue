@@ -191,9 +191,9 @@ module.exports = {
 </script>
 
 <style>
-body {
-  background: #00c6ff;
-}
+/* body {
+   background: #00c6ff; 
+} */
 
 .jumbotron {
   padding: 3%;

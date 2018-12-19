@@ -13,10 +13,10 @@ import routes from './routes';
 Vue.component('master', require('./components/Master.vue'));
 Vue.component('item-list', require('./components/ItemList.vue'));
 Vue.component('login', require('./components/auth/Login.vue'));
-Vue.component('logout', require('./components/auth/Logout.vue'));
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('profile', require('./components/Profile.vue'));
-Vue.component('registerWorker', require('./components/RegisterWorker.vue'));
+Vue.component('registerWorker', require('./components/auth/RegisterWorker.vue'));
+Vue.component('edit-user', require('./components/UserEdit.vue'));
 
 const router = new VueRouter({
     routes

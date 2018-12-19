@@ -6,8 +6,8 @@
       <li><router-link to="/">Home</router-link></li>
       <li v-if="loggedIn && currentUser.type == 'manager'"><router-link to="/registerWorker">Register Worker</router-link></li>
       <li v-if="loggedIn"><router-link to="/profile">Profile</router-link></li>
-      <li v-if="loggedIn"><router-link to="/logout">Logout</router-link></li>
       <li v-if="!loggedIn"><router-link to="/login">Login</router-link></li>
+      <a v-if="loggedIn" v-on:click.prevent="logout()">Logout</a>
     </nav>
     <div class="container">
       <router-view></router-view>
@@ -24,6 +24,19 @@ module.exports = {
     },
     currentUser() {
       return this.$store.state.user;
+    }
+  },
+  methods: {
+    logout() {
+      axios.post("api/logout")
+        .then(response => {
+          this.$store.commit("clearUserAndToken");
+          this.$router.push({ name: "home" });
+        })
+        .catch(error => {
+          this.$store.commit("clearUserAndToken");
+          console.log(error);
+        });
     }
   }
 };
@@ -74,6 +87,7 @@ a {
   color: black;
   font-weight: bold;
   size: 35px;
+  cursor: pointer;
 }
 
 a:active,

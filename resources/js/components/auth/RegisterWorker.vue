@@ -39,7 +39,7 @@
         <label for="inputType">Type</label>
         <select class="form-control" name="inputType" v-model="user.type">
           <option disabled value>-- Please select one --</option>
-          <option v-for="option in options" v-bind:value="option.value">{{ option.text }}</option>
+          <option v-for="option in options" v-bind:key="option.key">{{ option.value }}</option>
         </select>
       </div>
       <div class="form-group">
@@ -60,10 +60,10 @@ module.exports = {
         type: ""
       },
       options: [
-        { text: "Manager", value: "manager" },
-        { text: "Waiter", value: "waiter" },
-        { text: "Cook", value: "cook" },
-        { text: "Cashier", value: "cashier" }
+        { value: "Manager", key: "manager" },
+        { value: "Waiter", key: "waiter" },
+        { value: "Cook", key: "cook" },
+        { value: "Cashier", key: "cashier" }
       ]
     };
   },
