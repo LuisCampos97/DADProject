@@ -17,8 +17,8 @@
               <br>
               <a>End: {{ user.last_shift_end }}</a>
               <br>
-              <button v-if="user.shift_active == '0'" class="profile-shift-btn" @click.prevent="shiftStart()">Start</button>
-              <button v-if="user.shift_active == '1'" class="profile-shift-btn" @click.prevent="shiftQuit()">Quit</button>
+              <button v-if="user.shift_active == '0'" class="profile-shift-btn" @click.prevent="invertShift()">Start</button>
+              <button v-if="user.shift_active == '1'" class="profile-shift-btn" @click.prevent="invertShift()">Quit</button>
             </div>
           </div>
         </div>
@@ -45,7 +45,8 @@
               <label>User Id</label>
             </div>
             <div class="col-md-6">
-              <p>{{ user.username }}</p>
+              <p class="edit-label">{{ user.username }}</p>              
+              <input type="text" v-model="user.username" class="edit-input" style="display:none">
             </div>
           </div>
           <div class="row">
@@ -53,7 +54,8 @@
               <label>Name</label>
             </div>
             <div class="col-md-6">
-              <p>{{ user.name }}</p>
+              <p class="edit-label">{{ user.name }}</p>              
+              <input type="text" v-model="user.name" class="edit-input" style="display:none">
             </div>
           </div>
           <div class="row">
@@ -147,20 +149,35 @@ module.exports = {
       this.file = this.$refs.file.files[0];
     },
     editUser: function(user) {
+      $('.edit-label').hide();
+      $('.edit-input').show();
       this.editingUser = true;
       this.currentUser = Object.assign({}, user);
     },
-    shiftStart: function() {
-      this.currentUser.shift_active = 1;
-    },
-    shiftQuit: function() {
-      this.currentUser.shift_active = 0;
+    invertShift: function() {
+       const user = this.$store.state.user;
+      axios
+        .put("/api/users/" + user.id + "/shift", user)
+        .then(response => {
+          Vue.set(this.user, response.data.data);
+          this.$store.commit("setUser", response.data.data);
+          this.$router.push({ name: "profile" });
+        })
+        .catch(error => {
+          this.showFailure = true;
+          this.showSuccess = false;
+          this.failMessage = error.response.data.message;
+          console.dir(error);
+        });
     },
     cancelEdit: function() {
       this.editingUser = false;
+      $('.edit-label').show();
+      $('.edit-input').hide();
     },
     saveUser: function() {
-      const user = this.currentUser;
+       const user = this.$store.state.user;
+       console.log(user);
       axios
         .put("/api/users/" + user.id, user)
         .then(response => {

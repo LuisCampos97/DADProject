@@ -48,11 +48,22 @@ class UserControllerAPI extends Controller
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-            'username' => 'required|min:3',
+            'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/'
         ]);
         $user = User::findOrFail($id);
         $user->update($request->all());
+        return new UserResource($user);
+    }
+
+    public function invertShift(Request $request, $id)
+    {
+        $user = User::findOrFail($id);
+        if($user->shift_active){
+            $user->last_shift_end = date("Y-m-d H:i:s");
+        }else{
+            $user->last_shift_start = date("Y-m-d H:i:s");
+        }
+        $user->shift_active = !$user->shift_active;        
         $user->save();
         return new UserResource($user);
     }

@@ -8,7 +8,7 @@ Vue.use(VueRouter);
 import ItemList from './components/ItemList.vue';
 import Login from './components/auth/Login.vue';
 import Dashboard from './components/Dashboard.vue';
-import Profile from './components/Profile.vue';
+import Profile from './components/auth/Profile.vue';
 import RegisterWorker from './components/auth/RegisterWorker.vue';
 
 const routes = [{
