@@ -53462,10 +53462,6 @@ module.exports = {
         registerMeal: function registerMeal() {
             this.registeringMeal = true;
         },
-        cancelMeal: function cancelMeal() {
-            this.$emit("cancel-Meal");
-        },
-        addMeal: function addMeal() {},
         getMeals: function getMeals() {
             var _this = this;
 
@@ -53480,6 +53476,9 @@ module.exports = {
                 _this2.orders = response.data.data;
             });
         }
+    },
+    mounted: function mounted() {
+        this.getMeals();
     }
 };
 
@@ -53510,8 +53509,7 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("registerMeal", {
-            attrs: { registeringMeal: _vm.registeringMeal },
-            on: { "cancel-Meal": _vm.cancelMeal }
+            attrs: { registeringMeal: _vm.registeringMeal, meals: _vm.meals }
           }),
           _vm._v(" "),
           _c("table", { staticClass: "table table-striped" }, [
@@ -53641,7 +53639,7 @@ module.exports = Component.exports
 //
 
 module.exports = {
-    props: ["registeringMeal"],
+    props: ["registeringMeal", "meals"],
     data: function data() {
         return {
             meal: {
@@ -53657,23 +53655,35 @@ module.exports = {
     },
     methods: {
         cancelMeal: function cancelMeal() {
-            this.$emit("cancel-Meal");
+            this.registeringMeal = false;
         },
         registerMeal: function registerMeal() {
             var _this = this;
 
-            this.meal.start = new Date();
-            this.meal.responsible_waiter_id = this.$store.state.user.id;
+            var userId = this.$store.state.user.id;
+            var mealExists = false;
 
-            console.log(this.meal);
+            this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            this.meal.responsible_waiter_id = userId;
+            var table = this.meal.table_number;
 
-            axios.post("api/meals/register", this.meal).then(function (response) {
-                console.log('response', response);
-            }).catch(function (response) {
-                _this.showFailure = true;
-                _this.failMessage = error.response.data.message;
-                console.dir(error);
+            this.meals.forEach(function (element) {
+                if (element.table_number == table && element.state == "active") {
+                    this.showFailure = true;
+                    this.failMessage = "Meal already exists.";
+                    mealExists = true;
+                }
             });
+
+            if (mealExists == false) {
+                axios.post("api/meals/register", this.meal).then(function (response) {
+                    console.log('response', response);
+                }).catch(function (response) {
+                    _this.showFailure = true;
+                    _this.failMessage = error.response.data.message;
+                    console.dir(error);
+                });
+            }
         }
     },
     mounted: function mounted() {}

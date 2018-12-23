@@ -2,7 +2,7 @@
 <div class="jumbotron" v-if="user.type == 'waiter'">
     <button @click.prevent="registerMeal()">Register Meal</button>
     
-    <registerMeal :registeringMeal="registeringMeal" @cancel-Meal="cancelMeal"></registerMeal>
+    <registerMeal :registeringMeal="registeringMeal" :meals="meals"></registerMeal>
 
     <table class="table table-striped">
         <thead>
@@ -43,12 +43,6 @@ module.exports = {
         registerMeal: function () {
             this.registeringMeal = true;
         },
-        cancelMeal: function () {
-            this.$emit("cancel-Meal");
-        },
-        addMeal: function () {
-
-        },
         getMeals: function () {
             axios.get("api/meals").then(response => {
                 this.meals = response.data.data;
@@ -59,6 +53,9 @@ module.exports = {
                 this.orders = response.data.data;
             });
         }
-    }
+    },
+  mounted() {
+    this.getMeals();
+  }
 };
 </script>

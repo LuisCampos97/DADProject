@@ -24,7 +24,7 @@
 
 <script>
 module.exports = {
-    props: ["registeringMeal"],
+    props: ["registeringMeal", "meals"],
     data: function () {
         return {
             meal: {
@@ -40,15 +40,25 @@ module.exports = {
     },
     methods: {
         cancelMeal: function () {
-            this.$emit("cancel-Meal");
+            this.registeringMeal = false;
         },
         registerMeal: function () {
 
-            this.meal.start = new Date();
-            this.meal.responsible_waiter_id = this.$store.state.user.id;
+            var userId =this.$store.state.user.id;
+            var mealExists = false;
 
-            console.log(this.meal);
+            this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            this.meal.responsible_waiter_id = userId;
+            var table = this.meal.table_number;
 
+            this.meals.forEach(function(element) {            
+            if(element.table_number == table && element.state == "active"){
+                this.showFailure = true;
+                this.failMessage = "Meal already exists.";
+                mealExists = true;
+            }});
+
+            if(mealExists == false){
             axios.post("api/meals/register", this.meal)
                 .then(response => {
                     console.log('response', response);
@@ -58,6 +68,7 @@ module.exports = {
                     this.failMessage = error.response.data.message;
                     console.dir(error);
                 });
+            }
         }
     },
     mounted() {}
