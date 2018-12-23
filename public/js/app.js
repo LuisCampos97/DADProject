@@ -28205,7 +28205,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(24);
-module.exports = __webpack_require__(75);
+module.exports = __webpack_require__(81);
 
 
 /***/ }),
@@ -28231,11 +28231,16 @@ Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
 
 Vue.component('master', __webpack_require__(67));
 Vue.component('item-list', __webpack_require__(18));
+
 Vue.component('login', __webpack_require__(19));
-Vue.component('dashboard', __webpack_require__(20));
-Vue.component('profile', __webpack_require__(21));
 Vue.component('registerWorker', __webpack_require__(22));
+Vue.component('profile', __webpack_require__(21));
 Vue.component('edit-user', __webpack_require__(72));
+
+Vue.component('dashboard', __webpack_require__(20));
+Vue.component('dashboardWaiter', __webpack_require__(75));
+
+Vue.component('registerMeal', __webpack_require__(78));
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
     routes: __WEBPACK_IMPORTED_MODULE_2__routes__["a" /* default */]
@@ -51992,6 +51997,7 @@ if (false) {
 //
 //
 //
+//
 
 module.exports = {
     computed: {
@@ -52042,61 +52048,68 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "jumbotron" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "profile-shift" }, [
-        _c("p", [_vm._v("Shift")]),
-        _vm._v(" "),
-        _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _vm.user.shift_active == "0"
-          ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _vm.user.shift_active == "0"
-          ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _vm.user.shift_active == "0"
-          ? _c(
-              "button",
-              {
-                staticClass: "profile-shift-btn",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.invertShift()
+  return _c(
+    "div",
+    { staticClass: "jumbotron" },
+    [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "profile-shift" }, [
+          _c("p", [_vm._v("Shift")]),
+          _vm._v(" "),
+          _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _vm.user.shift_active == "0"
+            ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _vm.user.shift_active == "0"
+            ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _vm.user.shift_active == "0"
+            ? _c(
+                "button",
+                {
+                  staticClass: "profile-shift-btn",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.invertShift()
+                    }
                   }
-                }
-              },
-              [_vm._v("Start")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.user.shift_active == "1"
-          ? _c(
-              "button",
-              {
-                staticClass: "profile-shift-btn",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.invertShift()
+                },
+                [_vm._v("Start")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.user.shift_active == "1"
+            ? _c(
+                "button",
+                {
+                  staticClass: "profile-shift-btn",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.invertShift()
+                    }
                   }
-                }
-              },
-              [_vm._v("Quit")]
-            )
-          : _vm._e()
-      ])
-    ])
-  ])
+                },
+                [_vm._v("Quit")]
+              )
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      _c("dashboardWaiter", { attrs: { "current-user": _vm.user } })
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -53355,6 +53368,415 @@ if (false) {
 
 /***/ }),
 /* 75 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(76)
+/* template */
+var __vue_template__ = __webpack_require__(77)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/dashboardWaiter.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-4a8093ca", Component.options)
+  } else {
+    hotAPI.reload("data-v-4a8093ca", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+    data: function data() {
+        return {
+            registeringMeal: false,
+            orders: [],
+            meals: []
+        };
+    },
+    computed: {
+        user: function user() {
+            return this.$store.state.user;
+        }
+    },
+    methods: {
+        registerMeal: function registerMeal() {
+            this.registeringMeal = true;
+        },
+        cancelMeal: function cancelMeal() {
+            this.$emit("cancel-Meal");
+        },
+        addMeal: function addMeal() {},
+        getMeals: function getMeals() {
+            var _this = this;
+
+            axios.get("api/meals").then(function (response) {
+                _this.meals = response.data.data;
+            });
+        },
+        getOrders: function getOrders() {
+            var _this2 = this;
+
+            axios.get("api/orders").then(function (response) {
+                _this2.orders = response.data.data;
+            });
+        }
+    }
+};
+
+/***/ }),
+/* 77 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.user.type == "waiter"
+    ? _c(
+        "div",
+        { staticClass: "jumbotron" },
+        [
+          _c(
+            "button",
+            {
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.registerMeal()
+                }
+              }
+            },
+            [_vm._v("Register Meal")]
+          ),
+          _vm._v(" "),
+          _c("registerMeal", {
+            attrs: { registeringMeal: _vm.registeringMeal },
+            on: { "cancel-Meal": _vm.cancelMeal }
+          }),
+          _vm._v(" "),
+          _c("table", { staticClass: "table table-striped" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c(
+              "tbody",
+              _vm._l(_vm.orders, function(order) {
+                return _c("tr", { key: order.id }, [
+                  _c("td", [_vm._v(_vm._s(order.table_number))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(order.state))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(order.start))]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(order.price_preview))])
+                ])
+              })
+            )
+          ])
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Table Number")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("State")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Start")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Total Price Preview")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-4a8093ca", module.exports)
+  }
+}
+
+/***/ }),
+/* 78 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(79)
+/* template */
+var __vue_template__ = __webpack_require__(80)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/waiter/registerMeal.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-66570d98", Component.options)
+  } else {
+    hotAPI.reload("data-v-66570d98", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 79 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+    props: ["registeringMeal"],
+    data: function data() {
+        return {
+            meal: {
+                state: "active",
+                table_number: "",
+                start: "",
+                responsible_waiter_id: "",
+                total_price_preview: "0"
+            },
+            failMessage: "",
+            showFailure: false
+        };
+    },
+    methods: {
+        cancelMeal: function cancelMeal() {
+            this.$emit("cancel-Meal");
+        },
+        registerMeal: function registerMeal() {
+            var _this = this;
+
+            this.meal.start = new Date();
+            this.meal.responsible_waiter_id = this.$store.state.user.id;
+
+            console.log(this.meal);
+
+            axios.post("api/meals/register", this.meal).then(function (response) {
+                console.log('response', response);
+            }).catch(function (response) {
+                _this.showFailure = true;
+                _this.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        }
+    },
+    mounted: function mounted() {}
+};
+
+/***/ }),
+/* 80 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.registeringMeal == true
+    ? _c("div", { staticClass: "jumbotron" }, [
+        _c("div", { staticClass: "col-md-8 profile-info" }, [
+          _c("div", { staticClass: "row" }, [
+            _vm._m(0),
+            _vm._v(" "),
+            _c("div", { staticClass: "col-md-6" }, [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.meal.table_number,
+                    expression: "meal.table_number"
+                  }
+                ],
+                attrs: { type: "number" },
+                domProps: { value: _vm.meal.table_number },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(_vm.meal, "table_number", $event.target.value)
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "col-md-2" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "profile-edit-btn",
+                    staticStyle: { float: "right" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.registerMeal()
+                      }
+                    }
+                  },
+                  [_vm._v("Register")]
+                )
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-2" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "profile-edit-btn",
+                    staticStyle: { float: "right" },
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.cancelMeal()
+                      }
+                    }
+                  },
+                  [_vm._v("Cancel")]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("label", [_vm._v("Table Number: ")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-66570d98", module.exports)
+  }
+}
+
+/***/ }),
+/* 81 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin

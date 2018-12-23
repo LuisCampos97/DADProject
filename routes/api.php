@@ -19,16 +19,21 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::get('items', 'ItemController@index');
 Route::get('items/{id}', 'ItemController@show');
-Route::get('users', 'UserControllerAPI@index');
-Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
-Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
 
-Route::get('users/{id}', 'UserControllerAPI@show');
 Route::post('users', 'UserControllerAPI@store');
 Route::post('users/{id}', 'UserControllerAPI@postPhoto');
+Route::get('users', 'UserControllerAPI@index');
+Route::get('users/{id}', 'UserControllerAPI@show');
+Route::get('users/emailavailable', 'UserControllerAPI@emailAvailable');
 Route::put('users/{id}', 'UserControllerAPI@update');
 Route::put('users/{id}/shift', 'UserControllerAPI@invertShift');
 Route::delete('users/{id}', 'UserControllerAPI@destroy');
+Route::middleware('auth:api')->get('users/me', 'UserControllerAPI@myProfile');
+
+
+Route::post('meals/register', 'MealController@create');
+Route::get('meals', 'MealController@index');
+Route::get('meals/{id}', 'MealController@show');
 
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:
