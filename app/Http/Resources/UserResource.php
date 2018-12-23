@@ -18,8 +18,8 @@ class UserResource extends JsonResource
             'email' => $this->email,
             'email_verified_at' => $this->email_verified_at,
             'shift_active' => $this->shift_active,
-            'last_shift_end' => $this->last_shift_end,
             'last_shift_start' => $this->last_shift_start,
+            'last_shift_end' => $this->last_shift_end,
         ];
     }
 }
