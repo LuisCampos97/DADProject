@@ -7,7 +7,7 @@
             <img :src="'/storage/profiles/' + user.photo_url">
             <div class="file btn btn-lg btn-primary">
               Change Photo
-              <input type="file" id="file" ref="file" v-on:change="handleFileUpload()">
+              <input type="file" id="file" ref="file" @change="handleFileUpload">
             </div>
           </div>
           <div class="row">
@@ -17,8 +17,16 @@
               <br>
               <a>End: {{ user.last_shift_end }}</a>
               <br>
-              <button v-if="user.shift_active == '0'" class="profile-shift-btn" @click.prevent="shiftStart()">Start</button>
-              <button v-if="user.shift_active == '1'" class="profile-shift-btn" @click.prevent="shiftQuit()">Quit</button>
+              <button
+                v-if="user.shift_active == '0'"
+                class="profile-shift-btn"
+                @click.prevent="shiftStart()"
+              >Start</button>
+              <button
+                v-if="user.shift_active == '1'"
+                class="profile-shift-btn"
+                @click.prevent="shiftQuit()"
+              >Quit</button>
             </div>
           </div>
         </div>
@@ -38,7 +46,6 @@
             v-on:click.prevent="editUser(user)"
           >
         </div>
-
         <div class="col-md-8 profile-info">
           <div class="row">
             <div class="col-md-6">
@@ -76,7 +83,6 @@
       <button type="button" class="close-btn" @click="showSuccess=false; showFailure=false;">&times;</button>
       <strong>{{(showSuccess)?successMessage:failMessage}}</strong>
     </div>
-
     <edit-user
       :current-user="currentUser"
       :editing-user="editingUser"
@@ -91,12 +97,12 @@
 module.exports = {
   data: function() {
     return {
-      user: this.$store.state.user,
+      user: '',
       typeofmsg: "alert-success",
       showMessage: false,
       message: "",
       loggedIn: false,
-      file: "",
+      file: null,
       editingUser: false,
       currentUser: {},
       successMessage: "",
@@ -112,7 +118,7 @@ module.exports = {
     submitFile: function() {
       //Submete a foto para o servidor
       let formData = new FormData(); //inicializa os dados do form
-      formData.append("file", this.file); //adiciona os dados do form que vamos submeter
+      formData.append("file", this.file, this.file.name); //adiciona os dados do form que vamos submeter
       const user = this.currentUser;
 
       axios
@@ -125,7 +131,7 @@ module.exports = {
             }
           }
         )
-        .then(function() {
+        .then(res => {
           this.showSuccess = true;
           this.showFailure = false;
           this.successMessage = "Profile photo changed!";
@@ -144,7 +150,7 @@ module.exports = {
     },
     handleFileUpload: function() {
       //lida com mudanças no upload da foto
-      this.file = this.$refs.file.files[0];
+      this.file = event.target.files[0];
     },
     editUser: function(user) {
       this.editingUser = true;
@@ -172,6 +178,7 @@ module.exports = {
           this.editingUser = false;
           this.$store.commit("setUser", response.data.data); //TO DO: atualizar o user, para que depois de fazer save seja visto
           // o novo username e name (pq agora só atualiza se fizermos F5)
+          
           setTimeout(() => {
             this.showFailure = false;
             this.showSuccess = false;
@@ -183,17 +190,22 @@ module.exports = {
           this.failMessage = error.response.data.message;
           console.dir(error);
         });
+    },
+    getUser: function(){
+      axios.get('api/users/1')
+      .then(response=>{this.user= response.data.data;});
     }
   },
   mounted() {
+    this.getUser();
   }
 };
 </script>
 
 <style>
-/* body {
-   background: #00c6ff; 
-} */
+body {
+  background: #00c6ff;
+}
 
 .jumbotron {
   padding: 3%;
