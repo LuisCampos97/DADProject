@@ -51980,13 +51980,58 @@ if (false) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 module.exports = {
-  computed: {
-    user: function user() {
-      return this.$store.state.user;
+    computed: {
+        user: function user() {
+            return this.$store.state.user;
+        },
+        timePassed: function timePassed() {
+            var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
+            console.log(diff);
+            var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+            var hours = Math.floor(diff / 1000 / 60 / 60);
+            var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
+            if (days == 0 && hours == 0) {
+                return minutes + " m";
+            } else if (days == 0) {
+                return hours + " h : " + minutes + " m";
+            } else {
+                return days + " d : " + hours + " h : " + minutes + " m";
+            }
+        }
+    },
+    methods: {
+        invertShift: function invertShift() {
+            var _this = this;
+
+            var user = this.$store.state.user;
+            axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
+                Vue.set(_this.user, response.data.data);
+                _this.$store.commit("setUser", response.data.data);
+                _this.$router.push({
+                    name: "profile"
+                });
+            }).catch(function (error) {
+                _this.showFailure = true;
+                _this.showSuccess = false;
+                _this.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        }
     }
-  }
 };
 
 /***/ }),
@@ -51998,7 +52043,59 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", { staticClass: "jumbotron" }, [
-    _c("h1", [_vm._v("Hello " + _vm._s(_vm.user.name))])
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "profile-shift" }, [
+        _c("p", [_vm._v("Shift")]),
+        _vm._v(" "),
+        _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _vm.user.shift_active == "0"
+          ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _vm.user.shift_active == "0"
+          ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _vm.user.shift_active == "0"
+          ? _c(
+              "button",
+              {
+                staticClass: "profile-shift-btn",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.invertShift()
+                  }
+                }
+              },
+              [_vm._v("Start")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.user.shift_active == "1"
+          ? _c(
+              "button",
+              {
+                staticClass: "profile-shift-btn",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.invertShift()
+                  }
+                }
+              },
+              [_vm._v("Quit")]
+            )
+          : _vm._e()
+      ])
+    ])
   ])
 }
 var staticRenderFns = []
@@ -52046,7 +52143,7 @@ exports = module.exports = __webpack_require__(5)(false);
 
 
 // module
-exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\r\n/* body {\r\n   background: #00c6ff; \r\n} */\n.jumbotron {\r\n    padding: 3%;\r\n    margin-top: 3%;\r\n    margin-bottom: 3%;\r\n    border-radius: 0.5rem;\r\n    background: #fff;\n}\n.profile-img {\r\n    text-align: center;\n}\n.profile-img img {\r\n    width: 60%;\r\n    height: 90%;\n}\n.profile-img .file {\r\n    position: relative;\r\n    overflow: hidden;\r\n    margin-top: -20%;\r\n    width: 70%;\r\n    border: none;\r\n    border-radius: 0;\r\n    font-size: 15px;\r\n    background: #212529b8;\n}\n.profile-img .file input {\r\n    position: absolute;\r\n    opacity: 0;\r\n    right: 0;\r\n    top: 0;\n}\n.profile-head h3 {\r\n    color: #333;\n}\n.profile-head h4 {\r\n    color: #0062cc;\n}\n.profile-img:hover .btn-lg {\r\n    opacity: 1;\n}\n.btn-lg {\r\n    opacity: 0;\n}\n.profile-edit-btn {\r\n    border: none;\r\n    border-radius: 1.5rem;\r\n    width: 70%;\r\n    padding: 2%;\r\n    font-weight: 600;\r\n    color: #6c757d;\r\n    cursor: pointer;\n}\n.profile-shift-btn {\r\n    border: none;\r\n    border-radius: 1.5rem;\r\n    width: 30%;\r\n    margin-top: 4%;\r\n    padding: 2%;\r\n    font-weight: 600;\r\n    color: #6c757d;\r\n    cursor: pointer;\n}\n.profile-shift {\r\n    padding: 14%;\r\n    margin-top: -15%;\r\n    text-align: center;\n}\n.profile-shift p {\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    margin-top: 7%;\r\n    text-align: center;\n}\n.profile-shift a {\r\n    text-decoration: none;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    font-size: 13px;\n}\n.profile-info {\r\n    padding: 2%;\n}\n.profile-info p {\r\n    font-size: 15px;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    text-align: center;\n}\r\n", ""]);
+exports.push([module.i, "\nbody {\r\n    background: #00c6ff;\n}\n.jumbotron {\r\n    padding: 3%;\r\n    margin-top: 3%;\r\n    margin-bottom: 3%;\r\n    border-radius: 0.5rem;\r\n    background: #fff;\n}\n.profile-img {\r\n    text-align: center;\n}\n.profile-img img {\r\n    width: 60%;\r\n    height: 90%;\n}\n.profile-img .file {\r\n    position: relative;\r\n    overflow: hidden;\r\n    margin-top: -20%;\r\n    width: 70%;\r\n    border: none;\r\n    border-radius: 0;\r\n    font-size: 15px;\r\n    background: #212529b8;\n}\n.profile-img .file input {\r\n    position: absolute;\r\n    opacity: 0;\r\n    right: 0;\r\n    top: 0;\n}\n.profile-head h3 {\r\n    color: #333;\n}\n.profile-head h4 {\r\n    color: #0062cc;\n}\n.profile-img:hover .btn-lg {\r\n    opacity: 1;\n}\n.btn-lg {\r\n    opacity: 0;\n}\n.profile-edit-btn {\r\n    border: none;\r\n    border-radius: 1.5rem;\r\n    width: 70%;\r\n    padding: 2%;\r\n    font-weight: 600;\r\n    color: #6c757d;\r\n    cursor: pointer;\n}\n.profile-shift-btn {\r\n    border: none;\r\n    border-radius: 1.5rem;\r\n    width: 30%;\r\n    margin-top: 4%;\r\n    padding: 2%;\r\n    font-weight: 600;\r\n    color: #6c757d;\r\n    cursor: pointer;\n}\n.profile-shift {\r\n    padding: 14%;\r\n    margin-top: -15%;\r\n    text-align: center;\n}\n.profile-shift p {\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    margin-top: 7%;\r\n    text-align: center;\n}\n.profile-shift a {\r\n    text-decoration: none;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    font-size: 13px;\n}\n.profile-info {\r\n    padding: 2%;\n}\n.profile-info p {\r\n    font-size: 15px;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    text-align: center;\n}\r\n", ""]);
 
 // exports
 
@@ -52055,7 +52152,6 @@ exports.push([module.i, "\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\n\
 /* 63 */
 /***/ (function(module, exports) {
 
-//
 //
 //
 //
@@ -52262,8 +52358,7 @@ module.exports = {
                 console.dir(error);
             });
         }
-    },
-    mounted: function mounted() {}
+    }
 };
 
 /***/ }),

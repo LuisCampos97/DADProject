@@ -40,7 +40,6 @@
             v-on:click.prevent="editUser(user)"
           >
         </div>
-
                     <div class="col-md-8 profile-info">
                         <div class="row">
                             <div class="col-md-6">
@@ -210,15 +209,14 @@ module.exports = {
                     console.dir(error);
                 });
         }
-    },
-    mounted() {}
+    }
 };
 </script>
 
 <style>
-/* body {
-   background: #00c6ff; 
-} */
+body {
+    background: #00c6ff;
+}
 
 .jumbotron {
     padding: 3%;
