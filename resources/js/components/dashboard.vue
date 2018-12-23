@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="jumbotron">
     <h1>Hello {{user.name}}</h1>
   </div>
 </template>
