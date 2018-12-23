@@ -28103,7 +28103,57 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 21 */,
+/* 21 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(61)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(63)
+/* template */
+var __vue_template__ = __webpack_require__(64)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/auth/Profile.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-3bec62ed", Component.options)
+  } else {
+    hotAPI.reload("data-v-3bec62ed", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
 /* 22 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -28183,16 +28233,9 @@ Vue.component('master', __webpack_require__(67));
 Vue.component('item-list', __webpack_require__(18));
 
 Vue.component('login', __webpack_require__(19));
-<<<<<<< HEAD
 Vue.component('registerWorker', __webpack_require__(22));
 Vue.component('profile', __webpack_require__(21));
 Vue.component('edit-user', __webpack_require__(72));
-=======
-Vue.component('dashboard', __webpack_require__(20));
-Vue.component('profile', __webpack_require__(91));
-Vue.component('registerWorker', __webpack_require__(22));
-Vue.component('edit-user', __webpack_require__(96));
->>>>>>> master
 
 Vue.component('dashboard', __webpack_require__(20));
 Vue.component('dashboardWaiter', __webpack_require__(75));
@@ -51503,7 +51546,7 @@ var index_esm = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__components_auth_Login_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_2__components_auth_Login_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Dashboard_vue__ = __webpack_require__(20);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__components_Dashboard_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_3__components_Dashboard_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_auth_Profile_vue__ = __webpack_require__(91);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_auth_Profile_vue__ = __webpack_require__(21);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_auth_Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_auth_Profile_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_auth_RegisterWorker_vue__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_auth_RegisterWorker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_auth_RegisterWorker_vue__);
@@ -52079,10 +52122,551 @@ if (false) {
 }
 
 /***/ }),
-/* 61 */,
-/* 62 */,
-/* 63 */,
-/* 64 */,
+/* 61 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(62);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(6)("66e7b04a", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3bec62ed\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3bec62ed\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 62 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(5)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nbody {\r\n    background: #00c6ff;\n}\n.jumbotron {\r\n    padding: 3%;\r\n    margin-top: 3%;\r\n    margin-bottom: 3%;\r\n    border-radius: 0.5rem;\r\n    background: #fff;\n}\n.profile-img {\r\n    text-align: center;\n}\n.profile-img img {\r\n    width: 60%;\r\n    height: 90%;\n}\n.profile-img .file {\r\n    position: relative;\r\n    overflow: hidden;\r\n    margin-top: -20%;\r\n    width: 70%;\r\n    border: none;\r\n    border-radius: 0;\r\n    font-size: 15px;\r\n    background: #212529b8;\n}\n.profile-img .file input {\r\n    position: absolute;\r\n    opacity: 0;\r\n    right: 0;\r\n    top: 0;\n}\n.profile-head h3 {\r\n    color: #333;\n}\n.profile-head h4 {\r\n    color: #0062cc;\n}\n.profile-img:hover .btn-lg {\r\n    opacity: 1;\n}\n.btn-lg {\r\n    opacity: 0;\n}\n.profile-edit-btn {\r\n    border: none;\r\n    border-radius: 1.5rem;\r\n    width: 70%;\r\n    padding: 2%;\r\n    font-weight: 600;\r\n    color: #6c757d;\r\n    cursor: pointer;\n}\n.profile-shift-btn {\r\n    border: none;\r\n    border-radius: 1.5rem;\r\n    width: 30%;\r\n    margin-top: 4%;\r\n    padding: 2%;\r\n    font-weight: 600;\r\n    color: #6c757d;\r\n    cursor: pointer;\n}\n.profile-shift {\r\n    padding: 14%;\r\n    margin-top: -15%;\r\n    text-align: center;\n}\n.profile-shift p {\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    margin-top: 7%;\r\n    text-align: center;\n}\n.profile-shift a {\r\n    text-decoration: none;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    font-size: 13px;\n}\n.profile-info {\r\n    padding: 2%;\n}\n.profile-info p {\r\n    font-size: 15px;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    text-align: center;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 63 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+    data: function data() {
+        return {
+            user: this.$store.state.user,
+            typeofmsg: "alert-success",
+            showMessage: false,
+            message: "",
+            loggedIn: false,
+            file: "",
+            editingUser: false,
+            currentUser: {},
+            successMessage: "",
+            failMessage: "",
+            showSuccess: false,
+            showFailure: false
+        };
+    },
+    computed: {
+        timePassed: function timePassed() {
+            var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
+            console.log(diff);
+            var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+            var hours = Math.floor(diff / 1000 / 60 / 60);
+            var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
+            if (days == 0 && hours == 0) {
+                return minutes + " m";
+            } else if (days == 0) {
+                return hours + " h : " + minutes + " m";
+            } else {
+                return days + " d : " + hours + " h : " + minutes + " m";
+            }
+        }
+    },
+    methods: {
+        profiles: function profiles() {
+            this.showMessage = false;
+        },
+        submitFile: function submitFile() {
+            //Submete a foto para o servidor
+            var formData = new FormData(); //inicializa os dados do form
+            formData.append("file", this.file); //adiciona os dados do form que vamos submeter
+            var user = this.currentUser;
+
+            axios.post("/api/users/" + user.id, //fazemos um request para submeter (POST) no URL profile/photo
+            formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            }).then(function () {
+                var _this = this;
+
+                this.showSuccess = true;
+                this.showFailure = false;
+                this.successMessage = "Profile photo changed!";
+                this.editingUser = false;
+                setTimeout(function () {
+                    _this.showFailure = false;
+                    _this.showSuccess = false;
+                }, 2000);
+            }).catch(function () {
+                this.showFailure = true;
+                this.showSuccess = false;
+                this.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        },
+        handleFileUpload: function handleFileUpload() {
+            //lida com mudanças no upload da foto
+            this.file = this.$refs.file.files[0];
+        },
+        editUser: function editUser(user) {
+            $('.edit-label').hide();
+            $('.edit-input').show();
+            this.editingUser = true;
+            this.currentUser = Object.assign({}, user);
+        },
+        invertShift: function invertShift() {
+            var _this2 = this;
+
+            var user = this.$store.state.user;
+            axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
+                Vue.set(_this2.user, response.data.data);
+                _this2.$store.commit("setUser", response.data.data);
+                _this2.$router.push({
+                    name: "profile"
+                });
+            }).catch(function (error) {
+                _this2.showFailure = true;
+                _this2.showSuccess = false;
+                _this2.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        },
+        cancelEdit: function cancelEdit() {
+            this.editingUser = false;
+            $('.edit-label').show();
+            $('.edit-input').hide();
+        },
+        saveUser: function saveUser() {
+            var _this3 = this;
+
+            var user = this.$store.state.user;
+            console.log(user);
+            axios.put("/api/users/" + user.id, user).then(function (response) {
+                _this3.showSuccess = true;
+                _this3.showFailure = false;
+                _this3.successMessage = "User updated";
+
+                Vue.set(_this3.user, response.data.data);
+                _this3.editingUser = false;
+                _this3.$store.commit("setUser", response.data.data); //TO DO: atualizar o user, para que depois de fazer save seja visto
+                // o novo username e name (pq agora só atualiza se fizermos F5)
+                setTimeout(function () {
+                    _this3.showFailure = false;
+                    _this3.showSuccess = false;
+                }, 2000);
+            }).catch(function (error) {
+                _this3.showFailure = true;
+                _this3.showSuccess = false;
+                _this3.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        }
+    }
+};
+
+/***/ }),
+/* 64 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c(
+    "div",
+    { staticClass: "jumbotron" },
+    [
+      _c("div", { staticClass: "container emp-profile" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "profile-img" }, [
+              _c("img", {
+                attrs: { src: "/storage/profiles/" + _vm.user.photo_url }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "file btn btn-lg btn-primary" }, [
+                _vm._v(
+                  "\r\n                        Change Photo\r\n                        "
+                ),
+                _c("input", {
+                  ref: "file",
+                  attrs: { type: "file", id: "file" },
+                  on: {
+                    change: function($event) {
+                      _vm.handleFileUpload()
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _c("div", { staticClass: "profile-shift" }, [
+                _c("p", [_vm._v("Shift")]),
+                _vm._v(" "),
+                _c("a", [
+                  _vm._v("Start: " + _vm._s(_vm.user.last_shift_start))
+                ]),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _vm.user.shift_active == "0"
+                  ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _vm.user.shift_active == "0"
+                  ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
+                  : _vm._e(),
+                _vm._v(" "),
+                _c("br"),
+                _vm._v(" "),
+                _vm.user.shift_active == "0"
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "profile-shift-btn",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.invertShift()
+                          }
+                        }
+                      },
+                      [_vm._v("Start")]
+                    )
+                  : _vm._e(),
+                _vm._v(" "),
+                _vm.user.shift_active == "1"
+                  ? _c(
+                      "button",
+                      {
+                        staticClass: "profile-shift-btn",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.invertShift()
+                          }
+                        }
+                      },
+                      [_vm._v("Quit")]
+                    )
+                  : _vm._e()
+              ])
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-6" }, [
+            _c("div", { staticClass: "profile-head" }, [
+              _c("h3", [_vm._v(_vm._s(_vm.user.name))]),
+              _vm._v(" "),
+              _c("h4", [
+                _vm._v(
+                  _vm._s(
+                    _vm.user.type.charAt(0).toUpperCase() +
+                      _vm.user.type.slice(1)
+                  )
+                )
+              ]),
+              _vm._v(" "),
+              _c("ul", { staticClass: "nav nav-tabs" })
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-2" }, [
+            _c("input", {
+              staticClass: "profile-edit-btn",
+              attrs: {
+                type: "submit",
+                name: "btnAddMore",
+                value: "Edit Profile"
+              },
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.editUser(_vm.user)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-8 profile-info" }, [
+            _c("div", { staticClass: "row" }, [
+              _vm._m(0),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("p", { staticClass: "edit-label" }, [
+                  _vm._v(_vm._s(_vm.user.username))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.user.username,
+                      expression: "user.username"
+                    }
+                  ],
+                  staticClass: "edit-input",
+                  staticStyle: { display: "none" },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.user.username },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.user, "username", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("p", { staticClass: "edit-label" }, [
+                  _vm._v(_vm._s(_vm.user.name))
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.user.name,
+                      expression: "user.name"
+                    }
+                  ],
+                  staticClass: "edit-input",
+                  staticStyle: { display: "none" },
+                  attrs: { type: "text" },
+                  domProps: { value: _vm.user.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.$set(_vm.user, "name", $event.target.value)
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "row" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "col-md-6" }, [
+                _c("p", [_vm._v(_vm._s(_vm.user.email))])
+              ])
+            ])
+          ])
+        ])
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _vm.showSuccess || _vm.showFailure
+        ? _c(
+            "div",
+            {
+              staticClass: "alert",
+              class: {
+                "alert-success": _vm.showSuccess,
+                "alert-danger": _vm.showFailure
+              }
+            },
+            [
+              _c(
+                "button",
+                {
+                  staticClass: "close-btn",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.showSuccess = false
+                      _vm.showFailure = false
+                    }
+                  }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("strong", [
+                _vm._v(
+                  _vm._s(_vm.showSuccess ? _vm.successMessage : _vm.failMessage)
+                )
+              ])
+            ]
+          )
+        : _vm._e(),
+      _vm._v(" "),
+      _c("edit-user", {
+        attrs: {
+          "current-user": _vm.currentUser,
+          "editing-user": _vm.editingUser
+        },
+        on: {
+          "cancel-edit": _vm.cancelEdit,
+          "save-user": _vm.saveUser,
+          "submit-file": _vm.submitFile
+        }
+      })
+    ],
+    1
+  )
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("label", [_vm._v("User Id")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("label", [_vm._v("Name")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "col-md-6" }, [
+      _c("label", [_vm._v("Email")])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-3bec62ed", module.exports)
+  }
+}
+
+/***/ }),
 /* 65 */
 /***/ (function(module, exports) {
 
@@ -52619,635 +53203,15 @@ if (false) {
 }
 
 /***/ }),
-/* 72 */,
-/* 73 */,
-/* 74 */,
-/* 75 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 76 */,
-/* 77 */,
-/* 78 */,
-/* 79 */,
-/* 80 */,
-/* 81 */,
-/* 82 */,
-/* 83 */,
-/* 84 */,
-/* 85 */,
-/* 86 */,
-/* 87 */,
-/* 88 */,
-/* 89 */,
-/* 90 */,
-/* 91 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-function injectStyle (ssrContext) {
-  if (disposed) return
-  __webpack_require__(92)
-}
-var normalizeComponent = __webpack_require__(1)
-/* script */
-var __vue_script__ = __webpack_require__(94)
-/* template */
-var __vue_template__ = __webpack_require__(95)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = injectStyle
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/auth/Profile.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-3bec62ed", Component.options)
-  } else {
-    hotAPI.reload("data-v-3bec62ed", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 92 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(93);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(6)("66e7b04a", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3bec62ed\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-3bec62ed\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Profile.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 93 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(5)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\nbody {\r\n    background: #00c6ff;\n}\n.jumbotron {\r\n    padding: 3%;\r\n    margin-top: 3%;\r\n    margin-bottom: 3%;\r\n    border-radius: 0.5rem;\r\n    background: #fff;\n}\n.profile-img {\r\n    text-align: center;\n}\n.profile-img img {\r\n    width: 60%;\r\n    height: 90%;\n}\n.profile-img .file {\r\n    position: relative;\r\n    overflow: hidden;\r\n    margin-top: -20%;\r\n    width: 70%;\r\n    border: none;\r\n    border-radius: 0;\r\n    font-size: 15px;\r\n    background: #212529b8;\n}\n.profile-img .file input {\r\n    position: absolute;\r\n    opacity: 0;\r\n    right: 0;\r\n    top: 0;\n}\n.profile-head h3 {\r\n    color: #333;\n}\n.profile-head h4 {\r\n    color: #0062cc;\n}\n.profile-img:hover .btn-lg {\r\n    opacity: 1;\n}\n.btn-lg {\r\n    opacity: 0;\n}\n.profile-edit-btn {\r\n    border: none;\r\n    border-radius: 1.5rem;\r\n    width: 70%;\r\n    padding: 2%;\r\n    font-weight: 600;\r\n    color: #6c757d;\r\n    cursor: pointer;\n}\n.profile-shift-btn {\r\n    border: none;\r\n    border-radius: 1.5rem;\r\n    width: 30%;\r\n    margin-top: 4%;\r\n    padding: 2%;\r\n    font-weight: 600;\r\n    color: #6c757d;\r\n    cursor: pointer;\n}\n.profile-shift {\r\n    padding: 14%;\r\n    margin-top: -15%;\r\n    text-align: center;\n}\n.profile-shift p {\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    margin-top: 7%;\r\n    text-align: center;\n}\n.profile-shift a {\r\n    text-decoration: none;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    font-size: 13px;\n}\n.profile-info {\r\n    padding: 2%;\n}\n.profile-info p {\r\n    font-size: 15px;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    text-align: center;\n}\r\n", ""]);
-
-// exports
-
-
-/***/ }),
-/* 94 */
-/***/ (function(module, exports) {
-
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-module.exports = {
-    data: function data() {
-        return {
-            user: this.$store.state.user,
-            typeofmsg: "alert-success",
-            showMessage: false,
-            message: "",
-            loggedIn: false,
-            file: "",
-            editingUser: false,
-            currentUser: {},
-            successMessage: "",
-            failMessage: "",
-            showSuccess: false,
-            showFailure: false
-        };
-    },
-    computed: {
-        timePassed: function timePassed() {
-            var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
-            console.log(diff);
-            var days = Math.floor(diff / 1000 / 60 / 60 / 24);
-            var hours = Math.floor(diff / 1000 / 60 / 60);
-            var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
-            if (days == 0 && hours == 0) {
-                return minutes + " m";
-            } else if (days == 0) {
-                return hours + " h : " + minutes + " m";
-            } else {
-                return days + " d : " + hours + " h : " + minutes + " m";
-            }
-        }
-    },
-    methods: {
-        profiles: function profiles() {
-            this.showMessage = false;
-        },
-        submitFile: function submitFile() {
-            //Submete a foto para o servidor
-            var formData = new FormData(); //inicializa os dados do form
-            formData.append("file", this.file); //adiciona os dados do form que vamos submeter
-            var user = this.currentUser;
-
-            axios.post("/api/users/" + user.id, //fazemos um request para submeter (POST) no URL profile/photo
-            formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            }).then(function () {
-                var _this = this;
-
-                this.showSuccess = true;
-                this.showFailure = false;
-                this.successMessage = "Profile photo changed!";
-                this.editingUser = false;
-                setTimeout(function () {
-                    _this.showFailure = false;
-                    _this.showSuccess = false;
-                }, 2000);
-            }).catch(function () {
-                this.showFailure = true;
-                this.showSuccess = false;
-                this.failMessage = error.response.data.message;
-                console.dir(error);
-            });
-        },
-        handleFileUpload: function handleFileUpload() {
-            //lida com mudanças no upload da foto
-            this.file = this.$refs.file.files[0];
-        },
-        editUser: function editUser(user) {
-            $('.edit-label').hide();
-            $('.edit-input').show();
-            this.editingUser = true;
-            this.currentUser = Object.assign({}, user);
-        },
-        invertShift: function invertShift() {
-            var _this2 = this;
-
-            var user = this.$store.state.user;
-            axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
-                Vue.set(_this2.user, response.data.data);
-                _this2.$store.commit("setUser", response.data.data);
-                _this2.$router.push({
-                    name: "profile"
-                });
-            }).catch(function (error) {
-                _this2.showFailure = true;
-                _this2.showSuccess = false;
-                _this2.failMessage = error.response.data.message;
-                console.dir(error);
-            });
-        },
-        cancelEdit: function cancelEdit() {
-            this.editingUser = false;
-            $('.edit-label').show();
-            $('.edit-input').hide();
-        },
-        saveUser: function saveUser() {
-            var _this3 = this;
-
-            var user = this.$store.state.user;
-            console.log(user);
-            axios.put("/api/users/" + user.id, user).then(function (response) {
-                _this3.showSuccess = true;
-                _this3.showFailure = false;
-                _this3.successMessage = "User updated";
-
-                Vue.set(_this3.user, response.data.data);
-                _this3.editingUser = false;
-                _this3.$store.commit("setUser", response.data.data); //TO DO: atualizar o user, para que depois de fazer save seja visto
-                // o novo username e name (pq agora só atualiza se fizermos F5)
-                setTimeout(function () {
-                    _this3.showFailure = false;
-                    _this3.showSuccess = false;
-                }, 2000);
-            }).catch(function (error) {
-                _this3.showFailure = true;
-                _this3.showSuccess = false;
-                _this3.failMessage = error.response.data.message;
-                console.dir(error);
-            });
-        }
-    }
-};
-
-/***/ }),
-/* 95 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "jumbotron" },
-    [
-      _c("div", { staticClass: "container emp-profile" }, [
-        _c("div", { staticClass: "row" }, [
-          _c("div", { staticClass: "col-md-4" }, [
-            _c("div", { staticClass: "profile-img" }, [
-              _c("img", {
-                attrs: { src: "/storage/profiles/" + _vm.user.photo_url }
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "file btn btn-lg btn-primary" }, [
-                _vm._v(
-                  "\r\n                        Change Photo\r\n                        "
-                ),
-                _c("input", {
-                  ref: "file",
-                  attrs: { type: "file", id: "file" },
-                  on: {
-                    change: function($event) {
-                      _vm.handleFileUpload()
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _c("div", { staticClass: "profile-shift" }, [
-                _c("p", [_vm._v("Shift")]),
-                _vm._v(" "),
-                _c("a", [
-                  _vm._v("Start: " + _vm._s(_vm.user.last_shift_start))
-                ]),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _vm.user.shift_active == "0"
-                  ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _vm.user.shift_active == "0"
-                  ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
-                  : _vm._e(),
-                _vm._v(" "),
-                _c("br"),
-                _vm._v(" "),
-                _vm.user.shift_active == "0"
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "profile-shift-btn",
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.invertShift()
-                          }
-                        }
-                      },
-                      [_vm._v("Start")]
-                    )
-                  : _vm._e(),
-                _vm._v(" "),
-                _vm.user.shift_active == "1"
-                  ? _c(
-                      "button",
-                      {
-                        staticClass: "profile-shift-btn",
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.invertShift()
-                          }
-                        }
-                      },
-                      [_vm._v("Quit")]
-                    )
-                  : _vm._e()
-              ])
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-6" }, [
-            _c("div", { staticClass: "profile-head" }, [
-              _c("h3", [_vm._v(_vm._s(_vm.user.name))]),
-              _vm._v(" "),
-              _c("h4", [
-                _vm._v(
-                  _vm._s(
-                    _vm.user.type.charAt(0).toUpperCase() +
-                      _vm.user.type.slice(1)
-                  )
-                )
-              ]),
-              _vm._v(" "),
-              _c("ul", { staticClass: "nav nav-tabs" })
-            ])
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-2" }, [
-            _c("input", {
-              staticClass: "profile-edit-btn",
-              attrs: {
-                type: "submit",
-                name: "btnAddMore",
-                value: "Edit Profile"
-              },
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.editUser(_vm.user)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-8 profile-info" }, [
-            _c("div", { staticClass: "row" }, [
-              _vm._m(0),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("p", { staticClass: "edit-label" }, [
-                  _vm._v(_vm._s(_vm.user.username))
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.user.username,
-                      expression: "user.username"
-                    }
-                  ],
-                  staticClass: "edit-input",
-                  staticStyle: { display: "none" },
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.user.username },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.user, "username", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _vm._m(1),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("p", { staticClass: "edit-label" }, [
-                  _vm._v(_vm._s(_vm.user.name))
-                ]),
-                _vm._v(" "),
-                _c("input", {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.user.name,
-                      expression: "user.name"
-                    }
-                  ],
-                  staticClass: "edit-input",
-                  staticStyle: { display: "none" },
-                  attrs: { type: "text" },
-                  domProps: { value: _vm.user.name },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.$set(_vm.user, "name", $event.target.value)
-                    }
-                  }
-                })
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "row" }, [
-              _vm._m(2),
-              _vm._v(" "),
-              _c("div", { staticClass: "col-md-6" }, [
-                _c("p", [_vm._v(_vm._s(_vm.user.email))])
-              ])
-            ])
-          ])
-        ])
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _vm.showSuccess || _vm.showFailure
-        ? _c(
-            "div",
-            {
-              staticClass: "alert",
-              class: {
-                "alert-success": _vm.showSuccess,
-                "alert-danger": _vm.showFailure
-              }
-            },
-            [
-              _c(
-                "button",
-                {
-                  staticClass: "close-btn",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.showSuccess = false
-                      _vm.showFailure = false
-                    }
-                  }
-                },
-                [_vm._v("×")]
-              ),
-              _vm._v(" "),
-              _c("strong", [
-                _vm._v(
-                  _vm._s(_vm.showSuccess ? _vm.successMessage : _vm.failMessage)
-                )
-              ])
-            ]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _c("edit-user", {
-        attrs: {
-          "current-user": _vm.currentUser,
-          "editing-user": _vm.editingUser
-        },
-        on: {
-          "cancel-edit": _vm.cancelEdit,
-          "save-user": _vm.saveUser,
-          "submit-file": _vm.submitFile
-        }
-      })
-    ],
-    1
-  )
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c("label", [_vm._v("User Id")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c("label", [_vm._v("Name")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-6" }, [
-      _c("label", [_vm._v("Email")])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-3bec62ed", module.exports)
-  }
-}
-
-/***/ }),
-/* 96 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(97)
+var __vue_script__ = __webpack_require__(73)
 /* template */
-var __vue_template__ = __webpack_require__(98)
+var __vue_template__ = __webpack_require__(74)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -53286,7 +53250,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 97 */
+/* 73 */
 /***/ (function(module, exports) {
 
 //
@@ -53328,7 +53292,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 98 */
+/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -53402,7 +53366,6 @@ if (false) {
   }
 }
 
-<<<<<<< HEAD
 /***/ }),
 /* 75 */
 /***/ (function(module, exports, __webpack_require__) {
@@ -53713,6 +53676,7 @@ module.exports = {
             });
 
             if (mealExists == false) {
+
                 axios.post("api/meals/register", this.meal).then(function (response) {
                     console.log('response', response);
                 }).catch(function (response) {
@@ -53828,7 +53792,5 @@ if (false) {
 
 // removed by extract-text-webpack-plugin
 
-=======
->>>>>>> master
 /***/ })
 /******/ ]);

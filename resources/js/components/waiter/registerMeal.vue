@@ -58,7 +58,9 @@ module.exports = {
                 mealExists = true;
             }});
 
-            if(mealExists == false){
+            if(mealExists == false){ 
+
+                
             axios.post("api/meals/register", this.meal)
                 .then(response => {
                     console.log('response', response);
