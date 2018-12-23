@@ -99,6 +99,7 @@ class UserControllerAPI extends Controller
         }
         $file = Input::file('file');
         //$uploadedFile="CC1".'.'."jpg";
+
         if (!Storage::disk('local')->put('public/profiles/' . $file, File::get($file))) {
             return response()->json([
                 'message' => 'Problem uploading item photo.',
@@ -109,6 +110,7 @@ class UserControllerAPI extends Controller
             $user->photo_url = $file;
             $user->save();
         }
+
         return response()->json(
             ['status' => 201,
                 'success' => 'item photo updated.',
