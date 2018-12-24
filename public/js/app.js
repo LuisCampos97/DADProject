@@ -52156,7 +52156,7 @@ exports = module.exports = __webpack_require__(5)(false);
 
 
 // module
-exports.push([module.i, "\nbody {\r\n    background: #00c6ff;\n}\n.jumbotron {\r\n    padding: 3%;\r\n    margin-top: 3%;\r\n    margin-bottom: 3%;\r\n    border-radius: 0.5rem;\r\n    background: #fff;\n}\n.profile-img {\r\n    text-align: center;\n}\n.profile-img img {\r\n    width: 60%;\r\n    height: 90%;\n}\n.profile-img .file {\r\n    position: relative;\r\n    overflow: hidden;\r\n    margin-top: -20%;\r\n    width: 70%;\r\n    border: none;\r\n    border-radius: 0;\r\n    font-size: 15px;\r\n    background: #212529b8;\n}\n.profile-img .file input {\r\n    position: absolute;\r\n    opacity: 0;\r\n    right: 0;\r\n    top: 0;\n}\n.profile-head h3 {\r\n    color: #333;\n}\n.profile-head h4 {\r\n    color: #0062cc;\n}\n.profile-img:hover .btn-lg {\r\n    opacity: 1;\n}\n.btn-lg {\r\n    opacity: 0;\n}\n.profile-edit-btn {\r\n    border: none;\r\n    border-radius: 1.5rem;\r\n    width: 70%;\r\n    padding: 2%;\r\n    font-weight: 600;\r\n    color: #6c757d;\r\n    cursor: pointer;\n}\n.profile-shift-btn {\r\n    border: none;\r\n    border-radius: 1.5rem;\r\n    width: 30%;\r\n    margin-top: 4%;\r\n    padding: 2%;\r\n    font-weight: 600;\r\n    color: #6c757d;\r\n    cursor: pointer;\n}\n.profile-shift {\r\n    padding: 14%;\r\n    margin-top: -15%;\r\n    text-align: center;\n}\n.profile-shift p {\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    margin-top: 7%;\r\n    text-align: center;\n}\n.profile-shift a {\r\n    text-decoration: none;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    font-size: 13px;\n}\n.profile-info {\r\n    padding: 2%;\n}\n.profile-info p {\r\n    font-size: 15px;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    text-align: center;\n}\r\n", ""]);
+exports.push([module.i, "\nbody {\r\n  background: #00c6ff;\n}\n.jumbotron {\r\n  padding: 3%;\r\n  margin-top: 3%;\r\n  margin-bottom: 3%;\r\n  border-radius: 0.5rem;\r\n  background: #fff;\n}\n.profile-img {\r\n  text-align: center;\n}\n.profile-img img {\r\n  width: 60%;\r\n  height: 90%;\n}\n.profile-img .file {\r\n  position: relative;\r\n  overflow: hidden;\r\n  margin-top: -20%;\r\n  width: 70%;\r\n  border: none;\r\n  border-radius: 0;\r\n  font-size: 15px;\r\n  background: #212529b8;\n}\n.profile-img .file input {\r\n  position: absolute;\r\n  opacity: 0;\r\n  right: 0;\r\n  top: 0;\n}\n.profile-head h3 {\r\n  color: #333;\n}\n.profile-head h4 {\r\n  color: #0062cc;\n}\n.profile-img:hover .btn-lg {\r\n  opacity: 1;\n}\n.btn-lg {\r\n  opacity: 0;\n}\n.profile-edit-btn {\r\n  border: none;\r\n  border-radius: 1.5rem;\r\n  width: 70%;\r\n  padding: 2%;\r\n  font-weight: 600;\r\n  color: #6c757d;\r\n  cursor: pointer;\n}\n.profile-shift-btn {\r\n  border: none;\r\n  border-radius: 1.5rem;\r\n  width: 30%;\r\n  margin-top: 4%;\r\n  padding: 2%;\r\n  font-weight: 600;\r\n  color: #6c757d;\r\n  cursor: pointer;\n}\n.profile-shift {\r\n  padding: 14%;\r\n  margin-top: -15%;\r\n  text-align: center;\n}\n.profile-shift p {\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n  margin-top: 7%;\r\n  text-align: center;\n}\n.profile-shift a {\r\n  text-decoration: none;\r\n  color: #212529b8;\r\n  font-weight: 600;\r\n  font-size: 13px;\n}\n.profile-info {\r\n  padding: 2%;\n}\n.profile-info p {\r\n  font-size: 15px;\r\n  color: #212529b8;\r\n  font-weight: 600;\r\n  text-align: center;\n}\r\n", ""]);
 
 // exports
 
@@ -52247,131 +52247,149 @@ exports.push([module.i, "\nbody {\r\n    background: #00c6ff;\n}\n.jumbotron {\r
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 module.exports = {
-    data: function data() {
-        return {
-            user: this.$store.state.user,
-            typeofmsg: "alert-success",
-            showMessage: false,
-            message: "",
-            loggedIn: false,
-            file: "",
-            editingUser: false,
-            currentUser: {},
-            successMessage: "",
-            failMessage: "",
-            showSuccess: false,
-            showFailure: false
-        };
-    },
-    computed: {
-        timePassed: function timePassed() {
-            var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
-            console.log(diff);
-            var days = Math.floor(diff / 1000 / 60 / 60 / 24);
-            var hours = Math.floor(diff / 1000 / 60 / 60);
-            var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
-            if (days == 0 && hours == 0) {
-                return minutes + " m";
-            } else if (days == 0) {
-                return hours + " h : " + minutes + " m";
-            } else {
-                return days + " d : " + hours + " h : " + minutes + " m";
-            }
-        }
-    },
-    methods: {
-        profiles: function profiles() {
-            this.showMessage = false;
-        },
-        submitFile: function submitFile() {
-            //Submete a foto para o servidor
-            var formData = new FormData(); //inicializa os dados do form
-            formData.append("file", this.file); //adiciona os dados do form que vamos submeter
-            var user = this.currentUser;
-
-            axios.post("/api/users/" + user.id, //fazemos um request para submeter (POST) no URL profile/photo
-            formData, {
-                headers: {
-                    "Content-Type": "multipart/form-data"
-                }
-            }).then(function () {
-                var _this = this;
-
-                this.showSuccess = true;
-                this.showFailure = false;
-                this.successMessage = "Profile photo changed!";
-                this.editingUser = false;
-                setTimeout(function () {
-                    _this.showFailure = false;
-                    _this.showSuccess = false;
-                }, 2000);
-            }).catch(function () {
-                this.showFailure = true;
-                this.showSuccess = false;
-                this.failMessage = error.response.data.message;
-                console.dir(error);
-            });
-        },
-        handleFileUpload: function handleFileUpload() {
-            //lida com mudanças no upload da foto
-            this.file = this.$refs.file.files[0];
-        },
-        editUser: function editUser(user) {
-            $('.edit-label').hide();
-            $('.edit-input').show();
-            this.editingUser = true;
-            this.currentUser = Object.assign({}, user);
-        },
-        invertShift: function invertShift() {
-            var _this2 = this;
-
-            var user = this.$store.state.user;
-            axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
-                Vue.set(_this2.user, response.data.data);
-                _this2.$store.commit("setUser", response.data.data);
-                _this2.$router.push({
-                    name: "profile"
-                });
-            }).catch(function (error) {
-                _this2.showFailure = true;
-                _this2.showSuccess = false;
-                _this2.failMessage = error.response.data.message;
-                console.dir(error);
-            });
-        },
-        cancelEdit: function cancelEdit() {
-            this.editingUser = false;
-            $('.edit-label').show();
-            $('.edit-input').hide();
-        },
-        saveUser: function saveUser() {
-            var _this3 = this;
-
-            var user = this.$store.state.user;
-            console.log(user);
-            axios.put("/api/users/" + user.id, user).then(function (response) {
-                _this3.showSuccess = true;
-                _this3.showFailure = false;
-                _this3.successMessage = "User updated";
-
-                Vue.set(_this3.user, response.data.data);
-                _this3.editingUser = false;
-                _this3.$store.commit("setUser", response.data.data); //TO DO: atualizar o user, para que depois de fazer save seja visto
-                // o novo username e name (pq agora só atualiza se fizermos F5)
-                setTimeout(function () {
-                    _this3.showFailure = false;
-                    _this3.showSuccess = false;
-                }, 2000);
-            }).catch(function (error) {
-                _this3.showFailure = true;
-                _this3.showSuccess = false;
-                _this3.failMessage = error.response.data.message;
-                console.dir(error);
-            });
-        }
+  data: function data() {
+    return {
+      user: this.$store.state.user,
+      typeofmsg: "alert-success",
+      showMessage: false,
+      message: "",
+      loggedIn: false,
+      file: "",
+      editingUser: false,
+      currentUser: {},
+      successMessage: "",
+      failMessage: "",
+      showSuccess: false,
+      showFailure: false
+    };
+  },
+  computed: {
+    timePassed: function timePassed() {
+      var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
+      console.log(diff);
+      var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+      var hours = Math.floor(diff / 1000 / 60 / 60);
+      var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
+      if (days == 0 && hours == 0) {
+        return minutes + " m";
+      } else if (days == 0) {
+        return hours + " h : " + minutes + " m";
+      } else {
+        return days + " d : " + hours + " h : " + minutes + " m";
+      }
     }
+  },
+  methods: {
+    profiles: function profiles() {
+      this.showMessage = false;
+    },
+    submitFile: function submitFile() {
+      //Submete a foto para o servidor
+      var formData = new FormData(); //inicializa os dados do form
+      formData.append("file", this.file); //adiciona os dados do form que vamos submeter
+      var user = this.currentUser;
+
+      axios.post("/api/users/" + user.id, //fazemos um request para submeter (POST) no URL profile/photo
+      formData, {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      }).then(function () {
+        var _this = this;
+
+        this.showSuccess = true;
+        this.showFailure = false;
+        this.successMessage = "Profile photo changed!";
+        this.editingUser = false;
+        setTimeout(function () {
+          _this.showFailure = false;
+          _this.showSuccess = false;
+        }, 2000);
+      }).catch(function () {
+        this.showFailure = true;
+        this.showSuccess = false;
+        this.failMessage = error.response.data.message;
+        console.dir(error);
+      });
+    },
+    handleFileUpload: function handleFileUpload() {
+      //lida com mudanças no upload da foto
+      this.file = this.$refs.file.files[0];
+    },
+    editUser: function editUser(user) {
+      $(".edit-label").hide();
+      $(".edit-input").show();
+      this.editingUser = true;
+      this.currentUser = Object.assign({}, user);
+    },
+    invertShift: function invertShift() {
+      var _this2 = this;
+
+      var user = this.$store.state.user;
+      axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
+        Vue.set(_this2.user, response.data.data);
+        _this2.$store.commit("setUser", response.data.data);
+        _this2.$router.push({
+          name: "profile"
+        });
+      }).catch(function (error) {
+        _this2.showFailure = true;
+        _this2.showSuccess = false;
+        _this2.failMessage = error.response.data.message;
+        console.dir(error);
+      });
+    },
+    cancelEdit: function cancelEdit() {
+      this.editingUser = false;
+      $(".edit-label").show();
+      $(".edit-input").hide();
+    },
+    saveUser: function saveUser() {
+      var _this3 = this;
+
+      var user = this.$store.state.user;
+      console.log(user);
+      axios.put("/api/users/" + user.id, user).then(function (response) {
+        _this3.showSuccess = true;
+        _this3.showFailure = false;
+        _this3.successMessage = "User updated";
+
+        Vue.set(_this3.user, response.data.data);
+        _this3.editingUser = false;
+        _this3.$store.commit("setUser", response.data.data); //TO DO: atualizar o user, para que depois de fazer save seja visto
+        // o novo username e name (pq agora só atualiza se fizermos F5)
+        setTimeout(function () {
+          _this3.showFailure = false;
+          _this3.showSuccess = false;
+        }, 2000);
+      }).catch(function (error) {
+        _this3.showFailure = true;
+        _this3.showSuccess = false;
+        _this3.failMessage = error.response.data.message;
+        console.dir(error);
+      });
+    }
+  }
 };
 
 /***/ }),
@@ -52395,14 +52413,13 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "file btn btn-lg btn-primary" }, [
-                _vm._v(
-                  "\r\n                        Change Photo\r\n                        "
-                ),
+                _vm._v("\n            Change Photo\n            "),
                 _c("input", {
                   ref: "file",
                   attrs: { type: "file", id: "file" },
                   on: {
                     change: function($event) {
+                      $event.preventDefault()
                       _vm.handleFileUpload()
                     }
                   }
@@ -52599,6 +52616,7 @@ var render = function() {
                   attrs: { type: "button" },
                   on: {
                     click: function($event) {
+                      $event.preventDefault()
                       _vm.showSuccess = false
                       _vm.showFailure = false
                     }
@@ -53271,24 +53289,37 @@ module.exports = Component.exports
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 module.exports = {
-    props: ["currentUser", "editingUser"],
-    data: function data() {
-        return {};
+  props: ["currentUser", "editingUser"],
+  data: function data() {
+    return {};
+  },
+  methods: {
+    cancelEdit: function cancelEdit() {
+      this.$emit("cancel-edit");
     },
-    methods: {
-        cancelEdit: function cancelEdit() {
-            this.$emit("cancel-edit");
-        },
-        saveUser: function saveUser() {
-            this.$emit("save-user");
-        },
-        submitFile: function submitFile() {
-            this.$emit("submit-file");
-        }
+    saveUser: function saveUser() {
+      this.$emit("save-user");
     },
-    mounted: function mounted() {}
+    submitFile: function submitFile() {
+      this.$emit("submit-file");
+    }
+  },
+  mounted: function mounted() {}
 };
 
 /***/ }),
@@ -53309,10 +53340,15 @@ var render = function() {
                 staticClass: "profile-edit-btn",
                 staticStyle: { float: "right" },
                 on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.saveUser()
-                  }
+                  click: [
+                    function($event) {
+                      $event.preventDefault()
+                      _vm.saveUser()
+                    },
+                    function($event) {
+                      _vm.cancelEdit()
+                    }
+                  ]
                 }
               },
               [_vm._v("Save")]
@@ -53417,70 +53453,7 @@ module.exports = Component.exports
 /* 76 */
 /***/ (function(module, exports) {
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-module.exports = {
-    data: function data() {
-        return {
-            registeringMeal: false,
-            orders: [],
-            meals: []
-        };
-    },
-    computed: {
-        user: function user() {
-            return this.$store.state.user;
-        }
-    },
-    methods: {
-        registerMeal: function registerMeal() {
-            this.registeringMeal = true;
-        },
-        getMeals: function getMeals() {
-            var _this = this;
-
-            axios.get("api/meals").then(function (response) {
-                _this.meals = response.data.data;
-            });
-        },
-        getOrders: function getOrders() {
-            var _this2 = this;
-
-            axios.get("api/orders").then(function (response) {
-                _this2.orders = response.data.data;
-            });
-        }
-    },
-    mounted: function mounted() {
-        this.getMeals();
-    }
-};
+throw new Error("Module build failed: SyntaxError: C:/DAD_project/DADProject/resources/js/components/dashboardWaiter.vue: Unexpected token (49:0)\n\n\u001b[0m \u001b[90m 47 | \u001b[39m        registerMeal\u001b[33m:\u001b[39m \u001b[36mfunction\u001b[39m () {\n \u001b[90m 48 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mregisteringMeal \u001b[33m=\u001b[39m \u001b[36mtrue\u001b[39m\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 49 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 50 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 51 | \u001b[39m        }\u001b[33m,\u001b[39m\n \u001b[90m 52 | \u001b[39m        cancelMeal\u001b[33m:\u001b[39m \u001b[36mfunction\u001b[39m () {\u001b[0m\n");
 
 /***/ }),
 /* 77 */
@@ -53507,11 +53480,16 @@ var render = function() {
             },
             [_vm._v("Register Meal")]
           ),
-          _vm._v(" "),
+          _vm._v("\r\n    \r\n<<<<<<< HEAD\r\n    "),
           _c("registerMeal", {
             attrs: { registeringMeal: _vm.registeringMeal, meals: _vm.meals }
           }),
-          _vm._v(" "),
+          _vm._v("\r\n=======\r\n    "),
+          _c("registerMeal", {
+            attrs: { registeringMeal: _vm.registeringMeal },
+            on: { "cancel-Meal": _vm.cancelMeal }
+          }),
+          _vm._v("\r\n>>>>>>> fixes\r\n\r\n    "),
           _c("table", { staticClass: "table table-striped" }, [
             _vm._m(0),
             _vm._v(" "),
@@ -53613,82 +53591,7 @@ module.exports = Component.exports
 /* 79 */
 /***/ (function(module, exports) {
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-module.exports = {
-    props: ["registeringMeal", "meals"],
-    data: function data() {
-        return {
-            meal: {
-                state: "active",
-                table_number: "",
-                start: "",
-                responsible_waiter_id: "",
-                total_price_preview: "0"
-            },
-            failMessage: "",
-            showFailure: false
-        };
-    },
-    methods: {
-        cancelMeal: function cancelMeal() {
-            this.registeringMeal = false;
-        },
-        registerMeal: function registerMeal() {
-            var _this = this;
-
-            var userId = this.$store.state.user.id;
-            var mealExists = false;
-
-            this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');
-            this.meal.responsible_waiter_id = userId;
-            var table = this.meal.table_number;
-
-            this.meals.forEach(function (element) {
-                if (element.table_number == table && element.state == "active") {
-                    this.showFailure = true;
-                    this.failMessage = "Meal already exists.";
-                    mealExists = true;
-                }
-            });
-
-            if (mealExists == false) {
-
-                axios.post("api/meals/register", this.meal).then(function (response) {
-                    console.log('response', response);
-                }).catch(function (response) {
-                    _this.showFailure = true;
-                    _this.failMessage = error.response.data.message;
-                    console.dir(error);
-                });
-            }
-        }
-    },
-    mounted: function mounted() {}
-};
+throw new Error("Module build failed: SyntaxError: C:/DAD_project/DADProject/resources/js/components/waiter/registerMeal.vue: Unexpected token (27:0)\n\n\u001b[0m \u001b[90m 25 | \u001b[39m\n \u001b[90m 26 | \u001b[39mmodule\u001b[33m.\u001b[39mexports \u001b[33m=\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 | \u001b[39m    props\u001b[33m:\u001b[39m [\u001b[32m\"registeringMeal\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"meals\"\u001b[39m]\u001b[33m,\u001b[39m\n \u001b[90m 29 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 30 | \u001b[39m    props\u001b[33m:\u001b[39m [\u001b[32m\"registeringMeal\"\u001b[39m]\u001b[33m,\u001b[39m\u001b[0m\n");
 
 /***/ }),
 /* 80 */

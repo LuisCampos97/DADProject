@@ -2,7 +2,11 @@
 <div class="jumbotron" v-if="user.type == 'waiter'">
     <button @click.prevent="registerMeal()">Register Meal</button>
     
+<<<<<<< HEAD
     <registerMeal :registeringMeal="registeringMeal" :meals="meals"></registerMeal>
+=======
+    <registerMeal :registeringMeal="registeringMeal" @cancel-Meal="cancelMeal"></registerMeal>
+>>>>>>> fixes
 
     <table class="table table-striped">
         <thead>
@@ -42,6 +46,15 @@ module.exports = {
     methods: {
         registerMeal: function () {
             this.registeringMeal = true;
+<<<<<<< HEAD
+=======
+        },
+        cancelMeal: function () {
+            this.$emit("cancel-Meal");
+        },
+        addMeal: function () {
+
+>>>>>>> fixes
         },
         getMeals: function () {
             axios.get("api/meals").then(response => {

@@ -24,7 +24,11 @@
 
 <script>
 module.exports = {
+<<<<<<< HEAD
     props: ["registeringMeal", "meals"],
+=======
+    props: ["registeringMeal"],
+>>>>>>> fixes
     data: function () {
         return {
             meal: {
@@ -40,6 +44,7 @@ module.exports = {
     },
     methods: {
         cancelMeal: function () {
+<<<<<<< HEAD
             this.registeringMeal = false;
         },
         registerMeal: function () {
@@ -61,6 +66,17 @@ module.exports = {
             if(mealExists == false){ 
 
                 
+=======
+            this.$emit("cancel-Meal");
+        },
+        registerMeal: function () {
+
+            this.meal.start = new Date();
+            this.meal.responsible_waiter_id = this.$store.state.user.id;
+
+            console.log(this.meal);
+
+>>>>>>> fixes
             axios.post("api/meals/register", this.meal)
                 .then(response => {
                     console.log('response', response);
@@ -70,7 +86,10 @@ module.exports = {
                     this.failMessage = error.response.data.message;
                     console.dir(error);
                 });
+<<<<<<< HEAD
             }
+=======
+>>>>>>> fixes
         }
     },
     mounted() {}
