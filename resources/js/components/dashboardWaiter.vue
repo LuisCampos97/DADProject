@@ -1,14 +1,16 @@
 <template>
 <div class="jumbotron" v-if="user.type == 'waiter'">
-    <button @click.prevent="invertShift()">Add Meal</button>
+    <button @click.prevent="registerMeal()">Register Meal</button>
+    
+    <registerMeal :registeringMeal="registeringMeal" @cancel-Meal="cancelMeal"></registerMeal>
 
     <table class="table table-striped">
         <thead>
             <tr>
-                <th>table_number</th>
-                <th>state</th>
-                <th>start</th>
-                <th>total_price_preview</th>
+                <th>Table Number</th>
+                <th>State</th>
+                <th>Start</th>
+                <th>Total Price Preview</th>
             </tr>
         </thead>
         <tbody>
@@ -27,6 +29,7 @@
 module.exports = {
     data: function () {
         return {
+            registeringMeal: false,
             orders: [],
             meals: []
         };
@@ -37,17 +40,23 @@ module.exports = {
         }
     },
     methods: {
+        registerMeal: function () {
+            this.registeringMeal = true;
+        },
+        cancelMeal: function () {
+            this.$emit("cancel-Meal");
+        },
         addMeal: function () {
 
         },
         getMeals: function () {
             axios.get("api/meals").then(response => {
-                this.items = response.data.data;
+                this.meals = response.data.data;
             });
         },
         getOrders: function () {
             axios.get("api/orders").then(response => {
-                this.items = response.data.data;
+                this.orders = response.data.data;
             });
         }
     }

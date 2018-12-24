@@ -1,5 +1,4 @@
 <?php
-
 namespace App\Http\Controllers;
 
 use App\Http\Resources\UserResource as UserResource;
@@ -20,7 +19,6 @@ class UserControllerAPI extends Controller
         } else {
             return UserResource::collection(User::all());
         }
-
         /*Caso não se pretenda fazer uso de Eloquent API Resources (https://laravel.com/docs/5.5/eloquent-resources), é possível implementar com esta abordagem:
     if ($request->has('page')) {
     return User::with('department')->paginate(5);;
@@ -28,12 +26,10 @@ class UserControllerAPI extends Controller
     return User::with('department')->get();;
     }*/
     }
-
     public function show($id)
     {
         return new UserResource(User::find($id));
     }
-
     public function store(Request $request)
     {
         $request->validate([
@@ -47,30 +43,27 @@ class UserControllerAPI extends Controller
         $user->save();
         return response()->json(new UserResource($user), 201);
     }
-
     public function update(Request $request, $id)
     {
         $request->validate([
-            'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/'
+            'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
         ]);
         $user = User::findOrFail($id);
         $user->update($request->all());
         return new UserResource($user);
     }
-
     public function invertShift(Request $request, $id)
     {
         $user = User::findOrFail($id);
-        if($user->shift_active){
+        if ($user->shift_active) {
             $user->last_shift_end = date("Y-m-d H:i:s");
-        }else{
+        } else {
             $user->last_shift_start = date("Y-m-d H:i:s");
         }
-        $user->shift_active = !$user->shift_active;        
+        $user->shift_active = !$user->shift_active;
         $user->save();
         return new UserResource($user);
     }
-
     public function destroy($id)
     {
         $user = User::findOrFail($id);
@@ -100,14 +93,12 @@ class UserControllerAPI extends Controller
         ]);
         if ($id != -1) {
             $user = User::find($id);
-
             if ($user->photo_url) {
                 Storage::disk('local')->delete('public/profiles/' . $user->photo_url);
             }
         }
         $file = Input::file('file');
         //$uploadedFile="CC1".'.'."jpg";
-
         if (!Storage::disk('local')->put('public/profiles/' . $file, File::get($file))) {
             return response()->json([
                 'message' => 'Problem uploading item photo.',
@@ -118,7 +109,6 @@ class UserControllerAPI extends Controller
             $user->photo_url = $file;
             $user->save();
         }
-
         return response()->json(
             ['status' => 201,
                 'success' => 'item photo updated.',

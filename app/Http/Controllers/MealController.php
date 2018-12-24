@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Resources\MealResource;
+use App\Meal;
+use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class MealController extends Controller
 {
@@ -20,11 +24,14 @@ class MealController extends Controller
         return new MealResource(Meal::find($id));
     }
 
-    public function store(Request $request)
+    public function create(Request $request)
     {
-        $meal = new Meal();
-        $meal->fill($request->all());
-        $meal->save();
-        return response()->json(new MealResource($meal), 201);
+        Meal::create([
+            'state' => $request['state'],
+            'table_number' => $request['table_number'],
+            'start' => $request['start'],
+            'responsible_waiter_id' => $request['responsible_waiter_id'],
+            'total_price_preview' => $request['total_price_preview'],
+        ]);
     }
 }
