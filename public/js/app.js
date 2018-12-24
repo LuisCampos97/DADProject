@@ -53453,7 +53453,74 @@ module.exports = Component.exports
 /* 76 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: SyntaxError: C:/DAD_project/DADProject/resources/js/components/dashboardWaiter.vue: Unexpected token (49:0)\n\n\u001b[0m \u001b[90m 47 | \u001b[39m        registerMeal\u001b[33m:\u001b[39m \u001b[36mfunction\u001b[39m () {\n \u001b[90m 48 | \u001b[39m            \u001b[36mthis\u001b[39m\u001b[33m.\u001b[39mregisteringMeal \u001b[33m=\u001b[39m \u001b[36mtrue\u001b[39m\u001b[33m;\u001b[39m\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 49 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 50 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 51 | \u001b[39m        }\u001b[33m,\u001b[39m\n \u001b[90m 52 | \u001b[39m        cancelMeal\u001b[33m:\u001b[39m \u001b[36mfunction\u001b[39m () {\u001b[0m\n");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+    data: function data() {
+        return {
+            registeringMeal: false,
+            orders: [],
+            meals: []
+        };
+    },
+    computed: {
+        user: function user() {
+            return this.$store.state.user;
+        }
+    },
+    methods: {
+        registerMeal: function registerMeal() {
+            this.registeringMeal = true;
+        },
+        cancelMeal: function cancelMeal() {
+            this.$emit("cancel-Meal");
+        },
+        addMeal: function addMeal() {},
+        getMeals: function getMeals() {
+            var _this = this;
+
+            axios.get("api/meals").then(function (response) {
+                _this.meals = response.data.data;
+            });
+        },
+        getOrders: function getOrders() {
+            var _this2 = this;
+
+            axios.get("api/orders").then(function (response) {
+                _this2.orders = response.data.data;
+            });
+        }
+    },
+    mounted: function mounted() {
+        this.getMeals();
+    }
+};
 
 /***/ }),
 /* 77 */
@@ -53480,16 +53547,12 @@ var render = function() {
             },
             [_vm._v("Register Meal")]
           ),
-          _vm._v("\r\n    \r\n<<<<<<< HEAD\r\n    "),
-          _c("registerMeal", {
-            attrs: { registeringMeal: _vm.registeringMeal, meals: _vm.meals }
-          }),
-          _vm._v("\r\n=======\r\n    "),
+          _vm._v(" "),
           _c("registerMeal", {
             attrs: { registeringMeal: _vm.registeringMeal },
             on: { "cancel-Meal": _vm.cancelMeal }
           }),
-          _vm._v("\r\n>>>>>>> fixes\r\n\r\n    "),
+          _vm._v(" "),
           _c("table", { staticClass: "table table-striped" }, [
             _vm._m(0),
             _vm._v(" "),
@@ -53591,7 +53654,69 @@ module.exports = Component.exports
 /* 79 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: SyntaxError: C:/DAD_project/DADProject/resources/js/components/waiter/registerMeal.vue: Unexpected token (27:0)\n\n\u001b[0m \u001b[90m 25 | \u001b[39m\n \u001b[90m 26 | \u001b[39mmodule\u001b[33m.\u001b[39mexports \u001b[33m=\u001b[39m {\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 27 | \u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<<\u001b[39m\u001b[33m<\u001b[39m \u001b[33mHEAD\u001b[39m\n \u001b[90m    | \u001b[39m\u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 28 | \u001b[39m    props\u001b[33m:\u001b[39m [\u001b[32m\"registeringMeal\"\u001b[39m\u001b[33m,\u001b[39m \u001b[32m\"meals\"\u001b[39m]\u001b[33m,\u001b[39m\n \u001b[90m 29 | \u001b[39m\u001b[33m===\u001b[39m\u001b[33m===\u001b[39m\u001b[33m=\u001b[39m\n \u001b[90m 30 | \u001b[39m    props\u001b[33m:\u001b[39m [\u001b[32m\"registeringMeal\"\u001b[39m]\u001b[33m,\u001b[39m\u001b[0m\n");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+    props: ["registeringMeal"],
+    data: function data() {
+        return {
+            meal: {
+                state: "active",
+                table_number: "",
+                start: "",
+                responsible_waiter_id: "",
+                total_price_preview: "0"
+            },
+            failMessage: "",
+            showFailure: false
+        };
+    },
+    methods: {
+        cancelMeal: function cancelMeal() {
+            this.$emit("cancel-Meal");
+        },
+        registerMeal: function registerMeal() {
+            var _this = this;
+
+            this.meal.start = new Date();
+            this.meal.responsible_waiter_id = this.$store.state.user.id;
+
+            console.log(this.meal);
+
+            axios.post("api/meals/register", this.meal).then(function (response) {
+                console.log('response', response);
+            }).catch(function (response) {
+                _this.showFailure = true;
+                _this.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        }
+    },
+    mounted: function mounted() {}
+};
 
 /***/ }),
 /* 80 */
