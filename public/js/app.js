@@ -53480,6 +53480,10 @@ module.exports = Component.exports
 //
 //
 //
+//
+//
+//
+//
 
 module.exports = {
     data: function data() {
@@ -53519,6 +53523,7 @@ module.exports = {
     },
     mounted: function mounted() {
         this.getMeals();
+        this.getOrders();
     }
 };
 
@@ -53553,24 +53558,76 @@ var render = function() {
             on: { "cancel-Meal": _vm.cancelMeal }
           }),
           _vm._v(" "),
-          _c("table", { staticClass: "table table-striped" }, [
-            _vm._m(0),
-            _vm._v(" "),
-            _c(
-              "tbody",
-              _vm._l(_vm.orders, function(order) {
-                return _c("tr", { key: order.id }, [
-                  _c("td", [_vm._v(_vm._s(order.table_number))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(order.state))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(order.start))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(order.price_preview))])
-                ])
+          _c(
+            "table",
+            { staticClass: "table table-striped" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._l(_vm.meals, function(meal) {
+                return meal.responsible_waiter_id == _vm.user.id &&
+                  meal.state == "active"
+                  ? _c(
+                      "tbody",
+                      { key: meal.id },
+                      [
+                        _c("tr", [
+                          _c("td", [_vm._v("Meal: " + _vm._s(meal.id))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v("Table: " + _vm._s(meal.table_number))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(meal.start))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v("Total: " + _vm._s(meal.total_price_preview))
+                          ])
+                        ]),
+                        _vm._v(" "),
+                        _vm._l(_vm.orders, function(order) {
+                          return meal.id == order.meal_id &&
+                            (order.state == "confirmed" ||
+                              order.state == "pending")
+                            ? _c("tr", { key: order.id }, [
+                                _c("td", [
+                                  _vm._v("Item: " + _vm._s(order.item_id))
+                                ]),
+                                _vm._v(" "),
+                                order.state == "confirmed"
+                                  ? _c(
+                                      "td",
+                                      { staticStyle: { color: "#2bb800" } },
+                                      [_vm._v(_vm._s(order.state))]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                order.state == "pending"
+                                  ? _c(
+                                      "td",
+                                      { staticStyle: { color: "#0062cc" } },
+                                      [_vm._v(_vm._s(order.state))]
+                                    )
+                                  : _vm._e(),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(order.start))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    "Cook: " + _vm._s(order.responsible_cook_id)
+                                  )
+                                ])
+                              ])
+                            : _vm._e()
+                        })
+                      ],
+                      2
+                    )
+                  : _vm._e()
               })
-            )
-          ])
+            ],
+            2
+          )
         ],
         1
       )
@@ -53581,17 +53638,7 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Table Number")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("State")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Start")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Total Price Preview")])
-      ])
-    ])
+    return _c("thead", [_c("tr", [_c("th", [_vm._v("Meals")])])])
   }
 ]
 render._withStripped = true

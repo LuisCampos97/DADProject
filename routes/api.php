@@ -29,6 +29,9 @@ Route::post('meals/register', 'MealController@create');
 Route::get('meals', 'MealController@index');
 Route::get('meals/{id}', 'MealController@show');
 
+Route::get('orders', 'OrderController@index');
+Route::get('orders/{id}', 'OrderController@show');
+
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:
 NOTA: neste caso, o parâmetro a receber nos métodos do controlador é user e não id
