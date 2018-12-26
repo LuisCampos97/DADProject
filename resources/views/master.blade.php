@@ -14,6 +14,7 @@
 
 <body>
     <div id="app"></div>
+    @yield('content')
 </body>
 
 <script src="js/app.js"></script>

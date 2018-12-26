@@ -24,6 +24,7 @@
           placeholder="Enter password"
         >
       </div>
+      <p class="help-block" v-for="error in errors.validate">{{ error }}</p>
       <div class="form-group">
         <a class="btn btn-primary" v-on:click.prevent="login">Login</a>
       </div>
@@ -38,6 +39,9 @@ module.exports = {
       user: {
         email: "",
         password: ""
+      },
+      errors:{
+        validate: []
       }
     };
   },
@@ -51,8 +55,14 @@ module.exports = {
           return axios.get("api/users/me");
         })
         .then(response => {
-          this.$store.commit("setUser", response.data.data);
-          this.$router.push({ name: "dashboard" });
+          console.log(response.data.data.email_verified_at);
+          if (response.data.data.email_verified_at) {
+            this.$store.commit("setUser", response.data.data);
+            this.$router.push({ name: "dashboard" });
+          } else {
+            this.errors[validate] = "Your account has not been activated."
+            this.$store.commit("clearUserAndToken");
+          }
         })
         .catch(error => {
           this.$store.commit("clearUserAndToken");
@@ -61,3 +71,11 @@ module.exports = {
   }
 };
 </script> 
+
+<style>
+.help-block {
+  color: red;
+  display: table-row;
+  font-weight: bold;
+}
+</style>
