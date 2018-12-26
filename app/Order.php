@@ -10,6 +10,7 @@ class Order extends Model
         'state',
         'item_id',
         'meal_id',
-        'responsible_cook_id'
+        'responsible_cook_id',
+        'start'
     ];
 }

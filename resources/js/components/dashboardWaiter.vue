@@ -1,9 +1,8 @@
 <template>
 <div class="jumbotron" v-if="user.type == 'waiter'">
     <button @click.prevent="registerMeal()">Register Meal</button>
-
-    <registerMeal :registeringMeal="registeringMeal" @cancel-Meal="cancelMeal"></registerMeal>
-
+    <registerMeal :registeringMeal="registeringMeal" :tables="tables" @cancel-Meal="cancelMeal"></registerMeal>
+    <registerOrder :registeringOrder="registeringOrder" :current-meal="currentMeal" @cancel-Order="cancelOrder"></registerOrder>
     <table class="table table-striped">
         <thead>
             <tr>
@@ -16,6 +15,7 @@
                 <td>Table: {{ meal.table_number }}</td>
                 <td>{{ meal.start }}</td>
                 <td>Total: {{ meal.total_price_preview }}</td>
+                <td><button @click.prevent="registerOrder(meal)">Register Orders</button></td>
             </tr>
             <tr v-for="order in orders" :key="order.id " v-if="meal.id == order.meal_id && (order.state == 'confirmed' || order.state == 'pending')">
                 <td>Item: {{ order.item_id }}</td>
@@ -34,7 +34,10 @@ module.exports = {
     data: function () {
         return {
             registeringMeal: false,
+            registeringOrder: false,
             orders: [],
+            tables: [],
+            currentMeal: {},
             meals: []
         };
     },
@@ -47,15 +50,25 @@ module.exports = {
         registerMeal: function () {
             this.registeringMeal = true;
         },
-        cancelMeal: function () {
-            this.$emit("cancel-Meal");
+        registerOrder: function (meal) {
+            this.registeringOrder = true;
+      this.currentMeal = Object.assign({}, meal);
         },
-        addMeal: function () {
+        cancelMeal: function () {
+            this.registeringMeal = false;
+        },
 
+        cancelOrder: function () {
+            this.registeringOrder = false;
         },
         getMeals: function () {
             axios.get("api/meals").then(response => {
                 this.meals = response.data.data;
+                this.meals.forEach(element => {
+                    if(element.state == 'active'){
+                    this.tables.push(element.table_number);
+                    }
+                });
             });
         },
         getOrders: function () {

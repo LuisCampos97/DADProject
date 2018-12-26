@@ -24,7 +24,7 @@
 
 <script>
 module.exports = {
-    props: ["registeringMeal"],
+    props: ["registeringMeal", "tables"],
     data: function () {
         return {
             meal: {
@@ -42,22 +42,46 @@ module.exports = {
         cancelMeal: function () {
             this.$emit("cancel-Meal");
         },
+        contains: function (a, obj) {
+            var i = a.length;
+            while (i--) {
+                if (a[i] === obj) {
+                    return true;
+                }
+            }
+            return false;
+        },
         registerMeal: function () {
 
-            this.meal.start = new Date();
-            this.meal.responsible_waiter_id = this.$store.state.user.id;
+             var i = this.tables.length;
+             var bol = false;
 
-            console.log(this.meal);
+            while (i--) {
+                if (this.tables[i] == this.meal.table_number) {
+                    bol = true;
+                }
+            }
 
-            axios.post("api/meals/register", this.meal)
-                .then(response => {
-                    console.log('response', response);
-                })
-                .catch(response => {
-                    this.showFailure = true;
-                    this.failMessage = error.response.data.message;
-                    console.dir(error);
-                });
+            if (bol) {
+                console.dir("error");
+            } else {
+
+                this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');;
+                this.meal.responsible_waiter_id = this.$store.state.user.id;
+
+                console.log(this.meal);
+
+                axios.post("api/meals/register", this.meal)
+                    .then(response => {
+                        console.log('response', response);
+                    })
+                    .catch(response => {
+                        this.showFailure = true;
+                        this.failMessage = error.response.data.message;
+                        console.dir(error);
+                    });
+
+            }
         }
     },
     mounted() {}
