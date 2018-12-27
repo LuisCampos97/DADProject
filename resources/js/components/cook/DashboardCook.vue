@@ -9,13 +9,21 @@
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody v-for="order in orders" :key="order.id" v-if="order.state == 'confirmed' || order.state == 'in preparation'">
+      <tbody
+        v-for="order in orders"
+        :key="order.id"
+        :class="{active: currentOrder === order}"
+        v-if="order.state == 'confirmed' || order.state == 'in preparation'"
+      >
         <tr v-if="order.state == 'confirmed'" style="color: #2bb800">
           <td>{{ order.id }}</td>
           <td>{{ order.state }}</td>
           <td>{{ order.start }}</td>
           <td>
-            <div class="btn btn-primary btn-sm">In Preparation</div>
+            <a
+              class="btn btn-sm btn-primary"
+              v-on:click.prevent="setOrderState(order)"
+            >In Preparation</a>
           </td>
         </tr>
         <tr v-if="order.state == 'in preparation'" style="color: #0062cc">
@@ -23,7 +31,7 @@
           <td>{{ order.state }}</td>
           <td>{{ order.start }}</td>
           <td>
-            <div class="btn btn-success btn-sm">Prepared</div>
+            <a class="btn btn-sm btn-success" v-on:click.prevent="setOrderState(order)">Prepared</a>
           </td>
         </tr>
       </tbody>
@@ -36,7 +44,8 @@ module.exports = {
   data: function() {
     return {
       orders: [],
-      currentUser: ""
+      currentUser: {},
+      currentOrder: {}
     };
   },
   methods: {
@@ -45,8 +54,15 @@ module.exports = {
         this.orders = response.data.data;
       });
     },
-    setPrepared() {
-
+    setOrderState(order) {
+      this.currentOrder = order;
+      axios
+        .put("api/orders/" + order.id, order)
+        .then(response => {
+          console.log(order);
+          this.getOrders();
+        })
+        .catch();
     }
   },
   computed: {

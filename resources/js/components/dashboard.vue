@@ -6,7 +6,7 @@
             <a>Start: {{ user.last_shift_start }}</a>
             <br>
             <a v-if="user.shift_active == '0'">End: {{ user.last_shift_end }}</a>
-            <br>
+            <br>s
             <a v-if="user.shift_active == '0'">Time: {{ timePassed }}</a>
             <br>
             <button v-if="user.shift_active == '0'" class="profile-shift-btn" @click.prevent="invertShift()">Start</button>

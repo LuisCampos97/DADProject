@@ -26,22 +26,37 @@ class OrderController extends Controller
     {
         //Get orders
         $orders = Order::where('responsible_cook_id', $responsible_cook_id)
-        ->orderBy('start', 'asc')
-        ->orderBy('state', 'desc')
-        ->get();
+            ->orderBy('start', 'asc')
+            ->orderBy('state', 'desc')
+            ->get();
 
         //Return collection of orders as a resource
         return OrderResource::collection($orders);
     }
-    
+
     public function create(Request $request)
     {
         Order::create([
             'state' => $request['state'],
             'item_id' => $request['item_id'],
-            'meal_id' =>$request['meal_id'],
-            'responsible_cook_id' =>$request['responsible_cook_id'],
-            'start' =>$request['start'],
+            'meal_id' => $request['meal_id'],
+            'responsible_cook_id' => $request['responsible_cook_id'],
+            'start' => $request['start'],
         ]);
+    }
+
+    public function updateState(Request $request, $id)
+    {
+        $order = Order::findOrFail($id);
+        
+        if($order->state == 'confirmed') {
+            $order->state = 'in preparation';
+        } else if($order->state == 'in preparation') {
+            $order->state = 'prepared';
+        }
+
+        $order->save();
+
+        return new OrderResource($order);
     }
 }

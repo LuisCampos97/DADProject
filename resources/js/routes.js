@@ -48,14 +48,6 @@ const routes = [{
     meta: {
         requiresAuth: true
     }
-},
-{
-    path: '/dashboardCook',
-    component: DashboardCook,
-    name: 'dashboardCook',
-    meta: {
-        requiresAuth: true
-    }
 }
 ];
 
