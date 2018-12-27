@@ -1,5 +1,9 @@
 <template>
   <div class="jumbotron" v-if="user.type == 'cook'">
+    <div class="alert alert-success" v-if="showSuccess">
+      <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
+      <strong>{{ successMessage }}</strong>
+    </div>
     <table class="table table-striped">
       <thead class="thead-dark">
         <tr>
@@ -45,7 +49,9 @@ module.exports = {
     return {
       orders: [],
       currentUser: {},
-      currentOrder: {}
+      currentOrder: {},
+      showSuccess: false,
+      successMessage: "",
     };
   },
   methods: {
@@ -59,7 +65,8 @@ module.exports = {
       axios
         .put("api/orders/" + order.id, order)
         .then(response => {
-          console.log(order);
+          this.showSuccess = true;
+          this.successMessage = `Order ${order.id} status changed to: ${response.data.data.state}`
           this.getOrders();
         })
         .catch();

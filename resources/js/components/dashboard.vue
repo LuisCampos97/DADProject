@@ -6,13 +6,14 @@
             <a>Start: {{ user.last_shift_start }}</a>
             <br>
             <a v-if="user.shift_active == '0'">End: {{ user.last_shift_end }}</a>
-            <br>s
+            <br>
             <a v-if="user.shift_active == '0'">Time: {{ timePassed }}</a>
             <br>
             <button v-if="user.shift_active == '0'" class="profile-shift-btn" @click.prevent="invertShift()">Start</button>
             <button v-if="user.shift_active == '1'" class="profile-shift-btn" @click.prevent="invertShift()">Quit</button>
         </div>
     </div>
+    
     <dashboardWaiter :current-user="user" v-if="user.type == 'waiter'"></dashboardWaiter>
     <dashboardCook v-if="user.type == 'cook'"></dashboardCook>
 </div>
