@@ -31,6 +31,7 @@ Route::get('meals/{id}', 'MealController@show');
 
 Route::get('orders', 'OrderController@index');
 Route::get('orders/{id}', 'OrderController@show');
+Route::get('ordersCook/{responsible_cook_id}', 'OrderController@ordersByCook');
 
 /*
 Caso prefiram usar Resource Routes para o user, podem implementar antes as rotas:

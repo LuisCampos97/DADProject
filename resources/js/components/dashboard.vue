@@ -13,7 +13,8 @@
             <button v-if="user.shift_active == '1'" class="profile-shift-btn" @click.prevent="invertShift()">Quit</button>
         </div>
     </div>
-    <dashboardWaiter :current-user="user"></dashboardWaiter>
+    <dashboardWaiter :current-user="user" v-if="user.type == 'waiter'"></dashboardWaiter>
+    <dashboardCook v-if="user.type == 'cook'"></dashboardCook>
 </div>
 </template>
 

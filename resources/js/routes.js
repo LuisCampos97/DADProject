@@ -10,6 +10,7 @@ import Login from './components/auth/Login.vue';
 import Dashboard from './components/Dashboard.vue';
 import Profile from './components/auth/Profile.vue';
 import RegisterWorker from './components/auth/RegisterWorker.vue';
+import DashboardCook from './components/cook/DashboardCook.vue';
 
 const routes = [{
     path: '/',
@@ -44,6 +45,14 @@ const routes = [{
     path: '/registerWorker',
     component: RegisterWorker,
     name: 'registerWorker',
+    meta: {
+        requiresAuth: true
+    }
+},
+{
+    path: '/dashboardCook',
+    component: DashboardCook,
+    name: 'dashboardCook',
     meta: {
         requiresAuth: true
     }

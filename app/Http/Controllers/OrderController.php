@@ -4,9 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\OrderResource;
 use App\Order;
-use Hash;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -22,5 +20,17 @@ class OrderController extends Controller
     public function show($id)
     {
         return new OrderResource(Order::find($id));
+    }
+
+    public function ordersByCook($responsible_cook_id)
+    {
+        //Get orders
+        $orders = Order::where('responsible_cook_id', $responsible_cook_id)
+        ->orderBy('start', 'asc')
+        ->orderBy('state', 'desc')
+        ->get();
+
+        //Return collection of orders as a resource
+        return OrderResource::collection($orders);
     }
 }

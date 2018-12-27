@@ -20,7 +20,7 @@ Vue.component('edit-user', require('./components/auth/UserEdit.vue'));
 
 Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('dashboardWaiter', require('./components/dashboardWaiter.vue'));
-
+Vue.component('dashboardCook', require('./components/cook/DashboardCook'));
 Vue.component('registerMeal', require('./components/waiter/registerMeal.vue'));
 
 const router = new VueRouter({
