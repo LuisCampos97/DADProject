@@ -29,6 +29,7 @@ Route::post('meals/register', 'MealController@create');
 Route::get('meals', 'MealController@index');
 Route::get('meals/{id}', 'MealController@show');
 
+Route::post('orders/register', 'OrderController@create');
 Route::get('orders', 'OrderController@index');
 Route::get('orders/{id}', 'OrderController@show');
 Route::get('ordersCook/{responsible_cook_id}', 'OrderController@ordersByCook');

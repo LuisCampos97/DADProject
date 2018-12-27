@@ -33,4 +33,15 @@ class OrderController extends Controller
         //Return collection of orders as a resource
         return OrderResource::collection($orders);
     }
+    
+    public function create(Request $request)
+    {
+        Order::create([
+            'state' => $request['state'],
+            'item_id' => $request['item_id'],
+            'meal_id' =>$request['meal_id'],
+            'responsible_cook_id' =>$request['responsible_cook_id'],
+            'start' =>$request['start'],
+        ]);
+    }
 }

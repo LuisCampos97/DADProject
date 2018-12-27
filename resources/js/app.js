@@ -23,6 +23,9 @@ Vue.component('dashboardWaiter', require('./components/dashboardWaiter.vue'));
 Vue.component('dashboardCook', require('./components/cook/DashboardCook'));
 Vue.component('registerMeal', require('./components/waiter/registerMeal.vue'));
 
+Vue.component('registerOrder', require('./components/waiter/registerOrder.vue'));
+Vue.component('orderItems', require('./components/waiter/orderItems.vue'));
+
 const router = new VueRouter({
     routes
 });

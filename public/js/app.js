@@ -28297,6 +28297,9 @@ Vue.component('dashboardWaiter', __webpack_require__(82));
 Vue.component('dashboardCook', __webpack_require__(23));
 Vue.component('registerMeal', __webpack_require__(85));
 
+Vue.component('registerOrder', __webpack_require__(104));
+Vue.component('orderItems', __webpack_require__(107));
+
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
     routes: __WEBPACK_IMPORTED_MODULE_2__routes__["a" /* default */]
 });
@@ -53895,7 +53898,10 @@ module.exports = {
     data: function data() {
         return {
             registeringMeal: false,
+            registeringOrder: false,
             orders: [],
+            tables: [],
+            currentMeal: {},
             meals: []
         };
     },
@@ -53908,15 +53914,27 @@ module.exports = {
         registerMeal: function registerMeal() {
             this.registeringMeal = true;
         },
-        cancelMeal: function cancelMeal() {
-            this.$emit("cancel-Meal");
+        registerOrder: function registerOrder(meal) {
+            this.registeringOrder = true;
+            this.currentMeal = Object.assign({}, meal);
         },
-        addMeal: function addMeal() {},
+        cancelMeal: function cancelMeal() {
+            this.registeringMeal = false;
+        },
+
+        cancelOrder: function cancelOrder() {
+            this.registeringOrder = false;
+        },
         getMeals: function getMeals() {
             var _this = this;
 
             axios.get("api/meals").then(function (response) {
                 _this.meals = response.data.data;
+                _this.meals.forEach(function (element) {
+                    if (element.state == 'active') {
+                        _this.tables.push(element.table_number);
+                    }
+                });
             });
         },
         getOrders: function getOrders() {
@@ -53960,8 +53978,16 @@ var render = function() {
           ),
           _vm._v(" "),
           _c("registerMeal", {
-            attrs: { registeringMeal: _vm.registeringMeal },
+            attrs: { registeringMeal: _vm.registeringMeal, tables: _vm.tables },
             on: { "cancel-Meal": _vm.cancelMeal }
+          }),
+          _vm._v(" "),
+          _c("registerOrder", {
+            attrs: {
+              registeringOrder: _vm.registeringOrder,
+              "current-meal": _vm.currentMeal
+            },
+            on: { "cancel-Order": _vm.cancelOrder }
           }),
           _vm._v(" "),
           _c(
@@ -53988,6 +54014,21 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", [
                             _vm._v("Total: " + _vm._s(meal.total_price_preview))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "button",
+                              {
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.registerOrder(meal)
+                                  }
+                                }
+                              },
+                              [_vm._v("Register Orders")]
+                            )
                           ])
                         ]),
                         _vm._v(" "),
@@ -54133,7 +54174,7 @@ module.exports = Component.exports
 //
 
 module.exports = {
-    props: ["registeringMeal"],
+    props: ["registeringMeal", "tables"],
     data: function data() {
         return {
             meal: {
@@ -54151,21 +54192,44 @@ module.exports = {
         cancelMeal: function cancelMeal() {
             this.$emit("cancel-Meal");
         },
+        contains: function contains(a, obj) {
+            var i = a.length;
+            while (i--) {
+                if (a[i] === obj) {
+                    return true;
+                }
+            }
+            return false;
+        },
         registerMeal: function registerMeal() {
             var _this = this;
 
-            this.meal.start = new Date();
-            this.meal.responsible_waiter_id = this.$store.state.user.id;
+            var i = this.tables.length;
+            var bol = false;
 
-            console.log(this.meal);
+            while (i--) {
+                if (this.tables[i] == this.meal.table_number) {
+                    bol = true;
+                }
+            }
 
-            axios.post("api/meals/register", this.meal).then(function (response) {
-                console.log('response', response);
-            }).catch(function (response) {
-                _this.showFailure = true;
-                _this.failMessage = error.response.data.message;
-                console.dir(error);
-            });
+            if (bol) {
+                console.dir("error");
+            } else {
+
+                this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');;
+                this.meal.responsible_waiter_id = this.$store.state.user.id;
+
+                console.log(this.meal);
+
+                axios.post("api/meals/register", this.meal).then(function (response) {
+                    console.log('response', response);
+                }).catch(function (response) {
+                    _this.showFailure = true;
+                    _this.failMessage = error.response.data.message;
+                    console.dir(error);
+                });
+            }
         }
     },
     mounted: function mounted() {}
@@ -54272,6 +54336,409 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 89 */,
+/* 90 */,
+/* 91 */,
+/* 92 */,
+/* 93 */,
+/* 94 */,
+/* 95 */,
+/* 96 */,
+/* 97 */,
+/* 98 */,
+/* 99 */,
+/* 100 */,
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(105)
+/* template */
+var __vue_template__ = __webpack_require__(106)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/waiter/registerOrder.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-69e119c9", Component.options)
+  } else {
+    hotAPI.reload("data-v-69e119c9", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 105 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+    props: ["registeringOrder", "currentMeal"],
+    data: function data() {
+        return {
+            order: {
+                state: "active",
+                item_id: "",
+                meal_id: "",
+                responsible_cook_id: "1",
+                start: ""
+            },
+            failMessage: "",
+            showFailure: false
+        };
+    },
+    methods: {
+        cancelOrder: function cancelOrder() {
+            this.$emit("cancel-Order");
+        },
+        registerOrder: function registerOrder(item) {
+            var _this = this;
+
+            console.log(item);
+
+            this.order.state = "pending";
+            this.order.item_id = item;
+            this.order.meal_id = this.currentMeal.id;
+            this.order.start = new Date().toISOString().slice(0, 19).replace('T', ' ');
+
+            console.log(this.order);
+
+            axios.post("api/orders/register", this.order).then(function (response) {
+                console.log('response', response);
+            }).catch(function (response) {
+                _this.showFailure = true;
+                _this.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        }
+    },
+    mounted: function mounted() {}
+};
+
+/***/ }),
+/* 106 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.registeringOrder == true
+    ? _c("div", { staticClass: "jumbotron" }, [
+        _c("div", { staticClass: "col-md-8 profile-info" }, [
+          _c("div", { staticClass: "row" }, [
+            _c(
+              "div",
+              { staticClass: "col-md-6" },
+              [
+                _c("orderItems", {
+                  on: { "register-order": _vm.registerOrder }
+                }),
+                _vm._v(">\r\n            ")
+              ],
+              1
+            )
+          ])
+        ])
+      ])
+    : _vm._e()
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-69e119c9", module.exports)
+  }
+}
+
+/***/ }),
+/* 107 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(108)
+}
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(110)
+/* template */
+var __vue_template__ = __webpack_require__(111)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = injectStyle
+/* scopeId */
+var __vue_scopeId__ = "data-v-21f97bb8"
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/waiter/orderItems.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-21f97bb8", Component.options)
+  } else {
+    hotAPI.reload("data-v-21f97bb8", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 108 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(109);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("22795338", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-21f97bb8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./orderItems.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-21f97bb8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./orderItems.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 109 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nimg[data-v-21f97bb8] {\r\n    border-radius: 3px;\r\n    width: 125px;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 110 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+    data: function data() {
+        return {
+            items: [],
+            title: "Menu"
+        };
+    },
+    methods: {
+        getItems: function getItems() {
+            var _this = this;
+
+            axios.get("api/items").then(function (response) {
+                _this.items = response.data.data;
+            });
+        },
+        registerOrder: function registerOrder(id) {
+            console.dir(id);
+            this.$emit("register-order", id);
+        }
+    },
+    mounted: function mounted() {
+        this.getItems();
+    }
+};
+
+/***/ }),
+/* 111 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "content-header" }, [
+      _c("div", { staticClass: "row mb-2" }, [
+        _c("div", { staticClass: "col-sm-6" }, [
+          _c("h1", { staticClass: "text-dark" }, [_vm._v(_vm._s(_vm.title))])
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _c("table", { staticClass: "table table-striped" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "tbody",
+        _vm._l(_vm.items, function(item) {
+          return _c("tr", { key: item.id }, [
+            _c("td", [
+              _c("img", { attrs: { src: "/storage/items/" + item.photo_url } })
+            ]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(item.name))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(item.type))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(item.description))]),
+            _vm._v(" "),
+            _c("td", [_vm._v(_vm._s(item.price))]),
+            _vm._v(" "),
+            _c("td", [
+              _c(
+                "button",
+                {
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.registerOrder(item.id)
+                    }
+                  }
+                },
+                [_vm._v("add")]
+              )
+            ])
+          ])
+        })
+      )
+    ])
+  ])
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", [
+      _c("tr", [
+        _c("th", [_vm._v("Photo")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Description")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Price")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-21f97bb8", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);
