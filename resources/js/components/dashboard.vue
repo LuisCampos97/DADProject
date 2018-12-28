@@ -14,8 +14,9 @@
         </div>
     </div>
     
-    <dashboardWaiter :current-user="user" v-if="user.type == 'waiter'"></dashboardWaiter>
-    <dashboardCook v-if="user.type == 'cook'"></dashboardCook>
+    <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
+    <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
+    <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
 </div>
 </template>
 

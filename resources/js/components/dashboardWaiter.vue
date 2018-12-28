@@ -1,5 +1,5 @@
 <template>
-<div class="jumbotron" v-if="user.type == 'waiter'">
+<div class="jumbotron" v-if="currentUser.type == 'waiter'">
     <button @click.prevent="registerMeal()">Register Meal</button>
     <registerMeal :registeringMeal="registeringMeal" :tables="tables" @cancel-Meal="cancelMeal"></registerMeal>
     <registerOrder :registeringOrder="registeringOrder" :current-meal="currentMeal" @cancel-Order="cancelOrder"></registerOrder>
@@ -9,7 +9,7 @@
                 <th>Meals</th>
             </tr>
         </thead>
-        <tbody v-for="meal in meals" :key="meal.id" v-if="meal.responsible_waiter_id == user.id && meal.state == 'active'">
+        <tbody v-for="meal in meals" :key="meal.id" v-if="meal.responsible_waiter_id == currentUser.id && meal.state == 'active'">
             <tr>
                 <td>Meal: {{ meal.id }}</td>
                 <td>Table: {{ meal.table_number }}</td>
@@ -31,6 +31,7 @@
 
 <script>
 module.exports = {
+    props: ["currentUser"],
     data: function () {
         return {
             registeringMeal: false,
@@ -40,11 +41,6 @@ module.exports = {
             currentMeal: {},
             meals: []
         };
-    },
-    computed: {
-        user() {
-            return this.$store.state.user;
-        }
     },
     methods: {
         registerMeal: function () {

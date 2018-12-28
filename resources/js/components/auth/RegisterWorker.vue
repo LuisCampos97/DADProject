@@ -12,7 +12,7 @@
           id="inputEmail"
           placeholder="Enter email address"
         >
-        <p class="help-block" v-for="error in errors.email">{{ error }}</p>
+        <p class="help-block" v-for="error in errors.email" v-bind:key="error">{{ error }}</p>
       </div>
       <div class="form-group">
         <label for="inputUsername">Username</label>
@@ -24,7 +24,7 @@
           id="inputUsername"
           placeholder="Enter username"
         >
-        <p class="help-block" v-for="error in errors.username">{{ error }}</p>
+        <p class="help-block" v-for="error in errors.username" v-bind:key="error">{{ error }}</p>
       </div>
       <div class="form-group">
         <label for="inputName">Name</label>
@@ -36,7 +36,7 @@
           id="inputName"
           placeholder="Enter full name"
         >
-        <p class="help-block" v-for="error in errors.name">{{ error }}</p>
+        <p class="help-block" v-for="error in errors.name" v-bind:key="error">{{ error }}</p>
       </div>
       <div class="form-group">
         <label for="inputType">Type</label>
@@ -44,7 +44,7 @@
           <option disabled value>-- Please select one --</option>
           <option v-for="option in options" v-bind:key="option.key">{{ option.value }}</option>
         </select>
-        <p class="help-block" v-for="error in errors.type">{{ error }}</p>
+        <p class="help-block" v-for="error in errors.type" v-bind:key="error">{{ error }}</p>
       </div>
       <div class="form-group">
         <a class="btn btn-primary" v-on:click.prevent="register">Register</a>
@@ -86,7 +86,6 @@ module.exports = {
           this.$router.push({ name: "home" });
         })
         .catch(error => {
-          console.log(error);
           let data = error.response.data.errors;
 
           for (let key in this.errors) {

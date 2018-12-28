@@ -1,5 +1,9 @@
 <template>
   <div>
+    <div class="alert alert-warning" v-if="showMessage">
+      <button type="button" class="close-btn" v-on:click="showMessage=false">&times;</button>
+      <strong>{{ message }}</strong>
+    </div>
     <div class="container">
       <h2>Login</h2>
       <div class="form-group">
@@ -24,7 +28,6 @@
           placeholder="Enter password"
         >
       </div>
-      <p class="help-block" v-for="error in errors.validate">{{ error }}</p>
       <div class="form-group">
         <a class="btn btn-primary" v-on:click.prevent="login">Login</a>
       </div>
@@ -40,14 +43,12 @@ module.exports = {
         email: "",
         password: ""
       },
-      errors:{
-        validate: []
-      }
+      showMessage: false,
+      message: ""
     };
   },
   methods: {
     login() {
-      this.showMessage = false;
       axios
         .post("api/login", this.user)
         .then(response => {
@@ -55,27 +56,20 @@ module.exports = {
           return axios.get("api/users/me");
         })
         .then(response => {
-          console.log(response.data.data.email_verified_at);
           if (response.data.data.email_verified_at) {
             this.$store.commit("setUser", response.data.data);
             this.$router.push({ name: "dashboard" });
           } else {
-            this.errors[validate] = "Your account has not been activated."
             this.$store.commit("clearUserAndToken");
           }
         })
         .catch(error => {
+          this.showMessage = true;
+          this.message =
+            "Your credentials are incorrect or your account is not active please go to your email to activate it.";
           this.$store.commit("clearUserAndToken");
         });
     }
   }
 };
-</script> 
-
-<style>
-.help-block {
-  color: red;
-  display: table-row;
-  font-weight: bold;
-}
-</style>
+</script>
