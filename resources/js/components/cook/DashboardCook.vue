@@ -1,5 +1,5 @@
 <template>
-  <div class="jumbotron" v-if="user.type == 'cook'">
+  <div class="jumbotron" v-if="currentUser.type == 'cook'">
     <div class="alert alert-success" v-if="showSuccess">
       <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
       <strong>{{ successMessage }}</strong>
@@ -45,10 +45,10 @@
 
 <script>
 module.exports = {
+    props: ["currentUser"],
   data: function() {
     return {
       orders: [],
-      currentUser: {},
       currentOrder: {},
       showSuccess: false,
       successMessage: "",
@@ -56,7 +56,7 @@ module.exports = {
   },
   methods: {
     getOrders() {
-      axios.get("api/ordersCook/" + currentUser.id).then(response => {
+      axios.get("api/ordersCook/" + this.currentUser.id).then(response => {
         this.orders = response.data.data;
       });
     },
@@ -72,13 +72,7 @@ module.exports = {
         .catch();
     }
   },
-  computed: {
-    user() {
-      return this.$store.state.user;
-    }
-  },
   mounted() {
-    currentUser = this.$store.state.user;
     this.getOrders();
   }
 };
