@@ -1,6 +1,6 @@
 <template>
 <div class="jumbotron" v-if="currentUser.type == 'waiter'">
-    <button @click.prevent="registerMeal()">Register Meal</button>
+    <a class="btn btn-sm btn-info" @click.prevent="registerMeal()">Register Meal</a>
     <registerMeal :registeringMeal="registeringMeal" :tables="tables" @cancel-Meal="cancelMeal"></registerMeal>
     <registerOrder :registeringOrder="registeringOrder" :current-meal="currentMeal" @cancel-Order="cancelOrder"></registerOrder>
     <table class="table table-striped">
@@ -15,7 +15,7 @@
                 <td>Table: {{ meal.table_number }}</td>
                 <td>{{ meal.start }}</td>
                 <td>Total: {{ meal.total_price_preview }} €</td>
-                <td><button @click.prevent="registerOrder(meal)">Register Orders</button></td>
+                <td><a class="btn btn-sm btn-primary" @click.prevent="registerOrder(meal)">Register Orders</a></td>
             </tr>
             <tr v-for="order in orders" :key="order.id " v-if="meal.id == order.meal_id">
                 <td>{{items[order.item_id - 1].name }}</td>
@@ -26,8 +26,8 @@
                 <td v-else>{{ order.state }}</td>
                 <td>{{ order.start }}</td>
                 <td>Price: {{ items[order.item_id - 1].price }} €</td>
-                <td><button @click.prevent="setOrderState(order)" v-if="order.state == 'prepared'" >Deliver</button>
-                    <button @click.prevent="cancelOrder(order)" v-if=" plusFiveSeconds(order.start) >= currentDate">Cancel</button>
+                <td><a class="btn btn-sm btn-success" @click.prevent="setOrderState(order)" v-if="order.state == 'prepared'" >Deliver</a>
+                    <a class="btn btn-sm btn-danger" @click.prevent="cancelOrder(order)" v-if=" plusFiveSeconds(order.start) >= currentDate">Cancel</a>
                 </td>
             </tr>
         </tbody>

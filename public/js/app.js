@@ -54023,8 +54023,9 @@ var render = function() {
         { staticClass: "jumbotron" },
         [
           _c(
-            "button",
+            "a",
             {
+              staticClass: "btn btn-sm btn-info",
               on: {
                 click: function($event) {
                   $event.preventDefault()
@@ -54080,8 +54081,9 @@ var render = function() {
                           _vm._v(" "),
                           _c("td", [
                             _c(
-                              "button",
+                              "a",
                               {
+                                staticClass: "btn btn-sm btn-primary",
                                 on: {
                                   click: function($event) {
                                     $event.preventDefault()
@@ -54144,8 +54146,9 @@ var render = function() {
                                 _c("td", [
                                   order.state == "prepared"
                                     ? _c(
-                                        "button",
+                                        "a",
                                         {
+                                          staticClass: "btn btn-sm btn-success",
                                           on: {
                                             click: function($event) {
                                               $event.preventDefault()
@@ -54160,8 +54163,9 @@ var render = function() {
                                   _vm.plusFiveSeconds(order.start) >=
                                   _vm.currentDate
                                     ? _c(
-                                        "button",
+                                        "a",
                                         {
+                                          staticClass: "btn btn-sm btn-danger",
                                           on: {
                                             click: function($event) {
                                               $event.preventDefault()
