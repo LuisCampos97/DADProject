@@ -35,6 +35,7 @@ Route::get('profile/{id}', 'UserControllerAPI@getProfile')->name('profile');
 Route::post('meals/register', 'MealController@create');
 Route::get('meals', 'MealController@index');
 Route::get('meals/{id}', 'MealController@show');
+Route::put('meals/{id}/{total}', 'MealController@updateTotal');
 
 //Orders
 Route::post('orders/register', 'OrderController@create');

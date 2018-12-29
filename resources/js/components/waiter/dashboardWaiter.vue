@@ -1,6 +1,6 @@
 <template>
 <div class="jumbotron" v-if="currentUser.type == 'waiter'">
-    <button @click.prevent="registerMeal()">Register Meal</button>
+    <a class="btn btn-sm btn-info" @click.prevent="registerMeal()">Register Meal</a>
     <registerMeal :registeringMeal="registeringMeal" :tables="tables" @cancel-Meal="cancelMeal"></registerMeal>
     <registerOrder :registeringOrder="registeringOrder" :current-meal="currentMeal" @cancel-Order="cancelOrder"></registerOrder>
     <table class="table table-striped">
@@ -14,20 +14,20 @@
                 <td>Meal: {{ meal.id }}</td>
                 <td>Table: {{ meal.table_number }}</td>
                 <td>{{ meal.start }}</td>
-                <td>Total: {{ meal.total_price_preview }}</td>
-                <td><button @click.prevent="registerOrder(meal)">Register Orders</button></td>
+                <td>Total: {{ meal.total_price_preview }} €</td>
+                <td><a class="btn btn-sm btn-primary" @click.prevent="registerOrder(meal)">Register Orders</a></td>
             </tr>
             <tr v-for="order in orders" :key="order.id " v-if="meal.id == order.meal_id">
-                <td>Item: {{ order.item_id }}</td>
+                <td>{{items[order.item_id - 1].name }}</td>
                 <td v-if="order.state == 'confirmed'" style="color: #0062cc">{{ order.state }}</td>
                 <td v-else-if="order.state == 'pending'" style="color: #38bdf1">{{ order.state }}</td>
                 <td v-else-if="order.state == 'prepared'" style="color: #f08228">{{ order.state }}</td>
                 <td v-else-if="order.state == 'delivered'" style="color: #2bb800">{{ order.state }}</td>
                 <td v-else>{{ order.state }}</td>
                 <td>{{ order.start }}</td>
-                <td>Cook: {{ order.responsible_cook_id }}</td>
-                <td><button @click.prevent="setOrderState(order)" v-if="order.state == 'prepared'" >Deliver</button>
-                    <button @click.prevent="cancelOrder(order)" v-if=" plusFiveSeconds(order.start) >= currentDate">Cancel</button>
+                <td>Price: {{ items[order.item_id - 1].price }} €</td>
+                <td><a class="btn btn-sm btn-success" @click.prevent="setOrderState(order)" v-if="order.state == 'prepared'" >Deliver</a>
+                    <a class="btn btn-sm btn-danger" @click.prevent="cancelOrder(order)" v-if=" plusFiveSeconds(order.start) >= currentDate">Cancel</a>
                 </td>
             </tr>
         </tbody>
@@ -44,6 +44,7 @@ module.exports = {
             registeringMeal: false,
             registeringOrder: false,
             orders: [],
+            items: [],
             tables: [],
             currentMeal: {},
             meals: []
@@ -82,6 +83,11 @@ module.exports = {
                 });
             });
         },
+        getItems: function () {
+            axios.get("api/items").then(response => {
+                this.items = response.data.data;
+            });
+        },
         getOrders: function () {
             axios.get("api/orders").then(response => {
                 this.orders = response.data.data;
@@ -93,15 +99,19 @@ module.exports = {
             return new Date(dt).toISOString().slice(0, 19).replace('T', ' ');
         },
         setOrderState(order) {
-                    console.log('response');
-            this.currentOrder = order;
             axios
                 .put("api/orders/" + order.id, order)
                 .then(response => {
-                    this.showSuccess = true;
-                    this.successMessage = `Order ${order.id} status changed to: ${response.data.data.state}`
                     this.getOrders();
                 })
+                .catch();
+            var meal = this.meals[order.meal_id - 1];
+            meal.total_price_preview +=
+                axios
+                .put("api/meals/" + meal.id + "/" + this.items[order.item_id - 1].price, meal)
+                .then(response => {
+                    this.getMeals();
+                    })
                 .catch();
         }
 
@@ -109,6 +119,7 @@ module.exports = {
     mounted() {
         this.getMeals();
         this.getOrders();
+        this.getItems();
     }
 };
 </script>

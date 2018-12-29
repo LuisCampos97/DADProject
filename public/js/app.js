@@ -53981,6 +53981,7 @@ module.exports = {
             registeringMeal: false,
             registeringOrder: false,
             orders: [],
+            items: [],
             tables: [],
             currentMeal: {},
             meals: []
@@ -54021,11 +54022,18 @@ module.exports = {
                 });
             });
         },
-        getOrders: function getOrders() {
+        getItems: function getItems() {
             var _this3 = this;
 
+            axios.get("api/items").then(function (response) {
+                _this3.items = response.data.data;
+            });
+        },
+        getOrders: function getOrders() {
+            var _this4 = this;
+
             axios.get("api/orders").then(function (response) {
-                _this3.orders = response.data.data;
+                _this4.orders = response.data.data;
             });
         },
         plusFiveSeconds: function plusFiveSeconds(date) {
@@ -54034,20 +54042,27 @@ module.exports = {
             return new Date(dt).toISOString().slice(0, 19).replace('T', ' ');
         },
         setOrderState: function setOrderState(order) {
-            var _this4 = this;
+            var _this5 = this;
 
-            console.log('response');
-            this.currentOrder = order;
             axios.put("api/orders/" + order.id, order).then(function (response) {
-                _this4.showSuccess = true;
-                _this4.successMessage = 'Order ' + order.id + ' status changed to: ' + response.data.data.state;
-                _this4.getOrders();
+                _this5.getOrders();
+            }).catch();
+            var meal = this.meals[order.meal_id - 1];
+            meal.total_price_preview += axios.put("api/meals/" + meal.id + "/" + this.items[order.item_id - 1].price, meal).then(function (response) {
+                _this5.getMeals();
             }).catch();
         }
 >>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
     },
+<<<<<<< HEAD
     invoiceDetails: function invoiceDetails(invoiceId) {
       this.$router.push({ path: "/invoice/" + invoiceId });
+=======
+    mounted: function mounted() {
+        this.getMeals();
+        this.getOrders();
+        this.getItems();
+>>>>>>> 136c20539cd0b25dc984cfd76fc5c469e68b3338
     }
   },
   mounted: function mounted() {
@@ -54067,6 +54082,7 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
+<<<<<<< HEAD
   return _vm.currentUser.type == "cashier"
     ? _c("div", { staticClass: "jumbotron" }, [
         _vm.invoices.length >= 1
@@ -54092,6 +54108,85 @@ var render = function() {
                               " : " +
                               _vm._s(invoice.responsible_waiter_name)
                           )
+=======
+  return _vm.currentUser.type == "waiter"
+    ? _c(
+        "div",
+        { staticClass: "jumbotron" },
+        [
+          _c(
+            "a",
+            {
+              staticClass: "btn btn-sm btn-info",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.registerMeal()
+                }
+              }
+            },
+            [_vm._v("Register Meal")]
+          ),
+          _vm._v(" "),
+          _c("registerMeal", {
+            attrs: { registeringMeal: _vm.registeringMeal, tables: _vm.tables },
+            on: { "cancel-Meal": _vm.cancelMeal }
+          }),
+          _vm._v(" "),
+          _c("registerOrder", {
+            attrs: {
+              registeringOrder: _vm.registeringOrder,
+              "current-meal": _vm.currentMeal
+            },
+            on: { "cancel-Order": _vm.cancelOrder }
+          }),
+          _vm._v(" "),
+          _c(
+            "table",
+            { staticClass: "table table-striped" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._l(_vm.meals, function(meal) {
+                return meal.responsible_waiter_id == _vm.currentUser.id &&
+                  meal.state == "active"
+                  ? _c(
+                      "tbody",
+                      { key: meal.id },
+                      [
+                        _c("tr", [
+                          _c("td", [_vm._v("Meal: " + _vm._s(meal.id))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v("Table: " + _vm._s(meal.table_number))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(meal.start))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "Total: " +
+                                _vm._s(meal.total_price_preview) +
+                                " €"
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-sm btn-primary",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.registerOrder(meal)
+                                  }
+                                }
+                              },
+                              [_vm._v("Register Orders")]
+                            )
+                          ])
+>>>>>>> 136c20539cd0b25dc984cfd76fc5c469e68b3338
                         ]),
                         _vm._v(" "),
 <<<<<<< HEAD
@@ -54139,7 +54234,9 @@ var render = function() {
                           return meal.id == order.meal_id
                             ? _c("tr", { key: order.id }, [
                                 _c("td", [
-                                  _vm._v("Item: " + _vm._s(order.item_id))
+                                  _vm._v(
+                                    _vm._s(_vm.items[order.item_id - 1].name)
+                                  )
                                 ]),
                                 _vm._v(" "),
                                 order.state == "confirmed"
@@ -54172,15 +54269,20 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("td", [
                                   _vm._v(
-                                    "Cook: " + _vm._s(order.responsible_cook_id)
+                                    "Price: " +
+                                      _vm._s(
+                                        _vm.items[order.item_id - 1].price
+                                      ) +
+                                      " €"
                                   )
                                 ]),
                                 _vm._v(" "),
                                 _c("td", [
                                   order.state == "prepared"
                                     ? _c(
-                                        "button",
+                                        "a",
                                         {
+                                          staticClass: "btn btn-sm btn-success",
                                           on: {
                                             click: function($event) {
                                               $event.preventDefault()
@@ -54195,8 +54297,9 @@ var render = function() {
                                   _vm.plusFiveSeconds(order.start) >=
                                   _vm.currentDate
                                     ? _c(
-                                        "button",
+                                        "a",
                                         {
+                                          staticClass: "btn btn-sm btn-danger",
                                           on: {
                                             click: function($event) {
                                               $event.preventDefault()

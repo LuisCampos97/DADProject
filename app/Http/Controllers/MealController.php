@@ -34,4 +34,15 @@ class MealController extends Controller
             'total_price_preview' => $request['total_price_preview'],
         ]);
     }
+
+    public function updateTotal(Request $request, $id, $total)
+    {
+        $meal = Meal::findOrFail($id);
+        
+        $meal->total_price_preview += $total;
+
+        $meal->save();
+
+        return new MealResource($meal);
+    }
 }
