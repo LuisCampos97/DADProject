@@ -13,12 +13,27 @@
             <button v-if="user.shift_active == '1'" class="profile-shift-btn" @click.prevent="invertShift()">Quit</button>
         </div>
     </div>
+
+    <br><br>
+    <p> Message to all managers: </p>
+    <div>
+        <input type="text" id="inputGlobal" class="inputchat" v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
+        <br>
+        <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
+    </div>
+
     <dashboardWaiter :current-user="user"></dashboardWaiter>
 </div>
 </template>
 
 <script>
 module.exports = {
+    data: function() {
+        return {
+            msgGlobalText: '',
+            msgGlobalTextArea: '',
+        };
+    },
     computed: {
         user() {
             return this.$store.state.user;
@@ -56,7 +71,25 @@ module.exports = {
                     this.failMessage = error.response.data.message;
                     console.dir(error);
                 });
+        },
+        sendGlobalMsg: function(){
+            console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
+            if (this.$store.state.user === null) {
+                this.$socket.emit('msg_from_client', this.msgGlobalText);
+            } else {
+                this.$socket.emit('msg_from_client', this.msgGlobalText, this.$store.state.user);
+            }
+            this.msgGlobalText = "";
+        },
+    },
+    sockets:{
+        connect(){
+            console.log('socket connected (socket ID = '+this.$socket.id+')');
+        }, 
+        msg_from_server(dataFromServer){
+            console.log('Receiving this message from Server: "' + dataFromServer + '"');            
+            this.msgGlobalTextArea = dataFromServer + '\n' + this.msgGlobalTextArea ;
         }
-    }
+    },
 };
 </script>

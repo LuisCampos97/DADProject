@@ -7,6 +7,12 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
+import VueSocketio from 'vue-socket.io';
+Vue.use(new VueSocketio({
+    debug: true,
+    connection: 'http://192.168.10.1:8080'
+})); 
+
 import store from './stores/global-store';
 import routes from './routes';
 
