@@ -49,7 +49,8 @@ Route::delete('orders/{id}', 'OrderController@destroy');
 Route::get('invoices', 'InvoiceController@index');
 Route::get('invoices/{id}', 'InvoiceController@show');
 Route::get('mealForInvoice', 'InvoiceController@mealForInvoice');
-
+Route::get('invoiceDetails/{id}', 'InvoiceController@invoiceDetails');
+Route::get('invoiceItems/{id}', 'InvoiceController@invoiceItems');
 
 //Authentication
 Route::post('login', 'LoginControllerAPI@login')->name('login');

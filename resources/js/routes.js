@@ -50,7 +50,7 @@ const routes = [{
     }
 },
 {
-    path: 'invoice/:id',
+    path: '/invoice/:id',
     component: InvoiceDetails,
 }
 ];

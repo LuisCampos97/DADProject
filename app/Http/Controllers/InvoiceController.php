@@ -34,4 +34,27 @@ class InvoiceController extends Controller
 
         return $invoices;
     }
+
+    public function invoiceDetails($id) 
+    {
+        $invoice = DB::table('meals')
+        ->select("invoices.*","meals.table_number","meals.responsible_waiter_id", "users.name as responsible_waiter_name")
+        ->leftjoin('invoices', 'invoices.meal_id', '=', 'meals.id')
+        ->leftjoin('users', 'users.id', '=', 'meals.responsible_waiter_id')
+        ->where('invoices.id', $id)
+        ->get();
+
+        return $invoice;
+    }
+
+    public function invoiceItems($id) 
+    {
+        $invoiceItems = DB::table('invoice_items')
+        ->select("invoice_items.*","items.name")
+        ->leftjoin('items', 'invoice_items.item_id', '=', 'items.id')
+        ->where('invoice_items.invoice_id', $id)
+        ->get();
+
+        return $invoiceItems;
+    }
 }
