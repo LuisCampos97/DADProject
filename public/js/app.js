@@ -53930,6 +53930,7 @@ module.exports = {
             registeringMeal: false,
             registeringOrder: false,
             orders: [],
+            items: [],
             tables: [],
             currentMeal: {},
             meals: []
@@ -53970,11 +53971,18 @@ module.exports = {
                 });
             });
         },
-        getOrders: function getOrders() {
+        getItems: function getItems() {
             var _this3 = this;
 
+            axios.get("api/items").then(function (response) {
+                _this3.items = response.data.data;
+            });
+        },
+        getOrders: function getOrders() {
+            var _this4 = this;
+
             axios.get("api/orders").then(function (response) {
-                _this3.orders = response.data.data;
+                _this4.orders = response.data.data;
             });
         },
         plusFiveSeconds: function plusFiveSeconds(date) {
@@ -53983,20 +53991,21 @@ module.exports = {
             return new Date(dt).toISOString().slice(0, 19).replace('T', ' ');
         },
         setOrderState: function setOrderState(order) {
-            var _this4 = this;
+            var _this5 = this;
 
-            console.log('response');
-            this.currentOrder = order;
             axios.put("api/orders/" + order.id, order).then(function (response) {
-                _this4.showSuccess = true;
-                _this4.successMessage = 'Order ' + order.id + ' status changed to: ' + response.data.data.state;
-                _this4.getOrders();
+                _this5.getOrders();
+            }).catch();
+            var meal = this.meals[order.meal_id - 1];
+            meal.total_price_preview += axios.put("api/meals/" + meal.id + "/" + this.items[order.item_id - 1].price, meal).then(function (response) {
+                _this5.getMeals();
             }).catch();
         }
     },
     mounted: function mounted() {
         this.getMeals();
         this.getOrders();
+        this.getItems();
     }
 };
 
@@ -54062,7 +54071,11 @@ var render = function() {
                           _c("td", [_vm._v(_vm._s(meal.start))]),
                           _vm._v(" "),
                           _c("td", [
-                            _vm._v("Total: " + _vm._s(meal.total_price_preview))
+                            _vm._v(
+                              "Total: " +
+                                _vm._s(meal.total_price_preview) +
+                                " €"
+                            )
                           ]),
                           _vm._v(" "),
                           _c("td", [
@@ -54085,7 +54098,9 @@ var render = function() {
                           return meal.id == order.meal_id
                             ? _c("tr", { key: order.id }, [
                                 _c("td", [
-                                  _vm._v("Item: " + _vm._s(order.item_id))
+                                  _vm._v(
+                                    _vm._s(_vm.items[order.item_id - 1].name)
+                                  )
                                 ]),
                                 _vm._v(" "),
                                 order.state == "confirmed"
@@ -54118,7 +54133,11 @@ var render = function() {
                                 _vm._v(" "),
                                 _c("td", [
                                   _vm._v(
-                                    "Cook: " + _vm._s(order.responsible_cook_id)
+                                    "Price: " +
+                                      _vm._s(
+                                        _vm.items[order.item_id - 1].price
+                                      ) +
+                                      " €"
                                   )
                                 ]),
                                 _vm._v(" "),
