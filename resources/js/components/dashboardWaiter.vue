@@ -23,6 +23,7 @@
                 <td v-if="order.state == 'pending'" style="color: #0062cc">{{ order.state }}</td>
                 <td>{{ order.start }}</td>
                 <td>Cook: {{ order.responsible_cook_id }}</td>
+                <td><button @click.prevent="cancelOrder(order)" v-if=" plusFiveSeconds(order.start) >= currentDate">Cancel</button></td>
             </tr>
         </tbody>
     </table>
@@ -34,6 +35,7 @@ module.exports = {
     props: ["currentUser"],
     data: function () {
         return {
+            currentDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
             registeringMeal: false,
             registeringOrder: false,
             orders: [],
@@ -48,21 +50,29 @@ module.exports = {
         },
         registerOrder: function (meal) {
             this.registeringOrder = true;
-      this.currentMeal = Object.assign({}, meal);
+            this.currentMeal = Object.assign({}, meal);
         },
         cancelMeal: function () {
             this.registeringMeal = false;
         },
 
-        cancelOrder: function () {
-            this.registeringOrder = false;
+        cancelOrder: function (order) {
+            axios.delete("api/orders/" + order.id)
+                .then(response => {
+                    console.log('response', response);
+                })
+                .catch(response => {
+                    this.showFailure = true;
+                    this.failMessage = error.response.data.message;
+                    console.dir(error);
+                });
         },
         getMeals: function () {
             axios.get("api/meals").then(response => {
                 this.meals = response.data.data;
                 this.meals.forEach(element => {
-                    if(element.state == 'active'){
-                    this.tables.push(element.table_number);
+                    if (element.state == 'active') {
+                        this.tables.push(element.table_number);
                     }
                 });
             });
@@ -71,7 +81,13 @@ module.exports = {
             axios.get("api/orders").then(response => {
                 this.orders = response.data.data;
             });
-        }
+        },
+        plusFiveSeconds: function (date) {
+            var dt = new Date(date);
+            dt.setSeconds( dt.getSeconds() + 5 );
+            return new Date(dt).toISOString().slice(0, 19).replace('T', ' ');
+        },
+
     },
     mounted() {
         this.getMeals();
