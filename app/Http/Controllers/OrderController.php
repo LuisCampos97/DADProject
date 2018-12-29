@@ -49,11 +49,16 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         
-        if($order->state == 'confirmed') {
+        if($order->state == 'pending') {
+            $order->state = 'confirmed';
+        }else if($order->state == 'confirmed') {
             $order->state = 'in preparation';
         } else if($order->state == 'in preparation') {
             $order->state = 'prepared';
+        } else if($order->state == 'prepared') {
+            $order->state = 'delivered';
         }
+
 
         $order->save();
 

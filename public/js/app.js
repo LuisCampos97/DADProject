@@ -53916,6 +53916,11 @@ module.exports = Component.exports
 //
 //
 //
+//
+//
+//
+//
+//
 
 module.exports = {
     props: ["currentUser"],
@@ -53976,8 +53981,18 @@ module.exports = {
             var dt = new Date(date);
             dt.setSeconds(dt.getSeconds() + 5);
             return new Date(dt).toISOString().slice(0, 19).replace('T', ' ');
-        }
+        },
+        setOrderState: function setOrderState(order) {
+            var _this4 = this;
 
+            console.log('response');
+            this.currentOrder = order;
+            axios.put("api/orders/" + order.id, order).then(function (response) {
+                _this4.showSuccess = true;
+                _this4.successMessage = 'Order ' + order.id + ' status changed to: ' + response.data.data.state;
+                _this4.getOrders();
+            }).catch();
+        }
     },
     mounted: function mounted() {
         this.getMeals();
@@ -54067,9 +54082,7 @@ var render = function() {
                         ]),
                         _vm._v(" "),
                         _vm._l(_vm.orders, function(order) {
-                          return meal.id == order.meal_id &&
-                            (order.state == "confirmed" ||
-                              order.state == "pending")
+                          return meal.id == order.meal_id
                             ? _c("tr", { key: order.id }, [
                                 _c("td", [
                                   _vm._v("Item: " + _vm._s(order.item_id))
@@ -54078,18 +54091,28 @@ var render = function() {
                                 order.state == "confirmed"
                                   ? _c(
                                       "td",
-                                      { staticStyle: { color: "#2bb800" } },
-                                      [_vm._v(_vm._s(order.state))]
-                                    )
-                                  : _vm._e(),
-                                _vm._v(" "),
-                                order.state == "pending"
-                                  ? _c(
-                                      "td",
                                       { staticStyle: { color: "#0062cc" } },
                                       [_vm._v(_vm._s(order.state))]
                                     )
-                                  : _vm._e(),
+                                  : order.state == "pending"
+                                  ? _c(
+                                      "td",
+                                      { staticStyle: { color: "#38bdf1" } },
+                                      [_vm._v(_vm._s(order.state))]
+                                    )
+                                  : order.state == "prepared"
+                                  ? _c(
+                                      "td",
+                                      { staticStyle: { color: "#f08228" } },
+                                      [_vm._v(_vm._s(order.state))]
+                                    )
+                                  : order.state == "delivered"
+                                  ? _c(
+                                      "td",
+                                      { staticStyle: { color: "#2bb800" } },
+                                      [_vm._v(_vm._s(order.state))]
+                                    )
+                                  : _c("td", [_vm._v(_vm._s(order.state))]),
                                 _vm._v(" "),
                                 _c("td", [_vm._v(_vm._s(order.start))]),
                                 _vm._v(" "),
@@ -54100,6 +54123,21 @@ var render = function() {
                                 ]),
                                 _vm._v(" "),
                                 _c("td", [
+                                  order.state == "prepared"
+                                    ? _c(
+                                        "button",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              _vm.setOrderState(order)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Deliver")]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
                                   _vm.plusFiveSeconds(order.start) >=
                                   _vm.currentDate
                                     ? _c(
