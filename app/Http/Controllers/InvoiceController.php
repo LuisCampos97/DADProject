@@ -18,6 +18,11 @@ class InvoiceController extends Controller
         }
     }
 
+    public function show($id)
+    {
+        return new InvoiceResource(Invoice::find($id));
+    }
+
     public function mealForInvoice()
     {
         $invoices = DB::table('meals')

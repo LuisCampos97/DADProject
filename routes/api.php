@@ -45,6 +45,7 @@ Route::put('orders/{id}', 'OrderController@updateState');
 
 //Invoices
 Route::get('invoices', 'InvoiceController@index');
+Route::get('invoices/{id}', 'InvoiceController@show');
 Route::get('mealForInvoice', 'InvoiceController@mealForInvoice');
 
 
