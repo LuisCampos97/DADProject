@@ -52080,8 +52080,6 @@ if (false) {
 //
 //
 //
-//
-//
 
 module.exports = {
     data: function data() {
@@ -52213,19 +52211,7 @@ var render = function() {
             : _vm._e()
         ])
       ]),
-      _vm._v("\r\n<<<<<<< HEAD\r\n    \r\n    "),
-      _vm.user.type == "waiter"
-        ? _c("dashboardWaiter", { attrs: { currentUser: _vm.user } })
-        : _vm._e(),
       _vm._v(" "),
-      _vm.user.type == "cook"
-        ? _c("dashboardCook", { attrs: { currentUser: _vm.user } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.user.type == "cashier"
-        ? _c("dashboardCashier", { attrs: { currentUser: _vm.user } })
-        : _vm._e(),
-      _vm._v("\r\n=======\r\n\r\n    "),
       _c("br"),
       _c("br"),
       _vm._v(" "),
@@ -52292,8 +52278,17 @@ var render = function() {
         )
       ]),
       _vm._v(" "),
-      _c("dashboardWaiter", { attrs: { "current-user": _vm.user } }),
-      _vm._v("\r\n>>>>>>> US8\r\n")
+      _vm.user.type == "waiter"
+        ? _c("dashboardWaiter", { attrs: { currentUser: _vm.user } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.user.type == "cook"
+        ? _c("dashboardCook", { attrs: { currentUser: _vm.user } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.user.type == "cashier"
+        ? _c("dashboardCashier", { attrs: { currentUser: _vm.user } })
+        : _vm._e()
     ],
     1
   )

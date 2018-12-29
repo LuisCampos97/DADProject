@@ -13,10 +13,6 @@
             <button v-if="user.shift_active == '1'" class="profile-shift-btn" @click.prevent="invertShift()">Quit</button>
         </div>
     </div>
-    
-    <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
-    <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
-    <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
 
     <br><br>
     <p> Message to all managers: </p>
@@ -25,6 +21,12 @@
         <br>
         <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
     </div>
+    
+    <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
+    <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
+    <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
+
+    
 
 </div>
 </template>
