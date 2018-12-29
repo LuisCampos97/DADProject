@@ -42,6 +42,7 @@ Route::get('orders', 'OrderController@index');
 Route::get('orders/{id}', 'OrderController@show');
 Route::get('ordersCook/{responsible_cook_id}', 'OrderController@ordersByCook');
 Route::put('orders/{id}', 'OrderController@updateState');
+Route::delete('orders/{id}', 'OrderController@destroy');
 
 //Invoices
 Route::get('invoices', 'InvoiceController@index');

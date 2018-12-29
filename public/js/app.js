@@ -28289,15 +28289,22 @@ Vue.component('profile', __webpack_require__(21));
 Vue.component('edit-user', __webpack_require__(77));
 
 Vue.component('dashboard', __webpack_require__(20));
+<<<<<<< HEAD
 Vue.component('dashboardWaiter', __webpack_require__(113));
+=======
+Vue.component('dashboardWaiter', __webpack_require__(80));
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
 Vue.component('dashboardCook', __webpack_require__(23));
 Vue.component('dashboardCashier', __webpack_require__(83));
 
 Vue.component('registerMeal', __webpack_require__(86));
 Vue.component('registerOrder', __webpack_require__(89));
 Vue.component('orderItems', __webpack_require__(92));
+<<<<<<< HEAD
 
 Vue.component('invoiceDetails', __webpack_require__(116));
+=======
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
     routes: __WEBPACK_IMPORTED_MODULE_2__routes__["a" /* default */]
@@ -51607,8 +51614,13 @@ var index_esm = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_auth_Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_auth_Profile_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_auth_RegisterWorker_vue__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_auth_RegisterWorker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_auth_RegisterWorker_vue__);
+<<<<<<< HEAD
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_cashier_InvoiceDetails_vue__ = __webpack_require__(116);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_cashier_InvoiceDetails_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_cashier_InvoiceDetails_vue__);
+=======
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_cook_DashboardCook_vue__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_cook_DashboardCook_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_cook_DashboardCook_vue__);
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
 /*jshint esversion: 6 */
 __webpack_require__(7);
 
@@ -53839,18 +53851,28 @@ if (false) {
 }
 
 /***/ }),
+<<<<<<< HEAD
 /* 80 */,
 /* 81 */,
 /* 82 */,
 /* 83 */
+=======
+/* 80 */
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
+<<<<<<< HEAD
 var __vue_script__ = __webpack_require__(84)
 /* template */
 var __vue_template__ = __webpack_require__(85)
+=======
+var __vue_script__ = __webpack_require__(81)
+/* template */
+var __vue_template__ = __webpack_require__(82)
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -53889,7 +53911,410 @@ module.exports = Component.exports
 
 
 /***/ }),
+<<<<<<< HEAD
 /* 84 */
+=======
+/* 81 */
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+<<<<<<< HEAD
+
+module.exports = {
+  props: ["currentUser"],
+  data: function data() {
+    return {
+      invoices: []
+    };
+  },
+  methods: {
+    mealForInvoice: function mealForInvoice() {
+      var _this = this;
+
+      axios.get("/api/mealForInvoice").then(function (response) {
+        _this.invoices = response.data;
+      }).catch(function (error) {});
+=======
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+    props: ["currentUser"],
+    data: function data() {
+        return {
+            currentDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
+            registeringMeal: false,
+            registeringOrder: false,
+            orders: [],
+            tables: [],
+            currentMeal: {},
+            meals: []
+        };
+    },
+    methods: {
+        registerMeal: function registerMeal() {
+            this.registeringMeal = true;
+        },
+        registerOrder: function registerOrder(meal) {
+            this.registeringOrder = true;
+            this.currentMeal = Object.assign({}, meal);
+        },
+        cancelMeal: function cancelMeal() {
+            this.registeringMeal = false;
+        },
+
+        cancelOrder: function cancelOrder(order) {
+            var _this = this;
+
+            axios.delete("api/orders/" + order.id).then(function (response) {
+                console.log('response', response);
+            }).catch(function (response) {
+                _this.showFailure = true;
+                _this.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        },
+        getMeals: function getMeals() {
+            var _this2 = this;
+
+            axios.get("api/meals").then(function (response) {
+                _this2.meals = response.data.data;
+                _this2.meals.forEach(function (element) {
+                    if (element.state == 'active') {
+                        _this2.tables.push(element.table_number);
+                    }
+                });
+            });
+        },
+        getOrders: function getOrders() {
+            var _this3 = this;
+
+            axios.get("api/orders").then(function (response) {
+                _this3.orders = response.data.data;
+            });
+        },
+        plusFiveSeconds: function plusFiveSeconds(date) {
+            var dt = new Date(date);
+            dt.setSeconds(dt.getSeconds() + 5);
+            return new Date(dt).toISOString().slice(0, 19).replace('T', ' ');
+        },
+        setOrderState: function setOrderState(order) {
+            var _this4 = this;
+
+            console.log('response');
+            this.currentOrder = order;
+            axios.put("api/orders/" + order.id, order).then(function (response) {
+                _this4.showSuccess = true;
+                _this4.successMessage = 'Order ' + order.id + ' status changed to: ' + response.data.data.state;
+                _this4.getOrders();
+            }).catch();
+        }
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
+    },
+    invoiceDetails: function invoiceDetails(invoiceId) {
+      this.$router.push({ path: "/invoice/" + invoiceId });
+    }
+  },
+  mounted: function mounted() {
+    this.mealForInvoice();
+  }
+};
+
+/***/ }),
+<<<<<<< HEAD
+/* 85 */
+=======
+/* 82 */
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.currentUser.type == "cashier"
+    ? _c("div", { staticClass: "jumbotron" }, [
+        _vm.invoices.length >= 1
+          ? _c("div", [
+              _c("h3", { staticStyle: { "font-weight": "bold" } }, [
+                _vm._v("Pending Invoices")
+              ]),
+              _vm._v(" "),
+              _c(
+                "table",
+                { staticClass: "table table-striped" },
+                [
+                  _vm._m(0),
+                  _vm._v(" "),
+                  _vm._l(_vm.invoices, function(invoice) {
+                    return _c("tbody", { key: invoice.id }, [
+                      _c("tr", [
+                        _c("td", [_vm._v(_vm._s(invoice.table_number))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            _vm._s(invoice.responsible_waiter_id) +
+                              " : " +
+                              _vm._s(invoice.responsible_waiter_name)
+                          )
+                        ]),
+                        _vm._v(" "),
+<<<<<<< HEAD
+                        _c("td", [_vm._v(_vm._s(invoice.total_price) + " €")]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-info",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.invoiceDetails(invoice.id)
+                                }
+                              }
+                            },
+                            [_vm._v("Details")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-warning",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                }
+                              }
+                            },
+                            [_vm._v("Pay")]
+                          )
+                        ])
+                      ])
+                    ])
+                  })
+                ],
+                2
+              )
+            ])
+          : _c("h4", [_vm._v("You don't have any pending invoices")])
+      ])
+=======
+                        _vm._l(_vm.orders, function(order) {
+                          return meal.id == order.meal_id
+                            ? _c("tr", { key: order.id }, [
+                                _c("td", [
+                                  _vm._v("Item: " + _vm._s(order.item_id))
+                                ]),
+                                _vm._v(" "),
+                                order.state == "confirmed"
+                                  ? _c(
+                                      "td",
+                                      { staticStyle: { color: "#0062cc" } },
+                                      [_vm._v(_vm._s(order.state))]
+                                    )
+                                  : order.state == "pending"
+                                  ? _c(
+                                      "td",
+                                      { staticStyle: { color: "#38bdf1" } },
+                                      [_vm._v(_vm._s(order.state))]
+                                    )
+                                  : order.state == "prepared"
+                                  ? _c(
+                                      "td",
+                                      { staticStyle: { color: "#f08228" } },
+                                      [_vm._v(_vm._s(order.state))]
+                                    )
+                                  : order.state == "delivered"
+                                  ? _c(
+                                      "td",
+                                      { staticStyle: { color: "#2bb800" } },
+                                      [_vm._v(_vm._s(order.state))]
+                                    )
+                                  : _c("td", [_vm._v(_vm._s(order.state))]),
+                                _vm._v(" "),
+                                _c("td", [_vm._v(_vm._s(order.start))]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  _vm._v(
+                                    "Cook: " + _vm._s(order.responsible_cook_id)
+                                  )
+                                ]),
+                                _vm._v(" "),
+                                _c("td", [
+                                  order.state == "prepared"
+                                    ? _c(
+                                        "button",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              _vm.setOrderState(order)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Deliver")]
+                                      )
+                                    : _vm._e(),
+                                  _vm._v(" "),
+                                  _vm.plusFiveSeconds(order.start) >=
+                                  _vm.currentDate
+                                    ? _c(
+                                        "button",
+                                        {
+                                          on: {
+                                            click: function($event) {
+                                              $event.preventDefault()
+                                              _vm.cancelOrder(order)
+                                            }
+                                          }
+                                        },
+                                        [_vm._v("Cancel")]
+                                      )
+                                    : _vm._e()
+                                ])
+                              ])
+                            : _vm._e()
+                        })
+                      ],
+                      2
+                    )
+                  : _vm._e()
+              })
+            ],
+            2
+          )
+        ],
+        1
+      )
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-dark" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Table No")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Responsible Waiter")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Total Price")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5e32ad74", module.exports)
+  }
+}
+
+/***/ }),
+<<<<<<< HEAD
+/* 86 */
+=======
+/* 83 */
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+<<<<<<< HEAD
+var __vue_script__ = __webpack_require__(87)
+/* template */
+var __vue_template__ = __webpack_require__(88)
+=======
+var __vue_script__ = __webpack_require__(84)
+/* template */
+var __vue_template__ = __webpack_require__(85)
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/cashier/DashboardCashier.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-5e32ad74", Component.options)
+  } else {
+    hotAPI.reload("data-v-5e32ad74", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+<<<<<<< HEAD
+/* 87 */
+=======
+/* 84 */
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
 /***/ (function(module, exports) {
 
 //
@@ -53937,9 +54362,6 @@ module.exports = {
       axios.get("/api/mealForInvoice").then(function (response) {
         _this.invoices = response.data;
       }).catch(function (error) {});
-    },
-    invoiceDetails: function invoiceDetails(invoiceId) {
-      this.$router.push({ path: "/invoice/" + invoiceId });
     }
   },
   mounted: function mounted() {
@@ -53948,7 +54370,11 @@ module.exports = {
 };
 
 /***/ }),
+<<<<<<< HEAD
+/* 88 */
+=======
 /* 85 */
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -53992,7 +54418,6 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   $event.preventDefault()
-                                  _vm.invoiceDetails(invoice.id)
                                 }
                               }
                             },
@@ -54678,6 +55103,7 @@ if (false) {
 
 // removed by extract-text-webpack-plugin
 
+<<<<<<< HEAD
 /***/ }),
 /* 98 */,
 /* 99 */,
@@ -55059,5 +55485,7 @@ if (false) {
   }
 }
 
+=======
+>>>>>>> 3535a1fd48ad75ce9aeaff1bc39960339f02fa26
 /***/ })
 /******/ ]);
