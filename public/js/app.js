@@ -28270,8 +28270,9 @@ module.exports = __webpack_require__(100);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_global_store__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routes__ = __webpack_require__(52);
+throw new Error("Cannot find module \"vue-socket.io\"");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_global_store__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(52);
 /*jshint esversion: 6 */
 
 __webpack_require__(7);
@@ -28280,6 +28281,12 @@ window.Vue = __webpack_require__(6);
 
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
+
+
+Vue.use(new __WEBPACK_IMPORTED_MODULE_1_vue_socket_io___default.a({
+    debug: true,
+    connection: 'http://192.168.10.1:8080'
+}));
 
 
 
@@ -28304,7 +28311,7 @@ Vue.component('orderItems', __webpack_require__(95));
 Vue.component('invoiceDetails', __webpack_require__(23));
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
-    routes: __WEBPACK_IMPORTED_MODULE_2__routes__["a" /* default */]
+    routes: __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */]
 });
 
 /*router.beforeEach((to, from, next) => {
@@ -28322,7 +28329,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
 new Vue({
     router: router,
-    store: __WEBPACK_IMPORTED_MODULE_1__stores_global_store__["a" /* default */],
+    store: __WEBPACK_IMPORTED_MODULE_2__stores_global_store__["a" /* default */],
     created: function created() {
         this.$store.commit('loadTokenAndUserFromSession');
     },
@@ -52099,8 +52106,25 @@ if (false) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 module.exports = {
+    data: function data() {
+        return {
+            msgGlobalText: '',
+            msgGlobalTextArea: ''
+        };
+    },
     computed: {
         user: function user() {
             return this.$store.state.user;
@@ -52137,6 +52161,24 @@ module.exports = {
                 _this.failMessage = error.response.data.message;
                 console.dir(error);
             });
+        },
+        sendGlobalMsg: function sendGlobalMsg() {
+            console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
+            if (this.$store.state.user === null) {
+                this.$socket.emit('msg_from_client', this.msgGlobalText);
+            } else {
+                this.$socket.emit('msg_from_client', this.msgGlobalText, this.$store.state.user);
+            }
+            this.msgGlobalText = "";
+        }
+    },
+    sockets: {
+        connect: function connect() {
+            console.log('socket connected (socket ID = ' + this.$socket.id + ')');
+        },
+        msg_from_server: function msg_from_server(dataFromServer) {
+            console.log('Receiving this message from Server: "' + dataFromServer + '"');
+            this.msgGlobalTextArea = dataFromServer + '\n' + this.msgGlobalTextArea;
         }
     }
 };
@@ -52205,6 +52247,72 @@ var render = function() {
               )
             : _vm._e()
         ])
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _c("br"),
+      _vm._v(" "),
+      _c("p", [_vm._v(" Message to all managers: ")]),
+      _vm._v(" "),
+      _c("div", [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.msgGlobalText,
+              expression: "msgGlobalText"
+            }
+          ],
+          staticClass: "inputchat",
+          attrs: { type: "text", id: "inputGlobal" },
+          domProps: { value: _vm.msgGlobalText },
+          on: {
+            keypress: function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.sendGlobalMsg($event)
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.msgGlobalText = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "textarea",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.msgGlobalTextArea,
+                expression: "msgGlobalTextArea"
+              }
+            ],
+            staticClass: "inputchat",
+            attrs: { id: "textGlobal" },
+            domProps: { value: _vm.msgGlobalTextArea },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.msgGlobalTextArea = $event.target.value
+              }
+            }
+          },
+          [_vm._v("Global Chat")]
+        )
       ]),
       _vm._v(" "),
       _vm.user.type == "waiter"
