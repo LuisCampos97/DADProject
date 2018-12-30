@@ -28260,7 +28260,11 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(25);
+<<<<<<< HEAD
 module.exports = __webpack_require__(106);
+=======
+module.exports = __webpack_require__(103);
+>>>>>>> cab48dad6f1426d1b641279917e6c3ef6eb95b55
 
 
 /***/ }),
@@ -53327,7 +53331,11 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
+<<<<<<< HEAD
 exports.push([module.i, "\nh2 {\r\n  font-weight: bold;\n}\np {\r\n  display: table-row;\n}\r\n", ""]);
+=======
+exports.push([module.i, "\nh2, bold {\r\n  font-weight: bold;\n}\np {\r\n  display: table-row;\n}\r\n", ""]);
+>>>>>>> cab48dad6f1426d1b641279917e6c3ef6eb95b55
 
 // exports
 
@@ -55477,6 +55485,7 @@ if (false) {
 
 /***/ }),
 /* 103 */
+<<<<<<< HEAD
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
@@ -55745,10 +55754,13 @@ if (false) {
 
 /***/ }),
 /* 106 */
+=======
+>>>>>>> cab48dad6f1426d1b641279917e6c3ef6eb95b55
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
 
+<<<<<<< HEAD
 /***/ }),
 /* 107 */,
 /* 108 */,
@@ -55804,5 +55816,7 @@ exports.push([module.i, "\n.help-block {\r\n  font-size: 7px;\r\n  color: red;\r
 // exports
 
 
+=======
+>>>>>>> cab48dad6f1426d1b641279917e6c3ef6eb95b55
 /***/ })
 /******/ ]);
