@@ -28260,11 +28260,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(25);
-<<<<<<< HEAD
-module.exports = __webpack_require__(106);
-=======
 module.exports = __webpack_require__(103);
->>>>>>> cab48dad6f1426d1b641279917e6c3ef6eb95b55
 
 
 /***/ }),
@@ -28314,7 +28310,7 @@ Vue.component('registerOrder', __webpack_require__(95));
 Vue.component('orderItems', __webpack_require__(98));
 
 Vue.component('invoiceDetails', __webpack_require__(23));
-Vue.component('pay-invoice', __webpack_require__(103));
+Vue.component('pay-invoice', __webpack_require__(119));
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
     routes: __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */]
@@ -53331,11 +53327,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-<<<<<<< HEAD
 exports.push([module.i, "\nh2 {\r\n  font-weight: bold;\n}\np {\r\n  display: table-row;\n}\r\n", ""]);
-=======
-exports.push([module.i, "\nh2, bold {\r\n  font-weight: bold;\n}\np {\r\n  display: table-row;\n}\r\n", ""]);
->>>>>>> cab48dad6f1426d1b641279917e6c3ef6eb95b55
 
 // exports
 
@@ -54043,6 +54035,12 @@ module.exports = {
             items: [],
             tables: [],
             currentMeal: {},
+            invoice: {
+                state: "pending",
+                meal_id: "",
+                date: "",
+                total_price: 0
+            },
             meals: []
         };
     },
@@ -54120,6 +54118,16 @@ module.exports = {
 
             axios.put("api/orders/terminate/" + meal.id, meal).then(function (response) {
                 _this6.getOrders();
+            }).catch();
+
+            this.invoice.meal_id = meal.id;
+            this.invoice.date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            this.invoice.total_price = meal.total_price_preview;
+
+            console.log(this.invoice);
+
+            axios.post("api/invoices/register", this.invoice).then(function (response) {
+                console.log('response', response.data.data.id);
             }).catch();
         }
 
@@ -54981,7 +54989,7 @@ module.exports = {
                 console.dir("error");
             } else {
 
-                this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');;
+                this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');
                 this.meal.responsible_waiter_id = this.$store.state.user.id;
 
                 console.log(this.meal);
@@ -55485,19 +55493,39 @@ if (false) {
 
 /***/ }),
 /* 103 */
-<<<<<<< HEAD
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(122)
+  __webpack_require__(120)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(104)
+var __vue_script__ = __webpack_require__(122)
 /* template */
-var __vue_template__ = __webpack_require__(105)
+var __vue_template__ = __webpack_require__(123)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -55536,7 +55564,47 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 104 */
+/* 120 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(121);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("46b9a9ef", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19137548\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PayInvoice.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19137548\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PayInvoice.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 121 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.help-block {\r\n  font-size: 7px;\r\n  color: red;\r\n  display: table-row;\r\n  font-weight: bold;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 122 */
 /***/ (function(module, exports) {
 
 //
@@ -55615,7 +55683,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 105 */
+/* 123 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -55752,71 +55820,5 @@ if (false) {
   }
 }
 
-/***/ }),
-/* 106 */
-=======
->>>>>>> cab48dad6f1426d1b641279917e6c3ef6eb95b55
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-<<<<<<< HEAD
-/***/ }),
-/* 107 */,
-/* 108 */,
-/* 109 */,
-/* 110 */,
-/* 111 */,
-/* 112 */,
-/* 113 */,
-/* 114 */,
-/* 115 */,
-/* 116 */,
-/* 117 */,
-/* 118 */,
-/* 119 */,
-/* 120 */,
-/* 121 */,
-/* 122 */
-/***/ (function(module, exports, __webpack_require__) {
-
-// style-loader: Adds some css to the DOM by adding a <style> tag
-
-// load the styles
-var content = __webpack_require__(123);
-if(typeof content === 'string') content = [[module.i, content, '']];
-if(content.locals) module.exports = content.locals;
-// add the styles to the DOM
-var update = __webpack_require__(3)("46b9a9ef", content, false, {});
-// Hot Module Replacement
-if(false) {
- // When the styles change, update the <style> tags
- if(!content.locals) {
-   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19137548\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PayInvoice.vue", function() {
-     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-19137548\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./PayInvoice.vue");
-     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
-     update(newContent);
-   });
- }
- // When the module is disposed, remove the <style> tags
- module.hot.dispose(function() { update(); });
-}
-
-/***/ }),
-/* 123 */
-/***/ (function(module, exports, __webpack_require__) {
-
-exports = module.exports = __webpack_require__(2)(false);
-// imports
-
-
-// module
-exports.push([module.i, "\n.help-block {\r\n  font-size: 7px;\r\n  color: red;\r\n  display: table-row;\r\n  font-weight: bold;\n}\r\n", ""]);
-
-// exports
-
-
-=======
->>>>>>> cab48dad6f1426d1b641279917e6c3ef6eb95b55
 /***/ })
 /******/ ]);
