@@ -52388,7 +52388,6 @@ module.exports = {
   computed: {
     timePassed: function timePassed() {
       var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
-      console.log(diff);
       var days = Math.floor(diff / 1000 / 60 / 60 / 24);
       var hours = Math.floor(diff / 1000 / 60 / 60);
       var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
@@ -53921,6 +53920,7 @@ module.exports = Component.exports
 //
 //
 //
+//
 
 module.exports = {
     props: ["currentUser"],
@@ -53947,7 +53947,6 @@ module.exports = {
         cancelMeal: function cancelMeal() {
             this.registeringMeal = false;
         },
-
         cancelOrder: function cancelOrder(order) {
             var _this = this;
 
@@ -54000,7 +53999,20 @@ module.exports = {
             meal.total_price_preview += axios.put("api/meals/" + meal.id + "/" + this.items[order.item_id - 1].price, meal).then(function (response) {
                 _this5.getMeals();
             }).catch();
+        },
+
+        terminate: function terminate(meal) {
+            meal.state == 'terminated';
+
+            this.orders.forEach(function (order) {
+                if (order.state != "delivered") {
+                    order.state = "not delivered";
+                }
+            });
+            this.getMeals();
+            this.getOrders();
         }
+
     },
     mounted: function mounted() {
         this.getMeals();
@@ -54092,6 +54104,20 @@ var render = function() {
                                 }
                               },
                               [_vm._v("Register Orders")]
+                            ),
+                            _vm._v(" "),
+                            _c(
+                              "a",
+                              {
+                                staticClass: "btn btn-sm btn-primary",
+                                on: {
+                                  click: function($event) {
+                                    $event.preventDefault()
+                                    _vm.terminate(meal)
+                                  }
+                                }
+                              },
+                              [_vm._v("Terminate")]
                             )
                           ])
                         ]),

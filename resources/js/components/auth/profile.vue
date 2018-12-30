@@ -119,7 +119,6 @@ module.exports = {
   computed: {
     timePassed() {
       var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
-      console.log(diff);
       var days = Math.floor(diff / 1000 / 60 / 60 / 24);
       var hours = Math.floor(diff / 1000 / 60 / 60);
       var minutes = Math.floor(diff / 1000 / 60) - hours * 60;

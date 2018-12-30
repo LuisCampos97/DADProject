@@ -15,7 +15,8 @@
                 <td>Table: {{ meal.table_number }}</td>
                 <td>{{ meal.start }}</td>
                 <td>Total: {{ meal.total_price_preview }} €</td>
-                <td><a class="btn btn-sm btn-primary" @click.prevent="registerOrder(meal)">Register Orders</a></td>
+                <td><a class="btn btn-sm btn-primary" @click.prevent="registerOrder(meal)">Register Orders</a>
+                    <a class="btn btn-sm btn-primary" @click.prevent="terminate(meal)">Terminate</a></td>
             </tr>
             <tr v-for="order in orders" :key="order.id " v-if="meal.id == order.meal_id">
                 <td>{{items[order.item_id - 1].name }}</td>
@@ -61,7 +62,6 @@ module.exports = {
         cancelMeal: function () {
             this.registeringMeal = false;
         },
-
         cancelOrder: function (order) {
             axios.delete("api/orders/" + order.id)
                 .then(response => {
@@ -111,9 +111,20 @@ module.exports = {
                 .put("api/meals/" + meal.id + "/" + this.items[order.item_id - 1].price, meal)
                 .then(response => {
                     this.getMeals();
-                    })
+                })
                 .catch();
-        }
+        },
+        terminate: function (meal) {
+            meal.state == 'terminated';
+
+            this.orders.forEach(function (order) {
+                if (order.state != "delivered") {
+                    order.state = "not delivered";
+                }
+            });
+            this.getMeals();
+            this.getOrders();
+        },
 
     },
     mounted() {
