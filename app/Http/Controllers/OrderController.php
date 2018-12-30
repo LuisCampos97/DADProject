@@ -71,4 +71,15 @@ class OrderController extends Controller
         $order->delete();
         return response()->json(null, 204);
     }
+
+    public function terminate(Request $request, $id)
+    {
+        $orders = Order::where('meal_id', $id)
+            ->get();
+            
+            foreach ($orders as &$order) {
+                $order->state = 'not delivered';
+                $order->save();
+            }
+    }
 }

@@ -45,4 +45,15 @@ class MealController extends Controller
 
         return new MealResource($meal);
     }
+
+    public function terminate(Request $request, $id)
+    {
+        $meal = Meal::findOrFail($id);
+        
+        $meal->state = "terminated";
+
+        $meal->save();
+
+        return new MealResource($meal);
+    }
 }

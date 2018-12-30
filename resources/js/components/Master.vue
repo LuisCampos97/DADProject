@@ -32,7 +32,6 @@ module.exports = {
         },
         shiftTime() {
             var diff = new Date() - new Date(this.$store.state.user.last_shift_start);
-            console.log(diff);
             var hours = Math.floor((diff / 1000) / 60 / 60);
             var minutes = Math.floor((diff / 1000) / 60) - hours * 60;
             if (hours == 0) {

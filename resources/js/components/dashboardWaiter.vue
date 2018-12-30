@@ -115,15 +115,19 @@ module.exports = {
                 .catch();
         },
         terminate: function (meal) {
-            meal.state == 'terminated';
+            axios
+                .put("api/meals/terminate/" + meal.id, meal)
+                .then(response => {
+                    this.getMeals();
+                })
+                .catch();
 
-            this.orders.forEach(function (order) {
-                if (order.state != "delivered") {
-                    order.state = "not delivered";
-                }
-            });
-            this.getMeals();
-            this.getOrders();
+            axios
+                .put("api/orders/terminate/" + meal.id, meal)
+                .then(response => {
+                    this.getOrders();
+                })
+                .catch();
         },
 
     },

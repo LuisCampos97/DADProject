@@ -34,6 +34,7 @@ Route::get('profile/{id}', 'UserControllerAPI@getProfile')->name('profile');
 //Meals
 Route::post('meals/register', 'MealController@create');
 Route::get('meals', 'MealController@index');
+Route::put('meals/terminate/{id}', 'MealController@terminate');
 Route::get('meals/{id}', 'MealController@show');
 Route::put('meals/{id}/{total}', 'MealController@updateTotal');
 
@@ -43,6 +44,7 @@ Route::get('orders', 'OrderController@index');
 Route::get('orders/{id}', 'OrderController@show');
 Route::get('ordersCook/{responsible_cook_id}', 'OrderController@ordersByCook');
 Route::put('orders/{id}', 'OrderController@updateState');
+Route::put('orders/terminate/{id}', 'OrderController@terminate');
 Route::delete('orders/{id}', 'OrderController@destroy');
 
 //Invoices

@@ -53507,7 +53507,6 @@ module.exports = {
         },
         shiftTime: function shiftTime() {
             var diff = new Date() - new Date(this.$store.state.user.last_shift_start);
-            console.log(diff);
             var hours = Math.floor(diff / 1000 / 60 / 60);
             var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
             if (hours == 0) {
@@ -54002,15 +54001,15 @@ module.exports = {
         },
 
         terminate: function terminate(meal) {
-            meal.state == 'terminated';
+            var _this6 = this;
 
-            this.orders.forEach(function (order) {
-                if (order.state != "delivered") {
-                    order.state = "not delivered";
-                }
-            });
-            this.getMeals();
-            this.getOrders();
+            axios.put("api/meals/terminate/" + meal.id, meal).then(function (response) {
+                _this6.getMeals();
+            }).catch();
+
+            axios.put("api/orders/terminate/" + meal.id, meal).then(function (response) {
+                _this6.getOrders();
+            }).catch();
         }
 
     },
