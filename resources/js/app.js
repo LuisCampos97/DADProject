@@ -34,6 +34,7 @@ Vue.component('registerOrder', require('./components/waiter/registerOrder.vue'))
 Vue.component('orderItems', require('./components/waiter/orderItems.vue'));
 
 Vue.component('invoiceDetails', require('./components/cashier/InvoiceDetails.vue'));
+Vue.component('pay-invoice', require('./components/cashier/PayInvoice.vue'));
 
 const router = new VueRouter({
     routes

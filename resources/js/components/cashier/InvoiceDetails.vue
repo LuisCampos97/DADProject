@@ -1,17 +1,17 @@
 <template>
   <div class="jumbotron">
     <h2>Invoice Details</h2>
-    <p><bold class="bold">Id:</bold> {{ this.currentInvoice.id }}</p>
-    <p><bold>Date:</bold> {{ this.currentInvoice.date }}</p>
-    <p><bold>Table Number:</bold> {{ this.currentInvoice.table_number }}</p>
-    <p><bold>Total Price:</bold> {{ this.currentInvoice.total_price }} €</p>
+    <p><b>Id:</b> {{ this.currentInvoice.id }}</p>
+    <p><b>Date:</b> {{ this.currentInvoice.date }}</p>
+    <p><b>Table Number:</b> {{ this.currentInvoice.table_number }}</p>
+    <p><b>Total Price:</b> {{ this.currentInvoice.total_price }} €</p>
     <br>
-    <p style="font-weight: bold;">List of items:</p>
-    <div v-for="item in currentInvoiceItems" v-bind:key="item">
-      <p>&emsp;<bold>Name:</bold> {{ item.name }}</p>
-      <p>&emsp;<bold>Quantity:</bold> {{ item.quantity }}</p>
-      <p>&emsp;<bold>Unit Price:</bold> {{ item.unit_price }} €</p>
-      <p>&emsp;<bold>Sub-total price:</bold> {{ item.quantity * item.unit_price }} €</p>
+    <p style="font-weight: b;">List of items:</p>
+    <div v-for="item in currentInvoiceItems" v-bind:key="item.id">
+      <p>&emsp;<b>Name:</b> {{ item.name }}</p>
+      <p>&emsp;<b>Quantity:</b> {{ item.quantity }}</p>
+      <p>&emsp;<b>Unit Price:</b> {{ item.unit_price }} €</p>
+      <p>&emsp;<b>Sub-total price:</b> {{ item.quantity * item.unit_price }} €</p>
       <br>
     </div>
     <br>
@@ -55,7 +55,7 @@ module.exports = {
 </script>
 
 <style>
-h2, bold {
+h2 {
   font-weight: bold;
 }
 

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\InvoiceResource;
 use App\Invoice;
+use App\Meal;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -56,5 +57,25 @@ class InvoiceController extends Controller
         ->get();
 
         return $invoiceItems;
+    }
+
+    public function editInvoice(Request $request, $id)
+    {
+        $request->validate([
+            'nif' => 'required|digits:9',
+            'name' => 'required|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/'
+        ]);
+
+        $invoice = Invoice::findOrFail($id);
+        $invoice->update($request->all());
+
+        $invoice->state = 'paid';
+        $invoice->save();
+
+        $meal = Meal::findOrFail($id);
+        $meal->state = 'paid';
+        $meal->save();
+
+        return new InvoiceResource($invoice);
     }
 }

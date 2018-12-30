@@ -53,6 +53,7 @@ Route::get('invoices/{id}', 'InvoiceController@show');
 Route::get('mealForInvoice', 'InvoiceController@mealForInvoice');
 Route::get('invoiceDetails/{id}', 'InvoiceController@invoiceDetails');
 Route::get('invoiceItems/{id}', 'InvoiceController@invoiceItems');
+Route::put('invoices/{id}', 'InvoiceController@editInvoice');
 
 //Authentication
 Route::post('login', 'LoginControllerAPI@login')->name('login');
