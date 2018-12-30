@@ -17,7 +17,7 @@
           <td>{{ invoice.responsible_waiter_id }} : {{ invoice.responsible_waiter_name }}</td>
           <td>{{ invoice.total_price }} €</td>
           <td>
-            <a class="btn btn-sm btn-info" v-on:click.prevent="">Details</a>
+            <a class="btn btn-sm btn-info" v-on:click.prevent="invoiceDetails(invoice.id)">Details</a>
             <a class="btn btn-sm btn-warning" v-on:click.prevent="">Pay</a>
           </td>
         </tr>
@@ -44,6 +44,9 @@ module.exports = {
           this.invoices = response.data;
         })
         .catch(error => {});
+    },
+    invoiceDetails(invoiceId) {
+      this.$router.push({ path: `/invoice/${invoiceId}` })
     }
   },
   mounted() {

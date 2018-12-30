@@ -10,7 +10,7 @@ import Login from './components/auth/Login.vue';
 import Dashboard from './components/Dashboard.vue';
 import Profile from './components/auth/Profile.vue';
 import RegisterWorker from './components/auth/RegisterWorker.vue';
-import DashboardCook from './components/cook/DashboardCook.vue';
+import InvoiceDetails from './components/cashier/InvoiceDetails.vue';
 
 const routes = [{
     path: '/',
@@ -48,6 +48,10 @@ const routes = [{
     meta: {
         requiresAuth: true
     }
+},
+{
+    path: '/invoice/:id',
+    component: InvoiceDetails,
 }
 ];
 

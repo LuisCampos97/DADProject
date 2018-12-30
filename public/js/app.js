@@ -28209,6 +28209,10 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(116)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(70)
@@ -28217,7 +28221,7 @@ var __vue_template__ = __webpack_require__(71)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -28230,7 +28234,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/components/cook/DashboardCook.vue"
+Component.options.__file = "resources/js/components/cashier/InvoiceDetails.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -28239,9 +28243,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-0295b460", Component.options)
+    hotAPI.createRecord("data-v-218f72cc", Component.options)
   } else {
-    hotAPI.reload("data-v-0295b460", Component.options)
+    hotAPI.reload("data-v-218f72cc", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -28256,7 +28260,7 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(25);
-module.exports = __webpack_require__(97);
+module.exports = __webpack_require__(100);
 
 
 /***/ }),
@@ -28266,8 +28270,9 @@ module.exports = __webpack_require__(97);
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(17);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__stores_global_store__ = __webpack_require__(50);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__routes__ = __webpack_require__(52);
+throw new Error("Cannot find module \"vue-socket.io\"");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_global_store__ = __webpack_require__(50);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(52);
 /*jshint esversion: 6 */
 
 __webpack_require__(7);
@@ -28276,6 +28281,12 @@ window.Vue = __webpack_require__(6);
 
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
+
+
+Vue.use(new __WEBPACK_IMPORTED_MODULE_1_vue_socket_io___default.a({
+    debug: true,
+    connection: 'http://192.168.10.1:8080'
+}));
 
 
 
@@ -28290,15 +28301,17 @@ Vue.component('edit-user', __webpack_require__(77));
 
 Vue.component('dashboard', __webpack_require__(20));
 Vue.component('dashboardWaiter', __webpack_require__(80));
-Vue.component('dashboardCook', __webpack_require__(23));
-Vue.component('dashboardCashier', __webpack_require__(83));
+Vue.component('dashboardCook', __webpack_require__(83));
+Vue.component('dashboardCashier', __webpack_require__(86));
 
-Vue.component('registerMeal', __webpack_require__(86));
-Vue.component('registerOrder', __webpack_require__(89));
-Vue.component('orderItems', __webpack_require__(92));
+Vue.component('registerMeal', __webpack_require__(89));
+Vue.component('registerOrder', __webpack_require__(92));
+Vue.component('orderItems', __webpack_require__(95));
+
+Vue.component('invoiceDetails', __webpack_require__(23));
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
-    routes: __WEBPACK_IMPORTED_MODULE_2__routes__["a" /* default */]
+    routes: __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */]
 });
 
 /*router.beforeEach((to, from, next) => {
@@ -28316,7 +28329,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
 new Vue({
     router: router,
-    store: __WEBPACK_IMPORTED_MODULE_1__stores_global_store__["a" /* default */],
+    store: __WEBPACK_IMPORTED_MODULE_2__stores_global_store__["a" /* default */],
     created: function created() {
         this.$store.commit('loadTokenAndUserFromSession');
     },
@@ -51605,8 +51618,8 @@ var index_esm = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__components_auth_Profile_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_4__components_auth_Profile_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_auth_RegisterWorker_vue__ = __webpack_require__(22);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_auth_RegisterWorker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_auth_RegisterWorker_vue__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_cook_DashboardCook_vue__ = __webpack_require__(23);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_cook_DashboardCook_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_cook_DashboardCook_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_cashier_InvoiceDetails_vue__ = __webpack_require__(23);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_cashier_InvoiceDetails_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_cashier_InvoiceDetails_vue__);
 /*jshint esversion: 6 */
 __webpack_require__(7);
 
@@ -51653,6 +51666,9 @@ var routes = [{
     meta: {
         requiresAuth: true
     }
+}, {
+    path: '/invoice/:id',
+    component: __WEBPACK_IMPORTED_MODULE_6__components_cashier_InvoiceDetails_vue___default.a
 }];
 
 /* harmony default export */ __webpack_exports__["a"] = (routes);
@@ -52090,8 +52106,25 @@ if (false) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 module.exports = {
+    data: function data() {
+        return {
+            msgGlobalText: '',
+            msgGlobalTextArea: ''
+        };
+    },
     computed: {
         user: function user() {
             return this.$store.state.user;
@@ -52128,6 +52161,24 @@ module.exports = {
                 _this.failMessage = error.response.data.message;
                 console.dir(error);
             });
+        },
+        sendGlobalMsg: function sendGlobalMsg() {
+            console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
+            if (this.$store.state.user === null) {
+                this.$socket.emit('msg_from_client', this.msgGlobalText);
+            } else {
+                this.$socket.emit('msg_from_client', this.msgGlobalText, this.$store.state.user);
+            }
+            this.msgGlobalText = "";
+        }
+    },
+    sockets: {
+        connect: function connect() {
+            console.log('socket connected (socket ID = ' + this.$socket.id + ')');
+        },
+        msg_from_server: function msg_from_server(dataFromServer) {
+            console.log('Receiving this message from Server: "' + dataFromServer + '"');
+            this.msgGlobalTextArea = dataFromServer + '\n' + this.msgGlobalTextArea;
         }
     }
 };
@@ -52196,6 +52247,72 @@ var render = function() {
               )
             : _vm._e()
         ])
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _c("br"),
+      _vm._v(" "),
+      _c("p", [_vm._v(" Message to all managers: ")]),
+      _vm._v(" "),
+      _c("div", [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.msgGlobalText,
+              expression: "msgGlobalText"
+            }
+          ],
+          staticClass: "inputchat",
+          attrs: { type: "text", id: "inputGlobal" },
+          domProps: { value: _vm.msgGlobalText },
+          on: {
+            keypress: function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.sendGlobalMsg($event)
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.msgGlobalText = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "textarea",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.msgGlobalTextArea,
+                expression: "msgGlobalTextArea"
+              }
+            ],
+            staticClass: "inputchat",
+            attrs: { id: "textGlobal" },
+            domProps: { value: _vm.msgGlobalTextArea },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.msgGlobalTextArea = $event.target.value
+              }
+            }
+          },
+          [_vm._v("Global Chat")]
+        )
       ]),
       _vm._v(" "),
       _vm.user.type == "waiter"
@@ -53185,62 +53302,36 @@ if (false) {
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 module.exports = {
-  props: ["currentUser"],
   data: function data() {
     return {
-      orders: [],
-      currentOrder: {},
-      showSuccess: false,
-      successMessage: ""
+      id: this.$route.params.id,
+      details: {},
+      currentInvoice: {},
+      currentInvoiceItems: []
     };
   },
+
   methods: {
-    getOrders: function getOrders() {
+    getCurrentInvoiceDetails: function getCurrentInvoiceDetails() {
       var _this = this;
 
-      axios.get("api/ordersCook/" + this.currentUser.id).then(function (response) {
-        _this.orders = response.data.data;
-      });
+      axios.get("api/invoiceDetails/" + this.id).then(function (response) {
+        _this.currentInvoice = response.data[0];
+      }).catch(function (error) {});
     },
-    setOrderState: function setOrderState(order) {
+    getCurrentInvoiceItems: function getCurrentInvoiceItems() {
       var _this2 = this;
 
-      this.currentOrder = order;
-      axios.put("api/orders/" + order.id, order).then(function (response) {
-        _this2.showSuccess = true;
-        _this2.successMessage = "Order " + order.id + " status changed to: " + response.data.data.state;
-        _this2.getOrders();
-      }).catch();
+      axios.get("api/invoiceItems/" + this.id).then(function (response) {
+        _this2.currentInvoiceItems = response.data;
+      }).catch(function (error) {});
     }
   },
   mounted: function mounted() {
-    this.getOrders();
+    this.getCurrentInvoiceDetails();
+    this.getCurrentInvoiceItems();
   }
 };
 
@@ -53252,129 +53343,118 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.currentUser.type == "cook"
-    ? _c("div", { staticClass: "jumbotron" }, [
-        _vm.showSuccess
-          ? _c("div", { staticClass: "alert alert-success" }, [
-              _c(
-                "button",
-                {
-                  staticClass: "close-btn",
-                  attrs: { type: "button" },
-                  on: {
-                    click: function($event) {
-                      _vm.showSuccess = false
-                    }
-                  }
-                },
-                [_vm._v("×")]
-              ),
-              _vm._v(" "),
-              _c("strong", [_vm._v(_vm._s(_vm.successMessage))])
-            ])
-          : _vm._e(),
-        _vm._v(" "),
-        _c(
-          "table",
-          { staticClass: "table table-striped" },
-          [
-            _vm._m(0),
-            _vm._v(" "),
-            _vm._l(_vm.orders, function(order) {
-              return order.state == "confirmed" ||
-                order.state == "in preparation"
-                ? _c(
-                    "tbody",
-                    {
-                      key: order.id,
-                      class: { active: _vm.currentOrder === order }
-                    },
-                    [
-                      order.state == "confirmed"
-                        ? _c("tr", { staticStyle: { color: "#2bb800" } }, [
-                            _c("td", [_vm._v(_vm._s(order.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(order.state))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(order.start))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-sm btn-primary",
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.setOrderState(order)
-                                    }
-                                  }
-                                },
-                                [_vm._v("In Preparation")]
-                              )
-                            ])
-                          ])
-                        : _vm._e(),
-                      _vm._v(" "),
-                      order.state == "in preparation"
-                        ? _c("tr", { staticStyle: { color: "#0062cc" } }, [
-                            _c("td", [_vm._v(_vm._s(order.id))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(order.state))]),
-                            _vm._v(" "),
-                            _c("td", [_vm._v(_vm._s(order.start))]),
-                            _vm._v(" "),
-                            _c("td", [
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-sm btn-success",
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.setOrderState(order)
-                                    }
-                                  }
-                                },
-                                [_vm._v("Prepared")]
-                              )
-                            ])
-                          ])
-                        : _vm._e()
-                    ]
-                  )
-                : _vm._e()
-            })
-          ],
-          2
-        )
+  return _c(
+    "div",
+    { staticClass: "jumbotron" },
+    [
+      _c("h2", [_vm._v("Invoice Details")]),
+      _vm._v(" "),
+      _c(
+        "p",
+        [
+          _c("bold", { staticClass: "bold" }, [_vm._v("Id:")]),
+          _vm._v(" " + _vm._s(this.currentInvoice.id))
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "p",
+        [
+          _c("bold", [_vm._v("Date:")]),
+          _vm._v(" " + _vm._s(this.currentInvoice.date))
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "p",
+        [
+          _c("bold", [_vm._v("Table Number:")]),
+          _vm._v(" " + _vm._s(this.currentInvoice.table_number))
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c(
+        "p",
+        [
+          _c("bold", [_vm._v("Total Price:")]),
+          _vm._v(" " + _vm._s(this.currentInvoice.total_price) + " €")
+        ],
+        1
+      ),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("p", { staticStyle: { "font-weight": "bold" } }, [
+        _vm._v("List of items:")
+      ]),
+      _vm._v(" "),
+      _vm._l(_vm.currentInvoiceItems, function(item) {
+        return _c("div", { key: item }, [
+          _c(
+            "p",
+            [
+              _vm._v(" "),
+              _c("bold", [_vm._v("Name:")]),
+              _vm._v(" " + _vm._s(item.name))
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "p",
+            [
+              _vm._v(" "),
+              _c("bold", [_vm._v("Quantity:")]),
+              _vm._v(" " + _vm._s(item.quantity))
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "p",
+            [
+              _vm._v(" "),
+              _c("bold", [_vm._v("Unit Price:")]),
+              _vm._v(" " + _vm._s(item.unit_price) + " €")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c(
+            "p",
+            [
+              _vm._v(" "),
+              _c("bold", [_vm._v("Sub-total price:")]),
+              _vm._v(" " + _vm._s(item.quantity * item.unit_price) + " €")
+            ],
+            1
+          ),
+          _vm._v(" "),
+          _c("br")
+        ])
+      }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("router-link", { attrs: { to: "/dashboard" } }, [
+        _c("a", { staticClass: "btn btn-sm btn-success" }, [
+          _vm._v("Back to Dashboard")
+        ])
       ])
-    : _vm._e()
+    ],
+    2
+  )
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "thead-dark" }, [
-      _c("tr", [
-        _c("th", [_vm._v("Order ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("State")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Start")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Actions")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-0295b460", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-218f72cc", module.exports)
   }
 }
 
@@ -53857,7 +53937,7 @@ var Component = normalizeComponent(
   __vue_scopeId__,
   __vue_module_identifier__
 )
-Component.options.__file = "resources/js/components/dashboardWaiter.vue"
+Component.options.__file = "resources/js/components/waiter/dashboardWaiter.vue"
 
 /* hot reload */
 if (false) {(function () {
@@ -53866,9 +53946,9 @@ if (false) {(function () {
   if (!hotAPI.compatible) return
   module.hot.accept()
   if (!module.hot.data) {
-    hotAPI.createRecord("data-v-4a8093ca", Component.options)
+    hotAPI.createRecord("data-v-0ce428f4", Component.options)
   } else {
-    hotAPI.reload("data-v-4a8093ca", Component.options)
+    hotAPI.reload("data-v-0ce428f4", Component.options)
   }
   module.hot.dispose(function (data) {
     disposed = true
@@ -54231,7 +54311,7 @@ module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-4a8093ca", module.exports)
+    require("vue-hot-reload-api")      .rerender("data-v-0ce428f4", module.exports)
   }
 }
 
@@ -54245,6 +54325,271 @@ var normalizeComponent = __webpack_require__(0)
 var __vue_script__ = __webpack_require__(84)
 /* template */
 var __vue_template__ = __webpack_require__(85)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/cook/DashboardCook.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-0295b460", Component.options)
+  } else {
+    hotAPI.reload("data-v-0295b460", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 84 */
+/***/ (function(module, exports) {
+
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+  props: ["currentUser"],
+  data: function data() {
+    return {
+      orders: [],
+      currentOrder: {},
+      showSuccess: false,
+      successMessage: ""
+    };
+  },
+  methods: {
+    getOrders: function getOrders() {
+      var _this = this;
+
+      axios.get("api/ordersCook/" + this.currentUser.id).then(function (response) {
+        _this.orders = response.data.data;
+      });
+    },
+    setOrderState: function setOrderState(order) {
+      var _this2 = this;
+
+      this.currentOrder = order;
+      axios.put("api/orders/" + order.id, order).then(function (response) {
+        _this2.showSuccess = true;
+        _this2.successMessage = "Order " + order.id + " status changed to: " + response.data.data.state;
+        _this2.getOrders();
+      }).catch();
+    }
+  },
+  mounted: function mounted() {
+    this.getOrders();
+  }
+};
+
+/***/ }),
+/* 85 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.currentUser.type == "cook"
+    ? _c("div", { staticClass: "jumbotron" }, [
+        _vm.showSuccess
+          ? _c("div", { staticClass: "alert alert-success" }, [
+              _c(
+                "button",
+                {
+                  staticClass: "close-btn",
+                  attrs: { type: "button" },
+                  on: {
+                    click: function($event) {
+                      _vm.showSuccess = false
+                    }
+                  }
+                },
+                [_vm._v("×")]
+              ),
+              _vm._v(" "),
+              _c("strong", [_vm._v(_vm._s(_vm.successMessage))])
+            ])
+          : _vm._e(),
+        _vm._v(" "),
+        _c(
+          "table",
+          { staticClass: "table table-striped" },
+          [
+            _vm._m(0),
+            _vm._v(" "),
+            _vm._l(_vm.orders, function(order) {
+              return order.state == "confirmed" ||
+                order.state == "in preparation"
+                ? _c(
+                    "tbody",
+                    {
+                      key: order.id,
+                      class: { active: _vm.currentOrder === order }
+                    },
+                    [
+                      order.state == "confirmed"
+                        ? _c("tr", { staticStyle: { color: "#2bb800" } }, [
+                            _c("td", [_vm._v(_vm._s(order.id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(order.state))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(order.start))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-sm btn-primary",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.setOrderState(order)
+                                    }
+                                  }
+                                },
+                                [_vm._v("In Preparation")]
+                              )
+                            ])
+                          ])
+                        : _vm._e(),
+                      _vm._v(" "),
+                      order.state == "in preparation"
+                        ? _c("tr", { staticStyle: { color: "#0062cc" } }, [
+                            _c("td", [_vm._v(_vm._s(order.id))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(order.state))]),
+                            _vm._v(" "),
+                            _c("td", [_vm._v(_vm._s(order.start))]),
+                            _vm._v(" "),
+                            _c("td", [
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-sm btn-success",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.setOrderState(order)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Prepared")]
+                              )
+                            ])
+                          ])
+                        : _vm._e()
+                    ]
+                  )
+                : _vm._e()
+            })
+          ],
+          2
+        )
+      ])
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-dark" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Order ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("State")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Start")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-0295b460", module.exports)
+  }
+}
+
+/***/ }),
+/* 86 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(87)
+/* template */
+var __vue_template__ = __webpack_require__(88)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -54283,7 +54628,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 84 */
+/* 87 */
 /***/ (function(module, exports) {
 
 //
@@ -54331,6 +54676,9 @@ module.exports = {
       axios.get("/api/mealForInvoice").then(function (response) {
         _this.invoices = response.data;
       }).catch(function (error) {});
+    },
+    invoiceDetails: function invoiceDetails(invoiceId) {
+      this.$router.push({ path: "/invoice/" + invoiceId });
     }
   },
   mounted: function mounted() {
@@ -54339,7 +54687,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 85 */
+/* 88 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -54383,6 +54731,7 @@ var render = function() {
                               on: {
                                 click: function($event) {
                                   $event.preventDefault()
+                                  _vm.invoiceDetails(invoice.id)
                                 }
                               }
                             },
@@ -54441,15 +54790,15 @@ if (false) {
 }
 
 /***/ }),
-/* 86 */
+/* 89 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(87)
+var __vue_script__ = __webpack_require__(90)
 /* template */
-var __vue_template__ = __webpack_require__(88)
+var __vue_template__ = __webpack_require__(91)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -54488,7 +54837,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 87 */
+/* 90 */
 /***/ (function(module, exports) {
 
 //
@@ -54579,7 +54928,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 88 */
+/* 91 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -54675,15 +55024,15 @@ if (false) {
 }
 
 /***/ }),
-/* 89 */
+/* 92 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(90)
+var __vue_script__ = __webpack_require__(93)
 /* template */
-var __vue_template__ = __webpack_require__(91)
+var __vue_template__ = __webpack_require__(94)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -54722,7 +55071,7 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 90 */
+/* 93 */
 /***/ (function(module, exports) {
 
 //
@@ -54783,7 +55132,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 91 */
+/* 94 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -54821,19 +55170,19 @@ if (false) {
 }
 
 /***/ }),
-/* 92 */
+/* 95 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
-  __webpack_require__(93)
+  __webpack_require__(96)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
-var __vue_script__ = __webpack_require__(95)
+var __vue_script__ = __webpack_require__(98)
 /* template */
-var __vue_template__ = __webpack_require__(96)
+var __vue_template__ = __webpack_require__(99)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -54872,13 +55221,13 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 93 */
+/* 96 */
 /***/ (function(module, exports, __webpack_require__) {
 
 // style-loader: Adds some css to the DOM by adding a <style> tag
 
 // load the styles
-var content = __webpack_require__(94);
+var content = __webpack_require__(97);
 if(typeof content === 'string') content = [[module.i, content, '']];
 if(content.locals) module.exports = content.locals;
 // add the styles to the DOM
@@ -54898,7 +55247,7 @@ if(false) {
 }
 
 /***/ }),
-/* 94 */
+/* 97 */
 /***/ (function(module, exports, __webpack_require__) {
 
 exports = module.exports = __webpack_require__(3)(false);
@@ -54912,7 +55261,7 @@ exports.push([module.i, "\nimg[data-v-21f97bb8] {\r\n    border-radius: 3px;\r\n
 
 
 /***/ }),
-/* 95 */
+/* 98 */
 /***/ (function(module, exports) {
 
 //
@@ -54978,7 +55327,7 @@ module.exports = {
 };
 
 /***/ }),
-/* 96 */
+/* 99 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -55063,10 +55412,65 @@ if (false) {
 }
 
 /***/ }),
-/* 97 */
+/* 100 */
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 101 */,
+/* 102 */,
+/* 103 */,
+/* 104 */,
+/* 105 */,
+/* 106 */,
+/* 107 */,
+/* 108 */,
+/* 109 */,
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(117);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(4)("43c06ff3", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-218f72cc\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./InvoiceDetails.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-218f72cc\",\"scoped\":false,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./InvoiceDetails.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 117 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(3)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\nh2, bold {\r\n  font-weight: bold;\n}\np {\r\n  display: table-row;\n}\r\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
