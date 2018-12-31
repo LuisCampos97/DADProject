@@ -1,11 +1,24 @@
 <template>
   <div class="jumbotron">
     <div class="row">
-      <div class="profile-shift">
-        <p>Shift</p>
-        <a>Start: {{ user.last_shift_start }}</a>
-        <br>
-        <a v-if="user.shift_active == '0'">End: {{ user.last_shift_end }}</a>
+        <div class="profile-shift">
+            <p>Shift</p>
+            <a>Start: {{ user.last_shift_start }}</a>
+            <br>
+            <a v-if="user.shift_active == '0'">End: {{ user.last_shift_end }}</a>
+            <br>
+            <a v-if="user.shift_active == '0'">Time: {{ timePassed }}</a>
+            <br>
+            <button v-if="user.shift_active == '0'" class="profile-shift-btn" @click.prevent="invertShift()">Start</button>
+            <button v-if="user.shift_active == '1'" class="profile-shift-btn" @click.prevent="invertShift()">Quit</button>
+        </div>
+    </div>
+
+    <br><br>
+    <p> Message to all managers: </p>
+    
+    <div>
+        <input type="text" id="inputGlobal" class="inputchat" v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
         <br>
         <a v-if="user.shift_active == '0'">Time: {{ timePassed }}</a>
         <br>
@@ -20,7 +33,6 @@
           @click.prevent="invertShift()"
         >Quit</button>
       </div>
-    </div>
 
     <br>
     <br>
@@ -118,3 +130,35 @@ module.exports = {
   }
 };
 </script>
+
+<style>
+input[type=text] {
+  width: 80%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+textarea{
+    width: 80%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none; 
+}
+
+button{
+  background-color: #87CEEB;
+  border: 2px;
+  border-radius: 4px;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>

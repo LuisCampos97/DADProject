@@ -28060,6 +28060,10 @@ module.exports = Component.exports
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(125)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(61)
@@ -28068,7 +28072,7 @@ var __vue_template__ = __webpack_require__(62)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
 var __vue_scopeId__ = null
 /* moduleIdentifier (server only) */
@@ -52144,6 +52148,19 @@ if (false) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 module.exports = {
   data: function data() {
@@ -52214,154 +52231,7 @@ module.exports = {
 /* 62 */
 /***/ (function(module, exports, __webpack_require__) {
 
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "jumbotron" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "profile-shift" }, [
-        _c("p", [_vm._v("Shift")]),
-        _vm._v(" "),
-        _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _vm.user.shift_active == "0"
-          ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _vm.user.shift_active == "0"
-          ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _vm.user.shift_active == "0"
-          ? _c(
-              "button",
-              {
-                staticClass: "profile-shift-btn",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.invertShift()
-                  }
-                }
-              },
-              [_vm._v("Start")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.user.shift_active == "1"
-          ? _c(
-              "button",
-              {
-                staticClass: "profile-shift-btn",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.invertShift()
-                  }
-                }
-              },
-              [_vm._v("Quit")]
-            )
-          : _vm._e()
-      ])
-    ]),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _vm.user.shift_active == "1"
-      ? _c(
-          "div",
-          [
-            _c("p", [_vm._v("Message to all managers:")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.msgGlobalText,
-                  expression: "msgGlobalText"
-                }
-              ],
-              staticClass: "inputchat",
-              attrs: { type: "text", id: "inputGlobal" },
-              domProps: { value: _vm.msgGlobalText },
-              on: {
-                keypress: function($event) {
-                  if (
-                    !("button" in $event) &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.sendGlobalMsg($event)
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.msgGlobalText = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c(
-              "textarea",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.msgGlobalTextArea,
-                    expression: "msgGlobalTextArea"
-                  }
-                ],
-                staticClass: "inputchat",
-                attrs: { id: "textGlobal" },
-                domProps: { value: _vm.msgGlobalTextArea },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.msgGlobalTextArea = $event.target.value
-                  }
-                }
-              },
-              [_vm._v("Global Chat")]
-            ),
-            _vm._v(" "),
-            _vm.user.type == "waiter"
-              ? _c("dashboardWaiter", { attrs: { currentUser: _vm.user } })
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.user.type == "cook"
-              ? _c("dashboardCook", { attrs: { currentUser: _vm.user } })
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.user.type == "cashier"
-              ? _c("dashboardCashier", { attrs: { currentUser: _vm.user } })
-              : _vm._e()
-          ],
-          1
-        )
-      : _vm._e()
-  ])
-}
-var staticRenderFns = []
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
+module.exports={render:function(){},staticRenderFns:[]}
 if (false) {
   module.hot.accept()
   if (module.hot.data) {
@@ -54049,6 +53919,12 @@ module.exports = {
             items: [],
             tables: [],
             currentMeal: {},
+            invoice: {
+                state: "pending",
+                meal_id: "",
+                date: "",
+                total_price: 0
+            },
             meals: []
         };
     },
@@ -54126,6 +54002,16 @@ module.exports = {
 
             axios.put("api/orders/terminate/" + meal.id, meal).then(function (response) {
                 _this6.getOrders();
+            }).catch();
+
+            this.invoice.meal_id = meal.id;
+            this.invoice.date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            this.invoice.total_price = meal.total_price_preview;
+
+            console.log(this.invoice);
+
+            axios.post("api/invoices/register", this.invoice).then(function (response) {
+                console.log('response', response.data.data.id);
             }).catch();
         }
 
@@ -55449,7 +55335,7 @@ module.exports = {
                 console.dir("error");
             } else {
 
-                this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');;
+                this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');
                 this.meal.responsible_waiter_id = this.$store.state.user.id;
 
                 console.log(this.meal);
@@ -56264,6 +56150,61 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 110 */,
+/* 111 */,
+/* 112 */,
+/* 113 */,
+/* 114 */,
+/* 115 */,
+/* 116 */,
+/* 117 */,
+/* 118 */,
+/* 119 */,
+/* 120 */,
+/* 121 */,
+/* 122 */,
+/* 123 */,
+/* 124 */,
+/* 125 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(126);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(3)("bd9e14b0", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-040e2ab9\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Dashboard.vue", function() {
+     var newContent = require("!!../../../node_modules/css-loader/index.js!../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-040e2ab9\",\"scoped\":false,\"hasInlineConfig\":true}!../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./Dashboard.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 126 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(2)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\ninput[type=text] {\r\n  width: 80%;\r\n  padding: 12px 20px;\r\n  margin: 8px 0;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  background-color: #ffffff;\n}\ntextarea{\r\n    width: 80%;\r\n  height: 150px;\r\n  padding: 12px 20px;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  border: 2px solid #ccc;\r\n  border-radius: 4px;\r\n  background-color: #f8f8f8;\r\n  resize: none;\n}\nbutton{\r\n  background-color: #87CEEB;\r\n  border: 2px;\r\n  border-radius: 4px;\r\n  color: white;\r\n  padding: 16px 32px;\r\n  text-decoration: none;\r\n  margin: 4px 2px;\r\n  cursor: pointer;\n}\r\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
