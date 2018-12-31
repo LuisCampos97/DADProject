@@ -28,6 +28,8 @@ class OrderController extends Controller
         $orders = Order::where('responsible_cook_id', $responsible_cook_id)
             ->orderBy('start', 'asc')
             ->orderBy('state', 'desc')
+            ->where('state', 'in preparation')
+            ->orWhere('state', 'confirmed')
             ->get();
 
         //Return collection of orders as a resource

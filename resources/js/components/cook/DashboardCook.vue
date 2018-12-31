@@ -4,7 +4,8 @@
       <button type="button" class="close-btn" v-on:click="showSuccess=false">&times;</button>
       <strong>{{ successMessage }}</strong>
     </div>
-    <table class="table table-striped">
+    <h3 v-if="orders.length <= 0">You don't have any order!</h3>
+    <table v-else class="table table-striped">
       <thead class="thead-dark">
         <tr>
           <th>Order ID</th>
@@ -17,7 +18,6 @@
         v-for="order in orders"
         :key="order.id"
         :class="{active: currentOrder === order}"
-        v-if="order.state == 'confirmed' || order.state == 'in preparation'"
       >
         <tr v-if="order.state == 'confirmed'" style="color: #2bb800">
           <td>{{ order.id }}</td>

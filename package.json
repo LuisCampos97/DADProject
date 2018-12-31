@@ -22,8 +22,10 @@
     "dependencies": {
         "@fortawesome/fontawesome-free": "^5.5.0",
         "admin-lte": "^3.0.0-alpha.2",
+        "jspdf": "^1.5.3",
         "vue-router": "^3.0.1",
         "vue-socket.io": "^3.0.4",
+        "vuetable-2": "^1.7.5",
         "vuex": "^3.0.1"
     }
 }
