@@ -48,6 +48,12 @@ module.exports = {
             items: [],
             tables: [],
             currentMeal: {},
+            invoice: {
+                state: "pending",
+                meal_id: "",
+                date: "",
+                total_price: 0
+            },
             meals: []
         };
     },
@@ -126,6 +132,18 @@ module.exports = {
                 .put("api/orders/terminate/" + meal.id, meal)
                 .then(response => {
                     this.getOrders();
+                })
+                .catch();
+
+            this.invoice.meal_id = meal.id;
+            this.invoice.date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            this.invoice.total_price = meal.total_price_preview;
+
+            console.log(this.invoice);
+
+            axios.post("api/invoices/register", this.invoice)
+                .then(response => {
+                    console.log('response', response.data.data.id);
                 })
                 .catch();
         },

@@ -53782,7 +53782,7 @@ module.exports = {
                 console.dir("error");
             } else {
 
-                this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');;
+                this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');
                 this.meal.responsible_waiter_id = this.$store.state.user.id;
 
                 console.log(this.meal);
@@ -54648,6 +54648,12 @@ module.exports = {
             items: [],
             tables: [],
             currentMeal: {},
+            invoice: {
+                state: "pending",
+                meal_id: "",
+                date: "",
+                total_price: 0
+            },
             meals: []
         };
     },
@@ -54725,6 +54731,16 @@ module.exports = {
 
             axios.put("api/orders/terminate/" + meal.id, meal).then(function (response) {
                 _this6.getOrders();
+            }).catch();
+
+            this.invoice.meal_id = meal.id;
+            this.invoice.date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+            this.invoice.total_price = meal.total_price_preview;
+
+            console.log(this.invoice);
+
+            axios.post("api/invoices/register", this.invoice).then(function (response) {
+                console.log('response', response.data.data.id);
             }).catch();
         }
 

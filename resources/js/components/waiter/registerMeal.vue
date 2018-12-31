@@ -66,7 +66,7 @@ module.exports = {
                 console.dir("error");
             } else {
 
-                this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');;
+                this.meal.start = new Date().toISOString().slice(0, 19).replace('T', ' ');
                 this.meal.responsible_waiter_id = this.$store.state.user.id;
 
                 console.log(this.meal);

@@ -48,6 +48,7 @@ Route::put('orders/terminate/{id}', 'OrderController@terminate');
 Route::delete('orders/{id}', 'OrderController@destroy');
 
 //Invoices
+Route::post('invoices/register', 'InvoiceController@create');
 Route::get('invoices', 'InvoiceController@index');
 Route::get('invoices/{id}', 'InvoiceController@show');
 Route::get('mealForInvoice', 'InvoiceController@mealForInvoice');

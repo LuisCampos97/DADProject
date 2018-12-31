@@ -78,4 +78,16 @@ class InvoiceController extends Controller
 
         return new InvoiceResource($invoice);
     }
+
+    public function create(Request $request)
+    {
+        $invoice = Invoice::create([
+            'state' => $request['state'],
+            'meal_id' => $request['meal_id'],
+            'date' => $request['date'],
+            'total_price' => $request['total_price'],
+        ]);
+
+        return new InvoiceResource($invoice);
+    }
 }
