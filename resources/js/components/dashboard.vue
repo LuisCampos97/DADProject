@@ -16,6 +16,7 @@
 
     <br><br>
     <p> Message to all managers: </p>
+    
     <div>
         <input type="text" id="inputGlobal" class="inputchat" v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
         <br>
@@ -98,3 +99,35 @@ module.exports = {
     },
 };
 </script>
+
+<style>
+input[type=text] {
+  width: 80%;
+  padding: 12px 20px;
+  margin: 8px 0;
+  box-sizing: border-box;
+  background-color: #ffffff;
+}
+
+textarea{
+    width: 80%;
+  height: 150px;
+  padding: 12px 20px;
+  box-sizing: border-box;
+  border: 2px solid #ccc;
+  border-radius: 4px;
+  background-color: #f8f8f8;
+  resize: none; 
+}
+
+button{
+  background-color: #87CEEB;
+  border: 2px;
+  border-radius: 4px;
+  color: white;
+  padding: 16px 32px;
+  text-decoration: none;
+  margin: 4px 2px;
+  cursor: pointer;
+}
+</style>
