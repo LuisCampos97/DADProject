@@ -20,7 +20,6 @@ class InvoiceResource extends Resource
             'meal_id' => $this->meal_id,
             'nif' => $this->nif,
             'name' => $this->name,
-            'price' => $this->price,
             'date' => $this->date,
             'total_price' => $this->total_price,
             'created_at' => $this->created_at,

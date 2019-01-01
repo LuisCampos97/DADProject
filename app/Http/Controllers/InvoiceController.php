@@ -12,11 +12,15 @@ class InvoiceController extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->has('page')) {
-            return InvoiceResource::collection(Invoice::paginate(5));
-        } else {
-            return InvoiceResource::collection(Invoice::all());
-        }
+        $invoices = DB::table('meals')
+        ->select("invoices.*","meals.table_number","meals.responsible_waiter_id", "users.name as responsible_waiter_name")
+        ->leftjoin('invoices', 'invoices.meal_id', '=', 'meals.id')
+        ->leftjoin('users', 'users.id', '=', 'meals.responsible_waiter_id')
+        ->where('invoices.state', 'paid')
+        ->orderBy('date', 'desc')
+        ->paginate(15);
+
+        return $invoices;
     }
 
     public function show($id)

@@ -52143,105 +52143,7 @@ exports.push([module.i, "\ninput[type=text] {\r\n  width: 80%;\r\n  padding: 12p
 /* 63 */
 /***/ (function(module, exports) {
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-module.exports = {
-    data: function data() {
-        return {
-            msgGlobalText: '',
-            msgGlobalTextArea: ''
-        };
-    },
-    computed: {
-        user: function user() {
-            return this.$store.state.user;
-        },
-        timePassed: function timePassed() {
-            var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
-            console.log(diff);
-            var days = Math.floor(diff / 1000 / 60 / 60 / 24);
-            var hours = Math.floor(diff / 1000 / 60 / 60);
-            var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
-            if (days == 0 && hours == 0) {
-                return minutes + " m";
-            } else if (days == 0) {
-                return hours + " h : " + minutes + " m";
-            } else {
-                return days + " d : " + hours + " h : " + minutes + " m";
-            }
-        }
-    },
-    methods: {
-        invertShift: function invertShift() {
-            var _this = this;
-
-            var user = this.$store.state.user;
-            axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
-                Vue.set(_this.user, response.data.data);
-                _this.$store.commit("setUser", response.data.data);
-                _this.$router.push({
-                    name: "profile"
-                });
-            }).catch(function (error) {
-                _this.showFailure = true;
-                _this.showSuccess = false;
-                _this.failMessage = error.response.data.message;
-                console.dir(error);
-            });
-        },
-        sendGlobalMsg: function sendGlobalMsg() {
-            console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
-            if (this.$store.state.user === null) {
-                this.$toasted.error('User is not logged in!');
-            } else {
-                this.$socket.emit('msg_from_client', this.msgGlobalText, this.$store.state.user);
-            }
-            this.msgGlobalText = "";
-        }
-    },
-    sockets: {
-        connect: function connect() {
-            console.log('socket connected (socket ID = ' + this.$socket.id + ')');
-        },
-        msg_from_server: function msg_from_server(dataFromServer) {
-            console.log('Receiving this message from Server: "' + dataFromServer + '"');
-            this.msgGlobalTextArea = dataFromServer + '\n' + this.msgGlobalTextArea;
-        }
-    }
-};
+throw new Error("Module build failed: SyntaxError: c:\\DAD_project\\DADProject\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 1254\n    at JSON.parse (<anonymous>)\n    at ConfigChainBuilder.addConfig (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:150:65)\n    at ConfigChainBuilder.findConfigs (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:102:30)\n    at buildConfigChain (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:61:13)\n    at OptionManager.init (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\option-manager.js:354:58)\n    at File.initOptions (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\index.js:212:65)\n    at new File (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\index.js:135:24)\n    at Pipeline.transform (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\pipeline.js:46:16)\n    at transpile (c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\index.js:50:20)\n    at c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\fs-cache.js:118:18\n    at ReadFileContext.callback (c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\fs-cache.js:31:21)\n    at FSReqWrap.readFileAfterOpen [as oncomplete] (fs.js:235:13)");
 
 /***/ }),
 /* 64 */
@@ -52251,144 +52153,224 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "jumbotron" },
-    [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "profile-shift" }, [
-          _c("p", [_vm._v("Shift")]),
-          _vm._v(" "),
-          _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _vm.user.shift_active == "0"
-            ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _vm.user.shift_active == "0"
-            ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _vm.user.shift_active == "0"
-            ? _c(
-                "button",
-                {
-                  staticClass: "profile-shift-btn",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      _vm.invertShift()
-                    }
-                  }
-                },
-                [_vm._v("Start")]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.user.shift_active == "1"
-            ? _c(
-                "button",
-                {
-                  staticClass: "profile-shift-btn",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      _vm.invertShift()
-                    }
-                  }
-                },
-                [_vm._v("Quit")]
-              )
-            : _vm._e()
-        ])
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _c("p", [_vm._v(" Message to all managers: ")]),
-      _vm._v(" "),
-      _c("div", [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.msgGlobalText,
-              expression: "msgGlobalText"
-            }
-          ],
-          staticClass: "inputchat",
-          attrs: { type: "text", id: "inputGlobal" },
-          domProps: { value: _vm.msgGlobalText },
-          on: {
-            keypress: function($event) {
-              if (
-                !("button" in $event) &&
-                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-              ) {
-                return null
-              }
-              return _vm.sendGlobalMsg($event)
-            },
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.msgGlobalText = $event.target.value
-            }
-          }
-        }),
+  return _c("div", { staticClass: "jumbotron" }, [
+    _c("div", { staticClass: "row" }, [
+      _c("div", { staticClass: "profile-shift" }, [
+        _c("p", [_vm._v("Shift")]),
+        _vm._v(" "),
+        _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
         _vm._v(" "),
         _c("br"),
         _vm._v(" "),
-        _c(
-          "textarea",
-          {
-            directives: [
+        _vm.user.shift_active == "0"
+          ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _vm.user.shift_active == "0"
+          ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _vm.user.shift_active == "0"
+          ? _c(
+              "button",
               {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.msgGlobalTextArea,
-                expression: "msgGlobalTextArea"
-              }
-            ],
-            staticClass: "inputchat",
-            attrs: { id: "textGlobal" },
-            domProps: { value: _vm.msgGlobalTextArea },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+                staticClass: "profile-shift-btn",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.invertShift()
+                  }
                 }
-                _vm.msgGlobalTextArea = $event.target.value
-              }
+              },
+              [_vm._v("Start")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.user.shift_active == "1"
+          ? _c(
+              "button",
+              {
+                staticClass: "profile-shift-btn",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.invertShift()
+                  }
+                }
+              },
+              [_vm._v("Quit")]
+            )
+          : _vm._e()
+      ])
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _c("br"),
+    _vm._v(" "),
+    _c("p", [_vm._v(" Message to all managers: ")]),
+    _vm._v(" "),
+    _c("div", [
+      _c("input", {
+        directives: [
+          {
+            name: "model",
+            rawName: "v-model",
+            value: _vm.msgGlobalText,
+            expression: "msgGlobalText"
+          }
+        ],
+        staticClass: "inputchat",
+        attrs: { type: "text", id: "inputGlobal" },
+        domProps: { value: _vm.msgGlobalText },
+        on: {
+          keypress: function($event) {
+            if (
+              !("button" in $event) &&
+              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+            ) {
+              return null
             }
+            return _vm.sendGlobalMsg($event)
           },
-          [_vm._v("Global Chat")]
-        )
-      ]),
+          input: function($event) {
+            if ($event.target.composing) {
+              return
+            }
+            _vm.msgGlobalText = $event.target.value
+          }
+        }
+      }),
       _vm._v(" "),
-      _vm.user.type == "waiter"
-        ? _c("dashboardWaiter", { attrs: { currentUser: _vm.user } })
+      _c("br"),
+      _vm._v(" "),
+      _vm.user.shift_active == "0"
+        ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
         : _vm._e(),
       _vm._v(" "),
-      _vm.user.type == "cook"
-        ? _c("dashboardCook", { attrs: { currentUser: _vm.user } })
+      _c("br"),
+      _vm._v(" "),
+      _vm.user.shift_active == "0"
+        ? _c(
+            "button",
+            {
+              staticClass: "profile-shift-btn",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.invertShift()
+                }
+              }
+            },
+            [_vm._v("Start")]
+          )
         : _vm._e(),
       _vm._v(" "),
-      _vm.user.type == "cashier"
-        ? _c("dashboardCashier", { attrs: { currentUser: _vm.user } })
+      _vm.user.shift_active == "1"
+        ? _c(
+            "button",
+            {
+              staticClass: "profile-shift-btn",
+              on: {
+                click: function($event) {
+                  $event.preventDefault()
+                  _vm.invertShift()
+                }
+              }
+            },
+            [_vm._v("Quit")]
+          )
         : _vm._e()
-    ],
-    1
-  )
+    ]),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _c("br"),
+    _vm._v(" "),
+    _vm.user.shift_active == "1"
+      ? _c(
+          "div",
+          [
+            _c("p", [_vm._v("Message to all managers:")]),
+            _vm._v(" "),
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.msgGlobalText,
+                  expression: "msgGlobalText"
+                }
+              ],
+              staticClass: "inputchat",
+              attrs: { type: "text", id: "inputGlobal" },
+              domProps: { value: _vm.msgGlobalText },
+              on: {
+                keypress: function($event) {
+                  if (
+                    !("button" in $event) &&
+                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                  ) {
+                    return null
+                  }
+                  return _vm.sendGlobalMsg($event)
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.msgGlobalText = $event.target.value
+                }
+              }
+            }),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _c(
+              "textarea",
+              {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.msgGlobalTextArea,
+                    expression: "msgGlobalTextArea"
+                  }
+                ],
+                staticClass: "inputchat",
+                attrs: { id: "textGlobal" },
+                domProps: { value: _vm.msgGlobalTextArea },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.msgGlobalTextArea = $event.target.value
+                  }
+                }
+              },
+              [_vm._v("Global Chat")]
+            ),
+            _vm._v(" "),
+            _vm.user.type == "waiter"
+              ? _c("dashboardWaiter", { attrs: { currentUser: _vm.user } })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.user.type == "cook"
+              ? _c("dashboardCook", { attrs: { currentUser: _vm.user } })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.user.type == "cashier"
+              ? _c("dashboardCashier", { attrs: { currentUser: _vm.user } })
+              : _vm._e()
+          ],
+          1
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -54568,16 +54550,16 @@ var render = function() {
             ])
           : _vm._e(),
         _vm._v(" "),
-        _c(
-          "table",
-          { staticClass: "table table-striped" },
-          [
-            _vm._m(0),
-            _vm._v(" "),
-            _vm._l(_vm.orders, function(order) {
-              return order.state == "confirmed" ||
-                order.state == "in preparation"
-                ? _c(
+        _vm.orders.length <= 0
+          ? _c("h3", [_vm._v("You don't have any order!")])
+          : _c(
+              "table",
+              { staticClass: "table table-striped" },
+              [
+                _vm._m(0),
+                _vm._v(" "),
+                _vm._l(_vm.orders, function(order) {
+                  return _c(
                     "tbody",
                     {
                       key: order.id,
@@ -54637,11 +54619,10 @@ var render = function() {
                         : _vm._e()
                     ]
                   )
-                : _vm._e()
-            })
-          ],
-          2
-        )
+                })
+              ],
+              2
+            )
       ])
     : _vm._e()
 }
@@ -54723,72 +54704,7 @@ module.exports = Component.exports
 /* 92 */
 /***/ (function(module, exports) {
 
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-module.exports = {
-  props: ["currentUser"],
-  data: function data() {
-    return {
-      invoices: [],
-      payingInvoice: false
-    };
-  },
-  methods: {
-    mealForInvoice: function mealForInvoice() {
-      var _this = this;
-
-      axios.get("/api/mealForInvoice").then(function (response) {
-        _this.invoices = response.data;
-        console.log(invoices.length);
-      }).catch(function (error) {});
-    },
-    openPayInvoiceComponent: function openPayInvoiceComponent(invoice) {
-      this.payingInvoice = true;
-    },
-    closePayInvoiceComponent: function closePayInvoiceComponent() {
-      this.payingInvoice = false;
-      this.mealForInvoice();
-    }
-  },
-  mounted: function mounted() {
-    this.mealForInvoice();
-  }
-};
+throw new Error("Module build failed: SyntaxError: c:\\DAD_project\\DADProject\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 1254\n    at JSON.parse (<anonymous>)\n    at ConfigChainBuilder.addConfig (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:150:65)\n    at ConfigChainBuilder.findConfigs (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:102:30)\n    at buildConfigChain (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:61:13)\n    at OptionManager.init (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\option-manager.js:354:58)\n    at File.initOptions (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\index.js:212:65)\n    at new File (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\index.js:135:24)\n    at Pipeline.transform (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\pipeline.js:46:16)\n    at transpile (c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\index.js:50:20)\n    at c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\fs-cache.js:118:18\n    at ReadFileContext.callback (c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\fs-cache.js:31:21)\n    at FSReqWrap.readFileAfterOpen [as oncomplete] (fs.js:235:13)");
 
 /***/ }),
 /* 93 */
@@ -54804,13 +54720,13 @@ var render = function() {
         { staticClass: "jumbotron" },
         [
           _vm.invoices.length <= 0
-            ? _c("h4", [_vm._v("You don't have any pending invoices!")])
+            ? _c("h3", [_vm._v("You don't have any pending invoices!")])
             : _vm._l(_vm.invoices, function(invoice) {
                 return _c(
                   "div",
                   { key: invoice.id },
                   [
-                    _c("h3", { staticStyle: { "font-weight": "bold" } }, [
+                    _c("h2", { staticStyle: { "font-weight": "bold" } }, [
                       _vm._v("Pending Invoices")
                     ]),
                     _vm._v(" "),
@@ -54871,7 +54787,7 @@ var render = function() {
                         ])
                       ])
                     ]),
-                    _vm._v(" "),
+                    _vm._v("\n    " + _vm._s(_vm.invoices.links()) + "\n    "),
                     _c("pay-invoice", {
                       attrs: {
                         invoice: invoice,
@@ -54889,13 +54805,86 @@ var render = function() {
                   ],
                   1
                 )
+              }),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c("h2", [_vm._v("Paid Invoices")]),
+          _vm._v(" "),
+          _c(
+            "table",
+            { staticClass: "table table-striped", attrs: { id: "table" } },
+            [
+              _vm._m(1),
+              _vm._v(" "),
+              _vm._l(_vm.paidInvoices.data, function(invoice) {
+                return _c(
+                  "tbody",
+                  {
+                    key: invoice.id,
+                    class: { active: _vm.currentInvoice === invoice }
+                  },
+                  [
+                    _c("tr", [
+                      _c("td", [_vm._v(_vm._s(invoice.table_number))]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(invoice.responsible_waiter_id) +
+                            " : " +
+                            _vm._s(invoice.responsible_waiter_name)
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(invoice.total_price) + " €")]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _c(
+                          "a",
+                          {
+                            staticClass: "btn btn-sm btn-warning",
+                            on: {
+                              click: function($event) {
+                                $event.preventDefault()
+                                _vm.exportPdf(invoice)
+                              }
+                            }
+                          },
+                          [
+                            _c("i", { staticClass: "far fa-file-pdf" }),
+                            _vm._v(" Export to PDF\n          ")
+                          ]
+                        )
+                      ])
+                    ])
+                  ]
+                )
               })
+            ],
+            2
+          )
         ],
         2
       )
     : _vm._e()
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-dark" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Table No")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Responsible Waiter")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Total Price")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
