@@ -25,11 +25,8 @@
         "jspdf": "^1.5.3",
         "vue-router": "^3.0.1",
         "vue-socket.io": "^3.0.4",
-<<<<<<< HEAD
         "vue-toasted": "^1.1.26",
-=======
         "vuetable-2": "^1.7.5",
->>>>>>> 29b4f956d25bba8a5e6dd91e49009b5fe8629560
         "vuex": "^3.0.1"
     }
 }

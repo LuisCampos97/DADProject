@@ -52143,7 +52143,128 @@ exports.push([module.i, "\ninput[type=text] {\r\n  width: 80%;\r\n  padding: 12p
 /* 63 */
 /***/ (function(module, exports) {
 
-throw new Error("Module build failed: SyntaxError: c:\\DAD_project\\DADProject\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 1254\n    at JSON.parse (<anonymous>)\n    at ConfigChainBuilder.addConfig (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:150:65)\n    at ConfigChainBuilder.findConfigs (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:102:30)\n    at buildConfigChain (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:61:13)\n    at OptionManager.init (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\option-manager.js:354:58)\n    at File.initOptions (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\index.js:212:65)\n    at new File (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\index.js:135:24)\n    at Pipeline.transform (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\pipeline.js:46:16)\n    at transpile (c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\index.js:50:20)\n    at c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\fs-cache.js:118:18\n    at ReadFileContext.callback (c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\fs-cache.js:31:21)\n    at FSReqWrap.readFileAfterOpen [as oncomplete] (fs.js:235:13)");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+module.exports = {
+    data: function data() {
+        return {
+            msgGlobalText: "",
+            msgGlobalTextArea: ""
+        };
+    },
+    computed: {
+        user: function user() {
+            return this.$store.state.user;
+        }
+    },
+    methods: {
+        invertShift: function invertShift() {
+            var _this = this;
+
+            var user = this.$store.state.user;
+            axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
+                Vue.set(_this.user, response.data.data);
+                _this.$store.commit("setUser", response.data.data);
+                _this.$router.push({
+                    name: "profile"
+                });
+            }).catch(function (error) {
+                _this.showFailure = true;
+                _this.showSuccess = false;
+                _this.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        },
+        sendGlobalMsg: function sendGlobalMsg() {
+            console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
+            if (this.$store.state.user === null) {
+                this.$toasted.error('User is not logged in!');
+            } else {
+                this.$socket.emit("msg_from_client", this.msgGlobalText, this.$store.state.user);
+            }
+            this.msgGlobalText = "";
+        },
+        timePassed: function timePassed() {
+            var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
+            console.log(diff);
+            var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+            var hours = Math.floor(diff / 1000 / 60 / 60);
+            var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
+            if (days == 0 && hours == 0) {
+                return minutes + " m";
+            } else if (days == 0) {
+                return hours + " h : " + minutes + " m";
+            } else {
+                return days + " d : " + hours + " h : " + minutes + " m";
+            }
+        }
+    },
+    sockets: {
+        connect: function connect() {
+            console.log("socket connected (socket ID = " + this.$socket.id + ")");
+        },
+        msg_from_server: function msg_from_server(dataFromServer) {
+            console.log('Receiving this message from Server: "' + dataFromServer + '"');
+            this.msgGlobalTextArea = dataFromServer + "\n" + this.msgGlobalTextArea;
+        }
+    }
+};
 
 /***/ }),
 /* 64 */
@@ -54702,9 +54823,166 @@ module.exports = Component.exports
 
 /***/ }),
 /* 92 */
-/***/ (function(module, exports) {
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
 
-throw new Error("Module build failed: SyntaxError: c:\\DAD_project\\DADProject\\package.json: Error while parsing JSON - Unexpected token < in JSON at position 1254\n    at JSON.parse (<anonymous>)\n    at ConfigChainBuilder.addConfig (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:150:65)\n    at ConfigChainBuilder.findConfigs (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:102:30)\n    at buildConfigChain (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\build-config-chain.js:61:13)\n    at OptionManager.init (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\options\\option-manager.js:354:58)\n    at File.initOptions (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\index.js:212:65)\n    at new File (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\file\\index.js:135:24)\n    at Pipeline.transform (c:\\DAD_project\\DADProject\\node_modules\\babel-core\\lib\\transformation\\pipeline.js:46:16)\n    at transpile (c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\index.js:50:20)\n    at c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\fs-cache.js:118:18\n    at ReadFileContext.callback (c:\\DAD_project\\DADProject\\node_modules\\babel-loader\\lib\\fs-cache.js:31:21)\n    at FSReqWrap.readFileAfterOpen [as oncomplete] (fs.js:235:13)");
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+throw new Error("Cannot find module \"jspdf\"");
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["currentUser"],
+  data: function data() {
+    return {
+      invoices: [],
+      paidInvoices: {},
+      payingInvoice: false,
+      currentInvoice: {},
+      currentInvoiceItems: []
+    };
+  },
+  methods: {
+    mealForInvoice: function mealForInvoice() {
+      var _this = this;
+
+      axios.get("/api/mealForInvoice").then(function (response) {
+        _this.invoices = response.data;
+      });
+    },
+    openPayInvoiceComponent: function openPayInvoiceComponent(invoice) {
+      this.payingInvoice = true;
+    },
+    closePayInvoiceComponent: function closePayInvoiceComponent() {
+      this.mealForInvoice();
+      this.payingInvoice = false;
+    },
+    paidInvoice: function paidInvoice() {
+      var _this2 = this;
+
+      axios.get("/api/invoices").then(function (response) {
+        _this2.paidInvoices = response.data;
+      });
+    },
+    exportPdf: function exportPdf(invoice) {
+      var _this3 = this;
+
+      //Talvez por ser assincrono, primeiro corre o código do PDF 
+      //e só a seguir corre a chamada à API
+      axios.get("api/invoiceItems/" + invoice.id).then(function (response) {
+        _this3.currentInvoiceItems = response.data;
+      }).catch(function (error) {});
+
+      var doc = new __WEBPACK_IMPORTED_MODULE_0_jspdf___default.a();
+
+      doc.setFontSize(20);
+      doc.text("Restaurant Management", 10, 30);
+
+      doc.text("Invoice", 10, 40);
+
+      doc.setFontSize(12);
+      doc.text("Invoice ID: " + invoice.id, 13, 45);
+      doc.text("Name: " + invoice.name, 13, 49);
+      doc.text("NIF: " + invoice.nif, 13, 53);
+      doc.text("Date: " + invoice.date, 13, 57);
+
+      doc.addPage();
+      doc.setFontSize(17);
+      doc.text("List of items:", 10, 20);
+
+      var y = 30;
+      doc.setFontSize(12);
+      this.currentInvoiceItems.forEach(function (element) {
+        doc.text(element.name, 13, y);
+        doc.text("x" + element.quantity, 20, y += 5);
+        doc.text(element.unit_price + " €", 40, y);
+        doc.text(element.sub_total_price + " €", 65, y);
+        y += 10;
+      });
+
+      doc.setFontSize(18);
+      doc.text("TOTAL: " + invoice.total_price + " €", 40, y += 10);
+
+      doc.save("invoice_" + invoice.id + ".pdf");
+    }
+  },
+  mounted: function mounted() {
+    var _this4 = this;
+
+    this.mealForInvoice();
+    this.paidInvoice();
+
+    axios.get("api/invoiceItems/" + this.currentInvoice.id).then(function (response) {
+      _this4.currentInvoiceItems = response.data;
+    }).catch(function (error) {});
+  }
+});
 
 /***/ }),
 /* 93 */
