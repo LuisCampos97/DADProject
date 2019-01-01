@@ -81,7 +81,7 @@ module.exports = {
         sendGlobalMsg: function(){
             console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
             if (this.$store.state.user === null) {
-                this.$socket.emit('msg_from_client', this.msgGlobalText);
+                this.$toasted.error('User is not logged in!');
             } else {
                 this.$socket.emit('msg_from_client', this.msgGlobalText, this.$store.state.user);
             }

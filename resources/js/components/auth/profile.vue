@@ -183,6 +183,12 @@ module.exports = {
       axios
         .put("/api/users/" + user.id + "/shift", user)
         .then(response => {
+          if(user.shift_active == '0'){
+            this.$socket.emit('user_exit', this.$store.state.user);
+          }
+          else{
+            this.$socket.emit('user_enter', response.data.data);
+          }
           Vue.set(this.user, response.data.data);
           this.$store.commit("setUser", response.data.data);
           this.$router.push({
@@ -190,6 +196,9 @@ module.exports = {
           });
         })
         .catch(error => {
+          if(user.shift_active == '0'){
+            this.$socket.emit('user_exit', this.$store.state.user);
+          }
           this.showFailure = true;
           this.showSuccess = false;
           this.failMessage = error.response.data.message;
