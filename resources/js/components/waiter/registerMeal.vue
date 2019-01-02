@@ -14,7 +14,7 @@
                         <button class="profile-edit-btn"  style="float: right" @click.prevent="registerMeal()">Register</button>
                     </div>
                     <div class="col-md-2">
-                        <button class="profile-edit-btn" style="float: right" @click.prevent="cancelMeal()">Cancel</button>
+                        <button class="profile-edit-btn" style="float: left" @click.prevent="cancelMeal()">Cancel</button>
                     </div>
                 </div>
             </div>

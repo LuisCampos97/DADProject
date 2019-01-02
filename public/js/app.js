@@ -52177,93 +52177,78 @@ exports.push([module.i, "\ninput[type=text] {\r\n  width: 80%;\r\n  padding: 12p
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 module.exports = {
-  data: function data() {
-    return {
-      msgGlobalText: "",
-      msgGlobalTextArea: ""
-    };
-  },
-  computed: {
-    user: function user() {
-      return this.$store.state.user;
+    data: function data() {
+        return {
+            msgGlobalText: '',
+            msgGlobalTextArea: ''
+        };
     },
-    timePassed: function timePassed() {
-      var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
-      console.log(diff);
-      var days = Math.floor(diff / 1000 / 60 / 60 / 24);
-      var hours = Math.floor(diff / 1000 / 60 / 60);
-      var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
-      if (days == 0 && hours == 0) {
-        return minutes + " m";
-      } else if (days == 0) {
-        return hours + " h : " + minutes + " m";
-      } else {
-        return days + " d : " + hours + " h : " + minutes + " m";
-      }
-    }
-  },
-  methods: {
-    invertShift: function invertShift() {
-      var _this = this;
+    computed: {
+        user: function user() {
+            return this.$store.state.user;
+        },
+        timePassed: function timePassed() {
+            var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
+            console.log(diff);
+            var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+            var hours = Math.floor(diff / 1000 / 60 / 60);
+            var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
+            if (days == 0 && hours == 0) {
+                return minutes + " m";
+            } else if (days == 0) {
+                return hours + " h : " + minutes + " m";
+            } else {
+                return days + " d : " + hours + " h : " + minutes + " m";
+            }
+        }
+    },
+    methods: {
+        invertShift: function invertShift() {
+            var _this = this;
 
-      var user = this.$store.state.user;
-      axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
-        Vue.set(_this.user, response.data.data);
-        _this.$store.commit("setUser", response.data.data);
-        _this.$router.push({
-          name: "profile"
-        });
-      }).catch(function (error) {
-        _this.showFailure = true;
-        _this.showSuccess = false;
-        _this.failMessage = error.response.data.message;
-        console.dir(error);
-      });
+            var user = this.$store.state.user;
+            axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
+                if (user.shift_active == '0') {
+                    _this.$socket.emit('user_exit', _this.$store.state.user);
+                } else {
+                    _this.$socket.emit('user_enter', response.data.data);
+                }
+                Vue.set(_this.user, response.data.data);
+                _this.$store.commit("setUser", response.data.data);
+                _this.$router.push({
+                    name: "profile"
+                });
+            }).catch(function (error) {
+                if (user.shift_active == '0') {
+                    _this.$socket.emit('user_exit', _this.$store.state.user);
+                }
+                _this.showFailure = true;
+                _this.showSuccess = false;
+                _this.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        },
+        sendGlobalMsg: function sendGlobalMsg() {
+            console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
+            if (this.$store.state.user === null) {
+                this.$toasted.error('User is not logged in!');
+            } else {
+                this.$socket.emit('msg_from_client', this.msgGlobalText, this.$store.state.user);
+            }
+            this.msgGlobalText = "";
+        }
     },
-    sendGlobalMsg: function sendGlobalMsg() {
-      console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
-      if (this.$store.state.user === null) {
-        this.$socket.emit("msg_from_client", this.msgGlobalText);
-      } else {
-        this.$socket.emit("msg_from_client", this.msgGlobalText, this.$store.state.user);
-      }
-      this.msgGlobalText = "";
+    sockets: {
+        connect: function connect() {
+            console.log('socket connected (socket ID = ' + this.$socket.id + ')');
+        },
+        msg_from_server: function msg_from_server(dataFromServer) {
+            console.log('Receiving this message from Server: "' + dataFromServer + '"');
+            this.msgGlobalTextArea = dataFromServer + '\n' + this.msgGlobalTextArea;
+        }
     }
-  },
-  sockets: {
-    connect: function connect() {
-      console.log("socket connected (socket ID = " + this.$socket.id + ")");
-    },
-    msg_from_server: function msg_from_server(dataFromServer) {
-      console.log('Receiving this message from Server: "' + dataFromServer + '"');
-      this.msgGlobalTextArea = dataFromServer + "\n" + this.msgGlobalTextArea;
-    }
-  }
 };
 
 /***/ }),
@@ -52274,224 +52259,144 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "jumbotron" }, [
-    _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "profile-shift" }, [
-        _c("p", [_vm._v("Shift")]),
-        _vm._v(" "),
-        _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _vm.user.shift_active == "0"
-          ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _vm.user.shift_active == "0"
-          ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
-          : _vm._e(),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _vm.user.shift_active == "0"
-          ? _c(
-              "button",
-              {
-                staticClass: "profile-shift-btn",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.invertShift()
-                  }
-                }
-              },
-              [_vm._v("Start")]
-            )
-          : _vm._e(),
-        _vm._v(" "),
-        _vm.user.shift_active == "1"
-          ? _c(
-              "button",
-              {
-                staticClass: "profile-shift-btn",
-                on: {
-                  click: function($event) {
-                    $event.preventDefault()
-                    _vm.invertShift()
-                  }
-                }
-              },
-              [_vm._v("Quit")]
-            )
-          : _vm._e()
-      ])
-    ]),
-    _vm._v(" "),
-    _c("br"),
-    _c("br"),
-    _vm._v(" "),
-    _c("p", [_vm._v(" Message to all managers: ")]),
-    _vm._v(" "),
-    _c("div", [
-      _c("input", {
-        directives: [
-          {
-            name: "model",
-            rawName: "v-model",
-            value: _vm.msgGlobalText,
-            expression: "msgGlobalText"
-          }
-        ],
-        staticClass: "inputchat",
-        attrs: { type: "text", id: "inputGlobal" },
-        domProps: { value: _vm.msgGlobalText },
-        on: {
-          keypress: function($event) {
-            if (
-              !("button" in $event) &&
-              _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-            ) {
-              return null
-            }
-            return _vm.sendGlobalMsg($event)
-          },
-          input: function($event) {
-            if ($event.target.composing) {
-              return
-            }
-            _vm.msgGlobalText = $event.target.value
-          }
-        }
-      }),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _vm.user.shift_active == "0"
-        ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
-        : _vm._e(),
-      _vm._v(" "),
-      _c("br"),
-      _vm._v(" "),
-      _vm.user.shift_active == "0"
-        ? _c(
-            "button",
-            {
-              staticClass: "profile-shift-btn",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.invertShift()
-                }
-              }
-            },
-            [_vm._v("Start")]
-          )
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.user.shift_active == "1"
-        ? _c(
-            "button",
-            {
-              staticClass: "profile-shift-btn",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.invertShift()
-                }
-              }
-            },
-            [_vm._v("Quit")]
-          )
-        : _vm._e()
-    ]),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _c("br"),
-    _vm._v(" "),
-    _vm.user.shift_active == "1"
-      ? _c(
-          "div",
-          [
-            _c("p", [_vm._v("Message to all managers:")]),
-            _vm._v(" "),
-            _c("input", {
-              directives: [
+  return _c(
+    "div",
+    { staticClass: "jumbotron" },
+    [
+      _c("div", { staticClass: "row" }, [
+        _c("div", { staticClass: "profile-shift" }, [
+          _c("p", [_vm._v("Shift")]),
+          _vm._v(" "),
+          _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _vm.user.shift_active == "0"
+            ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _vm.user.shift_active == "0"
+            ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _vm.user.shift_active == "0"
+            ? _c(
+                "button",
                 {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.msgGlobalText,
-                  expression: "msgGlobalText"
-                }
-              ],
-              staticClass: "inputchat",
-              attrs: { type: "text", id: "inputGlobal" },
-              domProps: { value: _vm.msgGlobalText },
-              on: {
-                keypress: function($event) {
-                  if (
-                    !("button" in $event) &&
-                    _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                  ) {
-                    return null
-                  }
-                  return _vm.sendGlobalMsg($event)
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.msgGlobalText = $event.target.value
-                }
-              }
-            }),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _c(
-              "textarea",
-              {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.msgGlobalTextArea,
-                    expression: "msgGlobalTextArea"
-                  }
-                ],
-                staticClass: "inputchat",
-                attrs: { id: "textGlobal" },
-                domProps: { value: _vm.msgGlobalTextArea },
-                on: {
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
+                  staticClass: "profile-shift-btn",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.invertShift()
                     }
-                    _vm.msgGlobalTextArea = $event.target.value
                   }
-                }
-              },
-              [_vm._v("Global Chat")]
-            ),
-            _vm._v(" "),
-            _vm.user.type == "waiter"
-              ? _c("dashboardWaiter", { attrs: { currentUser: _vm.user } })
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.user.type == "cook"
-              ? _c("dashboardCook", { attrs: { currentUser: _vm.user } })
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.user.type == "cashier"
-              ? _c("dashboardCashier", { attrs: { currentUser: _vm.user } })
-              : _vm._e()
+                },
+                [_vm._v("Start")]
+              )
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.user.shift_active == "1"
+            ? _c(
+                "button",
+                {
+                  staticClass: "profile-shift-btn",
+                  on: {
+                    click: function($event) {
+                      $event.preventDefault()
+                      _vm.invertShift()
+                    }
+                  }
+                },
+                [_vm._v("Quit")]
+              )
+            : _vm._e()
+        ])
+      ]),
+      _vm._v(" "),
+      _c("br"),
+      _c("br"),
+      _vm._v(" "),
+      _c("p", [_vm._v(" Message to all managers: ")]),
+      _vm._v(" "),
+      _c("div", [
+        _c("input", {
+          directives: [
+            {
+              name: "model",
+              rawName: "v-model",
+              value: _vm.msgGlobalText,
+              expression: "msgGlobalText"
+            }
           ],
-          1
+          staticClass: "inputchat",
+          attrs: { type: "text", id: "inputGlobal" },
+          domProps: { value: _vm.msgGlobalText },
+          on: {
+            keypress: function($event) {
+              if (
+                !("button" in $event) &&
+                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+              ) {
+                return null
+              }
+              return _vm.sendGlobalMsg($event)
+            },
+            input: function($event) {
+              if ($event.target.composing) {
+                return
+              }
+              _vm.msgGlobalText = $event.target.value
+            }
+          }
+        }),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c(
+          "textarea",
+          {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.msgGlobalTextArea,
+                expression: "msgGlobalTextArea"
+              }
+            ],
+            staticClass: "inputchat",
+            attrs: { id: "textGlobal" },
+            domProps: { value: _vm.msgGlobalTextArea },
+            on: {
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.msgGlobalTextArea = $event.target.value
+              }
+            }
+          },
+          [_vm._v("Global Chat")]
         )
-      : _vm._e()
-  ])
+      ]),
+      _vm._v(" "),
+      _vm.user.type == "waiter"
+        ? _c("dashboardWaiter", { attrs: { currentUser: _vm.user } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.user.type == "cook"
+        ? _c("dashboardCook", { attrs: { currentUser: _vm.user } })
+        : _vm._e(),
+      _vm._v(" "),
+      _vm.user.type == "cashier"
+        ? _c("dashboardCashier", { attrs: { currentUser: _vm.user } })
+        : _vm._e()
+    ],
+    1
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -52728,12 +52633,20 @@ module.exports = {
 
       var user = this.$store.state.user;
       axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
+        if (user.shift_active == '0') {
+          _this2.$socket.emit('user_exit', _this2.$store.state.user);
+        } else {
+          _this2.$socket.emit('user_enter', response.data.data);
+        }
         Vue.set(_this2.user, response.data.data);
         _this2.$store.commit("setUser", response.data.data);
         _this2.$router.push({
           name: "profile"
         });
       }).catch(function (error) {
+        if (user.shift_active == '0') {
+          _this2.$socket.emit('user_exit', _this2.$store.state.user);
+        }
         _this2.showFailure = true;
         _this2.showSuccess = false;
         _this2.failMessage = error.response.data.message;
@@ -52757,8 +52670,7 @@ module.exports = {
 
         Vue.set(_this3.user, response.data.data);
         _this3.editingUser = false;
-        _this3.$store.commit("setUser", response.data.data); //TO DO: atualizar o user, para que depois de fazer save seja visto
-        // o novo username e name (bpq agora só atualiza se fizermos F5)
+        _this3.$store.commit("setUser", response.data.data);
         setTimeout(function () {
           _this3.showFailure = false;
           _this3.showSuccess = false;
@@ -55753,7 +55665,7 @@ var render = function() {
                   "button",
                   {
                     staticClass: "profile-edit-btn",
-                    staticStyle: { float: "right" },
+                    staticStyle: { float: "left" },
                     on: {
                       click: function($event) {
                         $event.preventDefault()
