@@ -60,28 +60,37 @@ module.exports = {
         }
     },
     methods: {
-        invertShift: function () {
+        invertShift: function() {
             const user = this.$store.state.user;
             axios
                 .put("/api/users/" + user.id + "/shift", user)
                 .then(response => {
-                    Vue.set(this.user, response.data.data);
-                    this.$store.commit("setUser", response.data.data);
-                    this.$router.push({
-                        name: "profile"
-                    });
+                if(user.shift_active == '0'){
+                    this.$socket.emit('user_exit', this.$store.state.user);
+                }
+                else{
+                    this.$socket.emit('user_enter', response.data.data);
+                }
+                Vue.set(this.user, response.data.data);
+                this.$store.commit("setUser", response.data.data);
+                this.$router.push({
+                    name: "profile"
+                });
                 })
                 .catch(error => {
-                    this.showFailure = true;
-                    this.showSuccess = false;
-                    this.failMessage = error.response.data.message;
-                    console.dir(error);
+                if(user.shift_active == '0'){
+                    this.$socket.emit('user_exit', this.$store.state.user);
+                }
+                this.showFailure = true;
+                this.showSuccess = false;
+                this.failMessage = error.response.data.message;
+                console.dir(error);
                 });
         },
         sendGlobalMsg: function(){
             console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
             if (this.$store.state.user === null) {
-                this.$socket.emit('msg_from_client', this.msgGlobalText);
+                this.$toasted.error('User is not logged in!');
             } else {
                 this.$socket.emit('msg_from_client', this.msgGlobalText, this.$store.state.user);
             }

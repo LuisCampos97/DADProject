@@ -52210,12 +52210,20 @@ module.exports = {
 
             var user = this.$store.state.user;
             axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
+                if (user.shift_active == '0') {
+                    _this.$socket.emit('user_exit', _this.$store.state.user);
+                } else {
+                    _this.$socket.emit('user_enter', response.data.data);
+                }
                 Vue.set(_this.user, response.data.data);
                 _this.$store.commit("setUser", response.data.data);
                 _this.$router.push({
                     name: "profile"
                 });
             }).catch(function (error) {
+                if (user.shift_active == '0') {
+                    _this.$socket.emit('user_exit', _this.$store.state.user);
+                }
                 _this.showFailure = true;
                 _this.showSuccess = false;
                 _this.failMessage = error.response.data.message;
@@ -52225,7 +52233,7 @@ module.exports = {
         sendGlobalMsg: function sendGlobalMsg() {
             console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
             if (this.$store.state.user === null) {
-                this.$socket.emit('msg_from_client', this.msgGlobalText);
+                this.$toasted.error('User is not logged in!');
             } else {
                 this.$socket.emit('msg_from_client', this.msgGlobalText, this.$store.state.user);
             }
@@ -52662,8 +52670,7 @@ module.exports = {
 
         Vue.set(_this3.user, response.data.data);
         _this3.editingUser = false;
-        _this3.$store.commit("setUser", response.data.data); //TO DO: atualizar o user, para que depois de fazer save seja visto
-        // o novo username e name (bpq agora só atualiza se fizermos F5)
+        _this3.$store.commit("setUser", response.data.data);
         setTimeout(function () {
           _this3.showFailure = false;
           _this3.showSuccess = false;

@@ -222,8 +222,7 @@ module.exports = {
 
           Vue.set(this.user, response.data.data);
           this.editingUser = false;
-          this.$store.commit("setUser", response.data.data); //TO DO: atualizar o user, para que depois de fazer save seja visto
-          // o novo username e name (bpq agora só atualiza se fizermos F5)
+          this.$store.commit("setUser", response.data.data);
           setTimeout(() => {
             this.showFailure = false;
             this.showSuccess = false;
