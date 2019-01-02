@@ -67,7 +67,12 @@ class UserControllerAPI extends Controller
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        $user->delete();
+        try {
+            $user->forceDelete();
+        } catch (\Exception $e) {
+            $user->delete();
+        }
+
         return response()->json(null, 204);
     }
     public function emailAvailable(Request $request)

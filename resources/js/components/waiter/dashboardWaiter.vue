@@ -41,12 +41,14 @@ module.exports = {
     props: ["currentUser"],
     data: function () {
         return {
-            currentDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
-            registeringMeal: false,
-            registeringOrder: false,
             orders: [],
             items: [],
             tables: [],
+            meals: [],
+            invoiceItems: [],
+            currentDate: new Date().toISOString().slice(0, 19).replace('T', ' '),
+            registeringMeal: false,
+            registeringOrder: false,
             currentMeal: {},
             invoice: {
                 state: "pending",
@@ -54,7 +56,13 @@ module.exports = {
                 date: "",
                 total_price: 0
             },
-            meals: []
+            invoiceItem: {
+                invoice_id: "",
+                item_id: "",
+                quantity: 0,
+                unit_price: 0,
+                sub_total_price: 0
+            },
         };
     },
     methods: {
@@ -121,31 +129,64 @@ module.exports = {
                 .catch();
         },
         terminate: function (meal) {
-            axios
-                .put("api/meals/terminate/" + meal.id, meal)
-                .then(response => {
-                    this.getMeals();
-                })
-                .catch();
 
-            axios
-                .put("api/orders/terminate/" + meal.id, meal)
-                .then(response => {
-                    this.getOrders();
-                })
-                .catch();
+            let response = confirm(
+                "There are orders not delivered, do you wish to continue?"
+            );
+            if (response) {
 
-            this.invoice.meal_id = meal.id;
-            this.invoice.date = new Date().toISOString().slice(0, 19).replace('T', ' ');
-            this.invoice.total_price = meal.total_price_preview;
+                axios
+                    .put("api/meals/terminate/" + meal.id, meal)
+                    .then(response => {
+                        this.getMeals();
+                    })
+                    .catch();
 
-            console.log(this.invoice);
+                axios
+                    .put("api/orders/terminate/" + meal.id, meal)
+                    .then(response => {
+                        this.getOrders();
+                    })
+                    .catch();
 
-            axios.post("api/invoices/register", this.invoice)
-                .then(response => {
-                    console.log('response', response.data.data.id);
-                })
-                .catch();
+                this.invoice.meal_id = meal.id;
+                this.invoice.date = new Date().toISOString().slice(0, 19).replace('T', ' ');
+                this.invoice.total_price = meal.total_price_preview;
+
+                console.log(this.invoice);
+
+                axios.post("api/invoices/register", this.invoice)
+                    .then(response => {
+                        for (let order of this.orders) {
+                            let invoiceitem = {};
+                            if (meal.id == order.meal_id) {
+                                invoiceitem.quantity = 0;
+                                invoiceitem.item_id = order.item_id;
+                                invoiceitem.invoice_id = response.data.data.id;
+                                for (let element of this.orders) {
+                                    if (invoiceitem.item_id == element.item_id && meal.id == element.meal_id) {
+                                        invoiceitem.quantity += 1;
+                                        invoiceitem.unit_price = this.items[order.item_id - 1].price;
+                                    }
+                                }
+
+                                invoiceitem.sub_total_price = invoiceitem.unit_price * invoiceitem.quantity;
+
+                                axios
+                                    .post("api/invoiceItems/register", invoiceitem)
+                                    .then(response => {
+                                        this.getOrders();
+                                        this.getMeals();
+                                    })
+                                    .catch();
+                            }
+                        }
+
+                    })
+                    .catch();
+            } else {
+                console.log("CANCEL");
+            }
         },
 
     },

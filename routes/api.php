@@ -56,6 +56,9 @@ Route::get('invoiceDetails/{id}', 'InvoiceController@invoiceDetails');
 Route::get('invoiceItems/{id}', 'InvoiceController@invoiceItems');
 Route::put('invoices/{id}', 'InvoiceController@editInvoice');
 
+//Invoice Items
+Route::post('invoiceItems/register', 'InvoiceItemController@create');
+
 //Authentication
 Route::post('login', 'LoginControllerAPI@login')->name('login');
 Route::post('register', 'Auth\RegisterController@create');
