@@ -1,7 +1,7 @@
 <template>
 <div class="jumbotron">
-    <div class="row">
-        <div class="profile-shift">
+    <div class="row" style="text-align: center">
+        <div class="col-md-3">
             <p>Shift</p>
             <a>Start: {{ user.last_shift_start }}</a>
             <br>
@@ -9,32 +9,30 @@
             <br>
             <a v-if="user.shift_active == '0'">Time: {{ timePassed }}</a>
             <br>
-            <button v-if="user.shift_active == '0'" class="profile-shift-btn" @click.prevent="invertShift()">Start</button>
-            <button v-if="user.shift_active == '1'" class="profile-shift-btn" @click.prevent="invertShift()">Quit</button>
+            <button v-if="user.shift_active == '0'" @click.prevent="invertShift()">Start</button>
+            <button v-if="user.shift_active == '1'" @click.prevent="invertShift()">Quit</button>
+        </div>
+        <div class="col-md-9">
+            <p> Message to all managers: </p>
+
+            <div>
+                <input type="text" id="inputGlobal" class="inputchat" v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
+                <br>
+                <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
+            </div>
         </div>
     </div>
 
-    <br><br>
-    <p> Message to all managers: </p>
-    
-    <div>
-        <input type="text" id="inputGlobal" class="inputchat" v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
-        <br>
-        <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
-    </div>
-    
     <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
     <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
     <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
-
-    
 
 </div>
 </template>
 
 <script>
 module.exports = {
-    data: function() {
+    data: function () {
         return {
             msgGlobalText: '',
             msgGlobalTextArea: '',
@@ -60,34 +58,33 @@ module.exports = {
         }
     },
     methods: {
-        invertShift: function() {
+        invertShift: function () {
             const user = this.$store.state.user;
             axios
                 .put("/api/users/" + user.id + "/shift", user)
                 .then(response => {
-                if(user.shift_active == '0'){
-                    this.$socket.emit('user_exit', this.$store.state.user);
-                }
-                else{
-                    this.$socket.emit('user_enter', response.data.data);
-                }
-                Vue.set(this.user, response.data.data);
-                this.$store.commit("setUser", response.data.data);
-                this.$router.push({
-                    name: "profile"
-                });
+                    if (user.shift_active == '0') {
+                        this.$socket.emit('user_exit', this.$store.state.user);
+                    } else {
+                        this.$socket.emit('user_enter', response.data.data);
+                    }
+                    Vue.set(this.user, response.data.data);
+                    this.$store.commit("setUser", response.data.data);
+                    this.$router.push({
+                        name: "profile"
+                    });
                 })
                 .catch(error => {
-                if(user.shift_active == '0'){
-                    this.$socket.emit('user_exit', this.$store.state.user);
-                }
-                this.showFailure = true;
-                this.showSuccess = false;
-                this.failMessage = error.response.data.message;
-                console.dir(error);
+                    if (user.shift_active == '0') {
+                        this.$socket.emit('user_exit', this.$store.state.user);
+                    }
+                    this.showFailure = true;
+                    this.showSuccess = false;
+                    this.failMessage = error.response.data.message;
+                    console.dir(error);
                 });
         },
-        sendGlobalMsg: function(){
+        sendGlobalMsg: function () {
             console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
             if (this.$store.state.user === null) {
                 this.$toasted.error('User is not logged in!');
@@ -97,13 +94,13 @@ module.exports = {
             this.msgGlobalText = "";
         },
     },
-    sockets:{
-        connect(){
-            console.log('socket connected (socket ID = '+this.$socket.id+')');
-        }, 
-        msg_from_server(dataFromServer){
-            console.log('Receiving this message from Server: "' + dataFromServer + '"');            
-            this.msgGlobalTextArea = dataFromServer + '\n' + this.msgGlobalTextArea ;
+    sockets: {
+        connect() {
+            console.log('socket connected (socket ID = ' + this.$socket.id + ')');
+        },
+        msg_from_server(dataFromServer) {
+            console.log('Receiving this message from Server: "' + dataFromServer + '"');
+            this.msgGlobalTextArea = dataFromServer + '\n' + this.msgGlobalTextArea;
         }
     },
 };
@@ -111,32 +108,31 @@ module.exports = {
 
 <style>
 input[type=text] {
-  width: 80%;
-  padding: 12px 20px;
-  margin: 8px 0;
-  box-sizing: border-box;
-  background-color: #ffffff;
-}
-
-textarea{
     width: 80%;
-  height: 150px;
-  padding: 12px 20px;
-  box-sizing: border-box;
-  border: 2px solid #ccc;
-  border-radius: 4px;
-  background-color: #f8f8f8;
-  resize: none; 
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    background-color: #ffffff;
 }
 
-button{
-  background-color: #87CEEB;
-  border: 2px;
-  border-radius: 4px;
-  color: white;
-  padding: 16px 32px;
-  text-decoration: none;
-  margin: 4px 2px;
-  cursor: pointer;
+textarea {
+    width: 80%;
+    height: 150px;
+    padding: 12px 20px;
+    box-sizing: border-box;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    background-color: #f8f8f8;
+    resize: none;
+}
+
+button {
+    background-color: #2C3E50 ;
+    border: 2px;
+    border-radius: 4px;
+    color: white;
+    padding: 8px 16px;
+    margin: 4px 2px;
+    cursor: pointer;
 }
 </style>

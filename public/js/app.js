@@ -52134,7 +52134,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\ninput[type=text] {\r\n  width: 80%;\r\n  padding: 12px 20px;\r\n  margin: 8px 0;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  background-color: #ffffff;\n}\ntextarea{\r\n    width: 80%;\r\n  height: 150px;\r\n  padding: 12px 20px;\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  border: 2px solid #ccc;\r\n  border-radius: 4px;\r\n  background-color: #f8f8f8;\r\n  resize: none;\n}\nbutton{\r\n  background-color: #87CEEB;\r\n  border: 2px;\r\n  border-radius: 4px;\r\n  color: white;\r\n  padding: 16px 32px;\r\n  text-decoration: none;\r\n  margin: 4px 2px;\r\n  cursor: pointer;\n}\r\n", ""]);
+exports.push([module.i, "\ninput[type=text] {\r\n    width: 80%;\r\n    padding: 12px 20px;\r\n    margin: 8px 0;\r\n    -webkit-box-sizing: border-box;\r\n            box-sizing: border-box;\r\n    background-color: #ffffff;\n}\ntextarea {\r\n    width: 80%;\r\n    height: 150px;\r\n    padding: 12px 20px;\r\n    -webkit-box-sizing: border-box;\r\n            box-sizing: border-box;\r\n    border: 2px solid #ccc;\r\n    border-radius: 4px;\r\n    background-color: #f8f8f8;\r\n    resize: none;\n}\nbutton {\r\n    background-color: #2C3E50 ;\r\n    border: 2px;\r\n    border-radius: 4px;\r\n    color: white;\r\n    padding: 8px 16px;\r\n    margin: 4px 2px;\r\n    cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -52143,8 +52143,6 @@ exports.push([module.i, "\ninput[type=text] {\r\n  width: 80%;\r\n  padding: 12p
 /* 63 */
 /***/ (function(module, exports) {
 
-//
-//
 //
 //
 //
@@ -52263,125 +52261,126 @@ var render = function() {
     "div",
     { staticClass: "jumbotron" },
     [
-      _c("div", { staticClass: "row" }, [
-        _c("div", { staticClass: "profile-shift" }, [
-          _c("p", [_vm._v("Shift")]),
-          _vm._v(" "),
-          _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _vm.user.shift_active == "0"
-            ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _vm.user.shift_active == "0"
-            ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _vm.user.shift_active == "0"
-            ? _c(
-                "button",
-                {
-                  staticClass: "profile-shift-btn",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      _vm.invertShift()
+      _c(
+        "div",
+        { staticClass: "row", staticStyle: { "text-align": "center" } },
+        [
+          _c("div", { staticClass: "col-md-3" }, [
+            _c("p", [_vm._v("Shift")]),
+            _vm._v(" "),
+            _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _vm.user.shift_active == "0"
+              ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _vm.user.shift_active == "0"
+              ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
+              : _vm._e(),
+            _vm._v(" "),
+            _c("br"),
+            _vm._v(" "),
+            _vm.user.shift_active == "0"
+              ? _c(
+                  "button",
+                  {
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.invertShift()
+                      }
                     }
-                  }
-                },
-                [_vm._v("Start")]
-              )
-            : _vm._e(),
-          _vm._v(" "),
-          _vm.user.shift_active == "1"
-            ? _c(
-                "button",
-                {
-                  staticClass: "profile-shift-btn",
-                  on: {
-                    click: function($event) {
-                      $event.preventDefault()
-                      _vm.invertShift()
+                  },
+                  [_vm._v("Start")]
+                )
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.user.shift_active == "1"
+              ? _c(
+                  "button",
+                  {
+                    on: {
+                      click: function($event) {
+                        $event.preventDefault()
+                        _vm.invertShift()
+                      }
                     }
+                  },
+                  [_vm._v("Quit")]
+                )
+              : _vm._e()
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "col-md-9" }, [
+            _c("p", [_vm._v(" Message to all managers: ")]),
+            _vm._v(" "),
+            _c("div", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.msgGlobalText,
+                    expression: "msgGlobalText"
                   }
-                },
-                [_vm._v("Quit")]
-              )
-            : _vm._e()
-        ])
-      ]),
-      _vm._v(" "),
-      _c("br"),
-      _c("br"),
-      _vm._v(" "),
-      _c("p", [_vm._v(" Message to all managers: ")]),
-      _vm._v(" "),
-      _c("div", [
-        _c("input", {
-          directives: [
-            {
-              name: "model",
-              rawName: "v-model",
-              value: _vm.msgGlobalText,
-              expression: "msgGlobalText"
-            }
-          ],
-          staticClass: "inputchat",
-          attrs: { type: "text", id: "inputGlobal" },
-          domProps: { value: _vm.msgGlobalText },
-          on: {
-            keypress: function($event) {
-              if (
-                !("button" in $event) &&
-                _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-              ) {
-                return null
-              }
-              return _vm.sendGlobalMsg($event)
-            },
-            input: function($event) {
-              if ($event.target.composing) {
-                return
-              }
-              _vm.msgGlobalText = $event.target.value
-            }
-          }
-        }),
-        _vm._v(" "),
-        _c("br"),
-        _vm._v(" "),
-        _c(
-          "textarea",
-          {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.msgGlobalTextArea,
-                expression: "msgGlobalTextArea"
-              }
-            ],
-            staticClass: "inputchat",
-            attrs: { id: "textGlobal" },
-            domProps: { value: _vm.msgGlobalTextArea },
-            on: {
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
+                ],
+                staticClass: "inputchat",
+                attrs: { type: "text", id: "inputGlobal" },
+                domProps: { value: _vm.msgGlobalText },
+                on: {
+                  keypress: function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.sendGlobalMsg($event)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.msgGlobalText = $event.target.value
+                  }
                 }
-                _vm.msgGlobalTextArea = $event.target.value
-              }
-            }
-          },
-          [_vm._v("Global Chat")]
-        )
-      ]),
+              }),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _c(
+                "textarea",
+                {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.msgGlobalTextArea,
+                      expression: "msgGlobalTextArea"
+                    }
+                  ],
+                  staticClass: "inputchat",
+                  attrs: { id: "textGlobal" },
+                  domProps: { value: _vm.msgGlobalTextArea },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.msgGlobalTextArea = $event.target.value
+                    }
+                  }
+                },
+                [_vm._v("Global Chat")]
+              )
+            ])
+          ])
+        ]
+      ),
       _vm._v(" "),
       _vm.user.type == "waiter"
         ? _c("dashboardWaiter", { attrs: { currentUser: _vm.user } })
@@ -52443,7 +52442,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n.jumbotron {\r\n  padding: 3%;\r\n  margin-top: 3%;\r\n  margin-bottom: 3%;\r\n  border-radius: 0.5rem;\r\n  background: #fff;\n}\n.profile-img {\r\n  text-align: center;\n}\n.profile-img img {\r\n  width: 60%;\r\n  height: 90%;\n}\n.profile-img .file {\r\n  position: relative;\r\n  overflow: hidden;\r\n  margin-top: -20%;\r\n  width: 70%;\r\n  border: none;\r\n  border-radius: 0;\r\n  font-size: 15px;\r\n  background: #212529b8;\n}\n.profile-img .file input {\r\n  position: absolute;\r\n  opacity: 0;\r\n  right: 0;\r\n  top: 0;\n}\n.profile-head h3 {\r\n  color: #333;\n}\n.profile-head h4 {\r\n  color: #0062cc;\n}\n.profile-img:hover .btn-lg {\r\n  opacity: 1;\n}\n.btn-lg {\r\n  opacity: 0;\n}\n.profile-edit-btn {\r\n  border: none;\r\n  border-radius: 1.5rem;\r\n  width: 70%;\r\n  padding: 2%;\r\n  font-weight: 600;\r\n  color: #6c757d;\r\n  cursor: pointer;\n}\n.profile-shift-btn {\r\n  border: none;\r\n  border-radius: 1.5rem;\r\n  width: 30%;\r\n  margin-top: 4%;\r\n  padding: 2%;\r\n  font-weight: 600;\r\n  color: #6c757d;\r\n  cursor: pointer;\n}\n.profile-shift {\r\n  padding: 14%;\r\n  margin-top: -15%;\r\n  text-align: center;\n}\n.profile-shift p {\r\n  font-size: 16px;\r\n  font-weight: 600;\r\n  margin-top: 7%;\r\n  text-align: center;\n}\n.profile-shift a {\r\n  text-decoration: none;\r\n  color: #212529b8;\r\n  font-weight: 600;\r\n  font-size: 13px;\n}\n.profile-info {\r\n  padding: 2%;\n}\n.profile-info p {\r\n  font-size: 15px;\r\n  color: #212529b8;\r\n  font-weight: 600;\r\n  text-align: center;\n}\r\n", ""]);
+exports.push([module.i, "\n.jumbotron {\r\n    padding: 3%;\r\n    margin-top: 3%;\r\n    margin-bottom: 3%;\r\n    border-radius: 0.5rem;\n}\n.profile-img {\r\n    text-align: center;\n}\n.profile-img img {\r\n    width: 60%;\r\n    height: 90%;\n}\n.profile-img .file {\r\n    position: relative;\r\n    overflow: hidden;\r\n    margin-top: -20%;\r\n    width: 70%;\r\n    border: none;\r\n    border-radius: 0;\r\n    font-size: 15px;\r\n    background: #212529b8;\n}\n.profile-img .file input {\r\n    position: absolute;\r\n    opacity: 0;\r\n    right: 0;\r\n    top: 0;\n}\n.profile-head h3 {\r\n    color: #333;\n}\n.profile-head h4 {\r\n    color: #0062cc;\n}\n.profile-img:hover .btn-lg {\r\n    opacity: 1;\n}\n.btn-lg {\r\n    opacity: 0;\n}\n.profile-shift {\r\n    padding: 14%;\r\n    margin-top: -15%;\r\n    text-align: center;\n}\n.profile-shift p {\r\n    font-size: 16px;\r\n    font-weight: 600;\r\n    margin-top: 7%;\r\n    text-align: center;\n}\n.profile-shift a {\r\n    text-decoration: none;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    font-size: 13px;\n}\n.profile-info {\r\n    padding: 2%;\n}\n.profile-info p {\r\n    font-size: 15px;\r\n    color: #212529b8;\r\n    font-weight: 600;\r\n    text-align: center;\n}\nbutton {\r\n    background-color: #2C3E50 ;\r\n    border: 2px;\r\n    border-radius: 4px;\r\n    color: white;\r\n    padding: 8px 16px;\r\n    margin: 4px 2px;\r\n    cursor: pointer;\n}\n.profile-edit-btn {\r\n    background-color: #2C3E50 ;\r\n    border: 2px;\r\n    border-radius: 4px;\r\n    color: white;\r\n    padding: 8px 16px;\r\n    margin: 4px 2px;\r\n    cursor: pointer;\n}\r\n", ""]);
 
 // exports
 
@@ -52542,147 +52541,137 @@ exports.push([module.i, "\n.jumbotron {\r\n  padding: 3%;\r\n  margin-top: 3%;\r
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 module.exports = {
-  data: function data() {
-    return {
-      user: this.$store.state.user,
-      typeofmsg: "alert-success",
-      showMessage: false,
-      message: "",
-      loggedIn: false,
-      file: "",
-      editingUser: false,
-      currentUser: {},
-      successMessage: "",
-      failMessage: "",
-      showSuccess: false,
-      showFailure: false
-    };
-  },
-  computed: {
-    timePassed: function timePassed() {
-      var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
-      var days = Math.floor(diff / 1000 / 60 / 60 / 24);
-      var hours = Math.floor(diff / 1000 / 60 / 60);
-      var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
-      if (days == 0 && hours == 0) {
-        return minutes + " m";
-      } else if (days == 0) {
-        return hours + " h : " + minutes + " m";
-      } else {
-        return days + " d : " + hours + " h : " + minutes + " m";
-      }
+    data: function data() {
+        return {
+            user: this.$store.state.user,
+            typeofmsg: "alert-success",
+            showMessage: false,
+            message: "",
+            loggedIn: false,
+            file: "",
+            editingUser: false,
+            currentUser: {},
+            successMessage: "",
+            failMessage: "",
+            showSuccess: false,
+            showFailure: false
+        };
+    },
+    computed: {
+        timePassed: function timePassed() {
+            var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
+            var days = Math.floor(diff / 1000 / 60 / 60 / 24);
+            var hours = Math.floor(diff / 1000 / 60 / 60);
+            var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
+            if (days == 0 && hours == 0) {
+                return minutes + " m";
+            } else if (days == 0) {
+                return hours + " h : " + minutes + " m";
+            } else {
+                return days + " d : " + hours + " h : " + minutes + " m";
+            }
+        }
+    },
+    methods: {
+        profiles: function profiles() {
+            this.showMessage = false;
+        },
+        submitFile: function submitFile() {
+            //Submete a foto para o servidor
+            var formData = new FormData(); //inicializa os dados do form
+            formData.append("file", this.file); //adiciona os dados do form que vamos submeter
+            var user = this.currentUser;
+
+            axios.post("/api/users/" + user.id, //fazemos um request para submeter (POST) no URL profile/photo
+            formData, {
+                headers: {
+                    "Content-Type": "multipart/form-data"
+                }
+            }).then(function () {
+                var _this = this;
+
+                this.showSuccess = true;
+                this.showFailure = false;
+                this.successMessage = "Profile photo changed!";
+                this.editingUser = false;
+                setTimeout(function () {
+                    _this.showFailure = false;
+                    _this.showSuccess = false;
+                }, 2000);
+            }).catch(function () {
+                this.showFailure = true;
+                this.showSuccess = false;
+                this.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        },
+        handleFileUpload: function handleFileUpload() {
+            //lida com mudanças no upload da foto
+            this.file = this.$refs.file.files[0];
+        },
+        editUser: function editUser(user) {
+            $(".edit-label").hide();
+            $(".edit-input").show();
+            this.editingUser = true;
+            this.currentUser = Object.assign({}, user);
+        },
+        invertShift: function invertShift() {
+            var _this2 = this;
+
+            var user = this.$store.state.user;
+            axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
+                if (user.shift_active == '0') {
+                    _this2.$socket.emit('user_exit', _this2.$store.state.user);
+                } else {
+                    _this2.$socket.emit('user_enter', response.data.data);
+                }
+                Vue.set(_this2.user, response.data.data);
+                _this2.$store.commit("setUser", response.data.data);
+                _this2.$router.push({
+                    name: "profile"
+                });
+            }).catch(function (error) {
+                if (user.shift_active == '0') {
+                    _this2.$socket.emit('user_exit', _this2.$store.state.user);
+                }
+                _this2.showFailure = true;
+                _this2.showSuccess = false;
+                _this2.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        },
+        cancelEdit: function cancelEdit() {
+            this.editingUser = false;
+            $(".edit-label").show();
+            $(".edit-input").hide();
+        },
+        saveUser: function saveUser() {
+            var _this3 = this;
+
+            var user = this.$store.state.user;
+            console.log(user);
+            axios.put("/api/users/" + user.id, user).then(function (response) {
+                _this3.showSuccess = true;
+                _this3.showFailure = false;
+                _this3.successMessage = "User updated";
+
+                Vue.set(_this3.user, response.data.data);
+                _this3.editingUser = false;
+                _this3.$store.commit("setUser", response.data.data);
+                setTimeout(function () {
+                    _this3.showFailure = false;
+                    _this3.showSuccess = false;
+                }, 2000);
+            }).catch(function (error) {
+                _this3.showFailure = true;
+                _this3.showSuccess = false;
+                _this3.failMessage = error.response.data.message;
+                console.dir(error);
+            });
+        }
     }
-  },
-  methods: {
-    profiles: function profiles() {
-      this.showMessage = false;
-    },
-    submitFile: function submitFile() {
-      //Submete a foto para o servidor
-      var formData = new FormData(); //inicializa os dados do form
-      formData.append("file", this.file); //adiciona os dados do form que vamos submeter
-      var user = this.currentUser;
-
-      axios.post("/api/users/" + user.id, //fazemos um request para submeter (POST) no URL profile/photo
-      formData, {
-        headers: {
-          "Content-Type": "multipart/form-data"
-        }
-      }).then(function () {
-        var _this = this;
-
-        this.showSuccess = true;
-        this.showFailure = false;
-        this.successMessage = "Profile photo changed!";
-        this.editingUser = false;
-        setTimeout(function () {
-          _this.showFailure = false;
-          _this.showSuccess = false;
-        }, 2000);
-      }).catch(function () {
-        this.showFailure = true;
-        this.showSuccess = false;
-        this.failMessage = error.response.data.message;
-        console.dir(error);
-      });
-    },
-    handleFileUpload: function handleFileUpload() {
-      //lida com mudanças no upload da foto
-      this.file = this.$refs.file.files[0];
-    },
-    editUser: function editUser(user) {
-      $(".edit-label").hide();
-      $(".edit-input").show();
-      this.editingUser = true;
-      this.currentUser = Object.assign({}, user);
-    },
-    invertShift: function invertShift() {
-      var _this2 = this;
-
-      var user = this.$store.state.user;
-      axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
-        if (user.shift_active == '0') {
-          _this2.$socket.emit('user_exit', _this2.$store.state.user);
-        } else {
-          _this2.$socket.emit('user_enter', response.data.data);
-        }
-        Vue.set(_this2.user, response.data.data);
-        _this2.$store.commit("setUser", response.data.data);
-        _this2.$router.push({
-          name: "profile"
-        });
-      }).catch(function (error) {
-        if (user.shift_active == '0') {
-          _this2.$socket.emit('user_exit', _this2.$store.state.user);
-        }
-        _this2.showFailure = true;
-        _this2.showSuccess = false;
-        _this2.failMessage = error.response.data.message;
-        console.dir(error);
-      });
-    },
-    cancelEdit: function cancelEdit() {
-      this.editingUser = false;
-      $(".edit-label").show();
-      $(".edit-input").hide();
-    },
-    saveUser: function saveUser() {
-      var _this3 = this;
-
-      var user = this.$store.state.user;
-      console.log(user);
-      axios.put("/api/users/" + user.id, user).then(function (response) {
-        _this3.showSuccess = true;
-        _this3.showFailure = false;
-        _this3.successMessage = "User updated";
-
-        Vue.set(_this3.user, response.data.data);
-        _this3.editingUser = false;
-        _this3.$store.commit("setUser", response.data.data);
-        setTimeout(function () {
-          _this3.showFailure = false;
-          _this3.showSuccess = false;
-        }, 2000);
-      }).catch(function (error) {
-        _this3.showFailure = true;
-        _this3.showSuccess = false;
-        _this3.failMessage = error.response.data.message;
-        console.dir(error);
-      });
-    }
-  }
 };
 
 /***/ }),
@@ -52697,7 +52686,7 @@ var render = function() {
     "div",
     { staticClass: "jumbotron" },
     [
-      _c("div", { staticClass: "container emp-profile" }, [
+      _c("div", [
         _c("div", { staticClass: "row" }, [
           _c("div", { staticClass: "col-md-4" }, [
             _c("div", { staticClass: "profile-img" }, [
@@ -52706,7 +52695,9 @@ var render = function() {
               }),
               _vm._v(" "),
               _c("div", { staticClass: "file btn btn-lg btn-primary" }, [
-                _vm._v("\n            Change Photo\n            "),
+                _vm._v(
+                  "\r\n                        Change Photo\r\n                        "
+                ),
                 _c("input", {
                   ref: "file",
                   attrs: { type: "file", id: "file" },
@@ -53627,7 +53618,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n* {\r\n    -webkit-box-sizing: border-box;\r\n            box-sizing: border-box;\r\n    margin: 0;\r\n    padding: 0;\n}\n#app {\r\n    font-family: \"Avenir\", Helvetica, Arial, sans-serif;\r\n    -webkit-font-smoothing: antialiased;\r\n    -moz-osx-font-smoothing: grayscale;\r\n    color: #2c3e50;\r\n    font-size: 24px;\r\n    height: 100vh;\n}\n.flex-center {\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    -webkit-box-pack: center;\r\n        -ms-flex-pack: center;\r\n            justify-content: center;\n}\nnav {\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    list-style: none;\r\n    padding: 15px 0;\r\n    margin: 0;\r\n    -webkit-box-pack: end;\r\n        -ms-flex-pack: end;\r\n            justify-content: flex-end;\r\n    background: #f5f8fa;\r\n    border-bottom: 1px solid lightgrey;\r\n    margin-bottom: 24px;\n}\nnav a {\r\n    color: #636b6f;\r\n    padding: 0 25px;\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    letter-spacing: 0.1rem;\r\n    text-decoration: none;\r\n    text-transform: uppercase;\n}\na {\r\n    text-decoration: none;\r\n    color: black;\r\n    font-weight: bold;\r\n    size: 35px;\r\n    cursor: pointer;\n}\na:active,\r\na:hover {\r\n    text-decoration: none;\n}\r\n", ""]);
+exports.push([module.i, "\n* {\r\n    -webkit-box-sizing: border-box;\r\n            box-sizing: border-box;\r\n    margin: 0;\r\n    padding: 0;\n}\n#app {\r\n    font-family: \"Avenir\", Helvetica, Arial, sans-serif;\r\n    -webkit-font-smoothing: antialiased;\r\n    -moz-osx-font-smoothing: grayscale;\r\n    color: #2c3e50;\r\n    font-size: 24px;\r\n    height: 100vh;\n}\n.flex-center {\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    -webkit-box-pack: center;\r\n        -ms-flex-pack: center;\r\n            justify-content: center;\n}\nnav {\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    list-style: none;\r\n    padding: 15px 0;\r\n    margin: 0;\r\n    -webkit-box-pack: center;\r\n        -ms-flex-pack: center;\r\n            justify-content: center;\r\n    background: #18BC9C;\r\n    margin-bottom: 24px;\n}\nnav a {\r\n    color: white;\r\n    padding: 0 25px;\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    letter-spacing: 0.1rem;\r\n    text-decoration: none;\r\n    text-transform: none;\n}\na {\r\n    text-decoration: none;\r\n    color: black;\r\n    font-weight: bold;\r\n    size: 35px;\r\n    cursor: pointer;\n}\na:active,\r\na:hover {\r\n    text-decoration: none;\n}\r\n", ""]);
 
 // exports
 
@@ -53711,8 +53702,11 @@ var render = function() {
     _c("nav", [
       _vm.loggedIn && _vm.currentUser.shift_active == "1"
         ? _c(
-            "i",
-            { staticClass: "fas fa-utensils" },
+            "a",
+            {
+              staticClass: "fas fa-clock col-md-4",
+              staticStyle: { "text-align": "center" }
+            },
             [
               _c("router-link", { attrs: { to: "/dashboard" } }, [
                 _vm._v("On Shift " + _vm._s(_vm.shiftTime))
@@ -53724,8 +53718,11 @@ var render = function() {
       _vm._v(" "),
       _vm.loggedIn && _vm.currentUser.shift_active == "0"
         ? _c(
-            "i",
-            { staticClass: "fas fa-utensils" },
+            "a",
+            {
+              staticClass: "far fa-clock col-md-4",
+              staticStyle: { "text-align": "center" }
+            },
             [
               _c("router-link", { attrs: { to: "/dashboard" } }, [
                 _vm._v("Off Shift")
@@ -53737,7 +53734,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "li",
-        [_c("router-link", { attrs: { to: "/" } }, [_vm._v("Home")])],
+        [_c("router-link", { attrs: { to: "/" } }, [_vm._v("Menu")])],
         1
       ),
       _vm._v(" "),
@@ -53745,9 +53742,11 @@ var render = function() {
         ? _c(
             "li",
             [
-              _c("router-link", { attrs: { to: "/registerWorker" } }, [
-                _vm._v("Register Worker")
-              ])
+              _c(
+                "router-link",
+                { staticClass: "col-md-2", attrs: { to: "/registerWorker" } },
+                [_vm._v("Register")]
+              )
             ],
             1
           )
@@ -53757,9 +53756,11 @@ var render = function() {
         ? _c(
             "li",
             [
-              _c("router-link", { attrs: { to: "/profile" } }, [
-                _vm._v("Profile")
-              ])
+              _c(
+                "router-link",
+                { staticClass: "col-md-2", attrs: { to: "/profile" } },
+                [_vm._v("Profile")]
+              )
             ],
             1
           )
@@ -53768,7 +53769,13 @@ var render = function() {
       !_vm.loggedIn
         ? _c(
             "li",
-            [_c("router-link", { attrs: { to: "/login" } }, [_vm._v("Login")])],
+            [
+              _c(
+                "router-link",
+                { staticClass: "col-md-2", attrs: { to: "/login" } },
+                [_vm._v("Login")]
+              )
+            ],
             1
           )
         : _vm._e(),
@@ -53777,6 +53784,7 @@ var render = function() {
         ? _c(
             "a",
             {
+              staticClass: "col-md-2",
               on: {
                 click: function($event) {
                   $event.preventDefault()
@@ -54079,10 +54087,6 @@ module.exports = Component.exports
 //
 //
 //
-//
-//
-//
-//
 
 module.exports = {
     props: ["currentUser"],
@@ -54286,12 +54290,13 @@ var render = function() {
   return _vm.currentUser.type == "waiter"
     ? _c(
         "div",
-        { staticClass: "jumbotron" },
         [
+          _c("br"),
+          _vm._v(" "),
           _c(
-            "a",
+            "button",
             {
-              staticClass: "btn btn-sm btn-info",
+              staticClass: "fas fa-plus-circle",
               on: {
                 click: function($event) {
                   $event.preventDefault()
@@ -54299,7 +54304,7 @@ var render = function() {
                 }
               }
             },
-            [_vm._v("Register Meal")]
+            [_vm._v(" Register Meal")]
           ),
           _vm._v(" "),
           _c("registerMeal", {
@@ -54318,169 +54323,153 @@ var render = function() {
           _c(
             "table",
             { staticClass: "table table-striped" },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._l(_vm.meals, function(meal) {
-                return meal.responsible_waiter_id == _vm.currentUser.id &&
-                  meal.state == "active"
-                  ? _c(
-                      "tbody",
-                      { key: meal.id },
-                      [
-                        _c("tr", [
-                          _c("td", [_vm._v("Meal: " + _vm._s(meal.id))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v("Table: " + _vm._s(meal.table_number))
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [_vm._v(_vm._s(meal.start))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              "Total: " +
-                                _vm._s(meal.total_price_preview) +
-                                " €"
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _c(
-                              "a",
-                              {
-                                staticClass: "btn btn-sm btn-primary",
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    _vm.registerOrder(meal)
-                                  }
-                                }
-                              },
-                              [_vm._v("Register Orders")]
-                            ),
-                            _vm._v(" "),
-                            _c(
-                              "a",
-                              {
-                                staticClass: "btn btn-sm btn-primary",
-                                on: {
-                                  click: function($event) {
-                                    $event.preventDefault()
-                                    _vm.terminate(meal)
-                                  }
-                                }
-                              },
-                              [_vm._v("Terminate")]
-                            )
-                          ])
+            _vm._l(_vm.meals, function(meal) {
+              return meal.responsible_waiter_id == _vm.currentUser.id &&
+                meal.state == "active"
+                ? _c(
+                    "tbody",
+                    { key: meal.id },
+                    [
+                      _c("tr", [
+                        _c("td", [_vm._v("Meal: " + _vm._s(meal.id))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v("Table: " + _vm._s(meal.table_number))
                         ]),
                         _vm._v(" "),
-                        _vm._l(_vm.orders, function(order) {
-                          return meal.id == order.meal_id
-                            ? _c("tr", { key: order.id }, [
-                                _c("td", [
-                                  _vm._v(
-                                    _vm._s(_vm.items[order.item_id - 1].name)
+                        _c("td", [_vm._v(_vm._s(meal.start))]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _vm._v(
+                            "Total: " + _vm._s(meal.total_price_preview) + " €"
+                          )
+                        ]),
+                        _vm._v(" "),
+                        _c("td", [
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-primary",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.registerOrder(meal)
+                                }
+                              }
+                            },
+                            [_vm._v("Register Orders")]
+                          ),
+                          _vm._v(" "),
+                          _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-primary",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.terminate(meal)
+                                }
+                              }
+                            },
+                            [_vm._v("Terminate")]
+                          )
+                        ])
+                      ]),
+                      _vm._v(" "),
+                      _vm._l(_vm.orders, function(order) {
+                        return meal.id == order.meal_id
+                          ? _c("tr", { key: order.id }, [
+                              _c("td", [
+                                _vm._v(
+                                  _vm._s(_vm.items[order.item_id - 1].name)
+                                )
+                              ]),
+                              _vm._v(" "),
+                              order.state == "confirmed"
+                                ? _c(
+                                    "td",
+                                    { staticStyle: { color: "#0062cc" } },
+                                    [_vm._v(_vm._s(order.state))]
                                   )
-                                ]),
-                                _vm._v(" "),
-                                order.state == "confirmed"
-                                  ? _c(
-                                      "td",
-                                      { staticStyle: { color: "#0062cc" } },
-                                      [_vm._v(_vm._s(order.state))]
-                                    )
-                                  : order.state == "pending"
-                                  ? _c(
-                                      "td",
-                                      { staticStyle: { color: "#38bdf1" } },
-                                      [_vm._v(_vm._s(order.state))]
-                                    )
-                                  : order.state == "prepared"
-                                  ? _c(
-                                      "td",
-                                      { staticStyle: { color: "#f08228" } },
-                                      [_vm._v(_vm._s(order.state))]
-                                    )
-                                  : order.state == "delivered"
-                                  ? _c(
-                                      "td",
-                                      { staticStyle: { color: "#2bb800" } },
-                                      [_vm._v(_vm._s(order.state))]
-                                    )
-                                  : _c("td", [_vm._v(_vm._s(order.state))]),
-                                _vm._v(" "),
-                                _c("td", [_vm._v(_vm._s(order.start))]),
-                                _vm._v(" "),
-                                _c("td", [
-                                  _vm._v(
-                                    "Price: " +
-                                      _vm._s(
-                                        _vm.items[order.item_id - 1].price
-                                      ) +
-                                      " €"
+                                : order.state == "pending"
+                                ? _c(
+                                    "td",
+                                    { staticStyle: { color: "#38bdf1" } },
+                                    [_vm._v(_vm._s(order.state))]
                                   )
-                                ]),
+                                : order.state == "prepared"
+                                ? _c(
+                                    "td",
+                                    { staticStyle: { color: "#f08228" } },
+                                    [_vm._v(_vm._s(order.state))]
+                                  )
+                                : order.state == "delivered"
+                                ? _c(
+                                    "td",
+                                    { staticStyle: { color: "#2bb800" } },
+                                    [_vm._v(_vm._s(order.state))]
+                                  )
+                                : _c("td", [_vm._v(_vm._s(order.state))]),
+                              _vm._v(" "),
+                              _c("td", [_vm._v(_vm._s(order.start))]),
+                              _vm._v(" "),
+                              _c("td", [
+                                _vm._v(
+                                  "Price: " +
+                                    _vm._s(_vm.items[order.item_id - 1].price) +
+                                    " €"
+                                )
+                              ]),
+                              _vm._v(" "),
+                              _c("td", [
+                                order.state == "prepared"
+                                  ? _c(
+                                      "a",
+                                      {
+                                        staticClass: "btn btn-sm btn-success",
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            _vm.setOrderState(order)
+                                          }
+                                        }
+                                      },
+                                      [_vm._v("Deliver")]
+                                    )
+                                  : _vm._e(),
                                 _vm._v(" "),
-                                _c("td", [
-                                  order.state == "prepared"
-                                    ? _c(
-                                        "a",
-                                        {
-                                          staticClass: "btn btn-sm btn-success",
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              _vm.setOrderState(order)
-                                            }
+                                _vm.plusFiveSeconds(order.start) >=
+                                _vm.currentDate
+                                  ? _c(
+                                      "a",
+                                      {
+                                        staticClass: "btn btn-sm btn-danger",
+                                        on: {
+                                          click: function($event) {
+                                            $event.preventDefault()
+                                            _vm.cancelOrder(order)
                                           }
-                                        },
-                                        [_vm._v("Deliver")]
-                                      )
-                                    : _vm._e(),
-                                  _vm._v(" "),
-                                  _vm.plusFiveSeconds(order.start) >=
-                                  _vm.currentDate
-                                    ? _c(
-                                        "a",
-                                        {
-                                          staticClass: "btn btn-sm btn-danger",
-                                          on: {
-                                            click: function($event) {
-                                              $event.preventDefault()
-                                              _vm.cancelOrder(order)
-                                            }
-                                          }
-                                        },
-                                        [_vm._v("Cancel")]
-                                      )
-                                    : _vm._e()
-                                ])
+                                        }
+                                      },
+                                      [_vm._v("Cancel")]
+                                    )
+                                  : _vm._e()
                               ])
-                            : _vm._e()
-                        })
-                      ],
-                      2
-                    )
-                  : _vm._e()
-              })
-            ],
-            2
+                            ])
+                          : _vm._e()
+                      })
+                    ],
+                    2
+                  )
+                : _vm._e()
+            })
           )
         ],
         1
       )
     : _vm._e()
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [_c("tr", [_c("th", [_vm._v("Meals")])])])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

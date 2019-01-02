@@ -42,7 +42,6 @@ class OrderController extends Controller
             'state' => $request['state'],
             'item_id' => $request['item_id'],
             'meal_id' => $request['meal_id'],
-            'responsible_cook_id' => $request['responsible_cook_id'],
             'start' => $request['start'],
         ]);
     }

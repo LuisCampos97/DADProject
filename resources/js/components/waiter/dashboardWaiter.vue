@@ -1,14 +1,10 @@
 <template>
-<div class="jumbotron" v-if="currentUser.type == 'waiter'">
-    <a class="btn btn-sm btn-info" @click.prevent="registerMeal()">Register Meal</a>
+<div v-if="currentUser.type == 'waiter'">
+    <br>
+    <button class="fas fa-plus-circle" @click.prevent="registerMeal()"> Register Meal</button>
     <registerMeal :registeringMeal="registeringMeal" :tables="tables" @cancel-Meal="cancelMeal"></registerMeal>
     <registerOrder :registeringOrder="registeringOrder" :current-meal="currentMeal" @cancel-Order="cancelOrder"></registerOrder>
     <table class="table table-striped">
-        <thead>
-            <tr>
-                <th>Meals</th>
-            </tr>
-        </thead>
         <tbody v-for="meal in meals" :key="meal.id" v-if="meal.responsible_waiter_id == currentUser.id && meal.state == 'active'">
             <tr>
                 <td>Meal: {{ meal.id }}</td>
