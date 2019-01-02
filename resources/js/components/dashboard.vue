@@ -1,5 +1,5 @@
 <template>
-  <div class="jumbotron">
+<div class="jumbotron">
     <div class="row">
         <div class="profile-shift">
             <p>Shift</p>
@@ -20,52 +20,43 @@
     <div>
         <input type="text" id="inputGlobal" class="inputchat" v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
         <br>
-        <a v-if="user.shift_active == '0'">Time: {{ timePassed }}</a>
-        <br>
-        <button
-          v-if="user.shift_active == '0'"
-          class="profile-shift-btn"
-          @click.prevent="invertShift()"
-        >Start</button>
-        <button
-          v-if="user.shift_active == '1'"
-          class="profile-shift-btn"
-          @click.prevent="invertShift()"
-        >Quit</button>
-      </div>
-
-    <br>
-    <br>
-    <div v-if="user.shift_active == '1'">
-      <p>Message to all managers:</p>
-      <input
-        type="text"
-        id="inputGlobal"
-        class="inputchat"
-        v-model="msgGlobalText"
-        @keypress.enter="sendGlobalMsg"
-      >
-      <br>
-      <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
-
-      <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
-      <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
-      <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
+        <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
     </div>
-  </div>
+    
+    <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
+    <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
+    <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
+
+    
+
+</div>
 </template>
 
 <script>
 module.exports = {
     data: function() {
         return {
-        msgGlobalText: "",
-        msgGlobalTextArea: ""
+            msgGlobalText: '',
+            msgGlobalTextArea: '',
         };
     },
     computed: {
-        user: function() {
+        user() {
             return this.$store.state.user;
+        },
+        timePassed() {
+            var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
+            console.log(diff);
+            var days = Math.floor((diff / 1000) / 60 / 60 / 24);
+            var hours = Math.floor((diff / 1000) / 60 / 60);
+            var minutes = Math.floor((diff / 1000) / 60) - hours * 60;
+            if (days == 0 && hours == 0) {
+                return minutes + " m";
+            } else if (days == 0) {
+                return hours + " h : " + minutes + " m";
+            } else {
+                return days + " d : " + hours + " h : " + minutes + " m";
+            }
         }
     },
     methods: {
@@ -87,42 +78,26 @@ module.exports = {
                     console.dir(error);
                 });
         },
-        sendGlobalMsg: function() {
+        sendGlobalMsg: function(){
             console.log('Sending to the server this message: "' + this.msgGlobalText + '"');
             if (this.$store.state.user === null) {
-                 this.$toasted.error('User is not logged in!');
+                this.$socket.emit('msg_from_client', this.msgGlobalText);
             } else {
-                this.$socket.emit("msg_from_client",this.msgGlobalText,this.$store.state.user);
+                this.$socket.emit('msg_from_client', this.msgGlobalText, this.$store.state.user);
             }
             this.msgGlobalText = "";
         },
-        timePassed() {
-            var diff = new Date() - new Date(this.$store.state.user.last_shift_end);
-            console.log(diff);
-            var days = Math.floor(diff / 1000 / 60 / 60 / 24);
-            var hours = Math.floor(diff / 1000 / 60 / 60);
-            var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
-            if (days == 0 && hours == 0) {
-                return minutes + " m";
-            } else if (days == 0) {
-                return hours + " h : " + minutes + " m";
-            } else {
-                return days + " d : " + hours + " h : " + minutes + " m";
-            }
+    },
+    sockets:{
+        connect(){
+            console.log('socket connected (socket ID = '+this.$socket.id+')');
+        }, 
+        msg_from_server(dataFromServer){
+            console.log('Receiving this message from Server: "' + dataFromServer + '"');            
+            this.msgGlobalTextArea = dataFromServer + '\n' + this.msgGlobalTextArea ;
         }
     },
-    sockets: {
-        connect() {
-        console.log("socket connected (socket ID = " + this.$socket.id + ")");
-        },
-        msg_from_server(dataFromServer) {
-        console.log(
-            'Receiving this message from Server: "' + dataFromServer + '"'
-        );
-        this.msgGlobalTextArea = dataFromServer + "\n" + this.msgGlobalTextArea;
-        }
-    }
-}
+};
 </script>
 
 <style>
