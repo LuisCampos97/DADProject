@@ -14,11 +14,7 @@
           <th>Actions</th>
         </tr>
       </thead>
-      <tbody
-        v-for="order in orders"
-        :key="order.id"
-        :class="{active: currentOrder === order}"
-      >
+      <tbody v-for="order in orders" :key="order.id" :class="{active: currentOrder === order}">
         <tr v-if="order.state == 'confirmed'" style="color: #2bb800">
           <td>{{ order.id }}</td>
           <td>{{ order.state }}</td>
@@ -45,13 +41,13 @@
 
 <script>
 module.exports = {
-    props: ["currentUser"],
+  props: ["currentUser"],
   data: function() {
     return {
       orders: [],
       currentOrder: {},
       showSuccess: false,
-      successMessage: "",
+      successMessage: ""
     };
   },
   methods: {
@@ -66,7 +62,9 @@ module.exports = {
         .put("api/orders/" + order.id, order)
         .then(response => {
           this.showSuccess = true;
-          this.successMessage = `Order ${order.id} status changed to: ${response.data.data.state}`
+          this.successMessage = `Order ${order.id} status changed to: ${
+            response.data.data.state
+          }`;
           this.getOrders();
         })
         .catch();

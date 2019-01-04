@@ -48,6 +48,7 @@
       <br>
       <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
 
+      <dashboardManager :currentUser="user" v-if="user.type == 'manager'"></dashboardManager>
       <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
       <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
       <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>

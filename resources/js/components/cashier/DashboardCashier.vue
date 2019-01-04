@@ -48,7 +48,6 @@
       <tbody
         v-for="invoice in paidInvoices.data"
         :key="invoice.id"
-        :class="{active: currentInvoice === invoice}"
       >
         <tr>
           <td>{{ invoice.table_number }}</td>
@@ -74,7 +73,6 @@ export default {
       invoices: [],
       paidInvoices: {},
       payingInvoice: false,
-      currentInvoice: {},
       currentInvoiceItems: []
     };
   },
@@ -142,13 +140,6 @@ export default {
   mounted() {
     this.mealForInvoice();
     this.paidInvoice();
-
-    axios
-      .get("api/invoiceItems/" + this.currentInvoice.id)
-      .then(response => {
-        this.currentInvoiceItems = response.data;
-      })
-      .catch(error => {});
   }
 };
 </script>
