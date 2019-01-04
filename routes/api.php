@@ -62,6 +62,8 @@ Route::put('invoices/{id}', 'InvoiceController@editInvoice');
 //RestaurantTable
 Route::get('restaurantTables', 'RestaurantTableController@index');
 Route::post('restaurantTables/register', 'RestaurantTableController@register');
+//Invoice Items
+Route::post('invoiceItems/register', 'InvoiceItemController@create');
 
 //Authentication
 Route::post('login', 'LoginControllerAPI@login')->name('login');

@@ -1,21 +1,21 @@
 <template>
 <div id="id">
     <nav>
-        <i v-if="loggedIn && currentUser.shift_active == '1'" class="fas fa-utensils"><router-link to="/dashboard">On Shift {{ shiftTime }}</router-link></i>
-        <i v-if="loggedIn && currentUser.shift_active == '0'" class="fas fa-utensils"><router-link to="/dashboard">Off Shift</router-link></i>
+        <a v-if="loggedIn && currentUser.shift_active == '1'" class="fas fa-clock col-md-4" style="text-align: center"><router-link to="/dashboard">On Shift {{ shiftTime }}</router-link></a>
+        <a v-if="loggedIn && currentUser.shift_active == '0'" class="far fa-clock col-md-4" style="text-align: center"><router-link to="/dashboard">Off Shift</router-link></a>
         <li>
-            <router-link to="/">Home</router-link>
+            <router-link to="/">Menu</router-link>
         </li>
         <li v-if="loggedIn && currentUser.type == 'manager'">
-            <router-link to="/registerWorker">Register Worker</router-link>
+            <router-link class="col-md-2" to="/registerWorker">Register</router-link>
         </li>
         <li v-if="loggedIn">
-            <router-link to="/profile">Profile</router-link>
+            <router-link class="col-md-2" to="/profile">Profile</router-link>
         </li>
         <li v-if="!loggedIn">
-            <router-link to="/login">Login</router-link>
+            <router-link class="col-md-2" to="/login">Login</router-link>
         </li>
-        <a v-if="loggedIn" v-on:click.prevent="logout()">Logout</a>
+        <a v-if="loggedIn" v-on:click.prevent="logout()" class="col-md-2">Logout</a>
     </nav>
     <div class="container">
         <router-view></router-view>
@@ -88,20 +88,19 @@ nav {
     list-style: none;
     padding: 15px 0;
     margin: 0;
-    justify-content: flex-end;
-    background: #f5f8fa;
-    border-bottom: 1px solid lightgrey;
+    justify-content: center;
+    background: #18BC9C;
     margin-bottom: 24px;
 }
 
 nav a {
-    color: #636b6f;
+    color: white;
     padding: 0 25px;
     font-size: 14px;
     font-weight: 600;
     letter-spacing: 0.1rem;
     text-decoration: none;
-    text-transform: uppercase;
+    text-transform: none;
 }
 
 a {

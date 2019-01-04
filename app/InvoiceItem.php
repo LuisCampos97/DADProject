@@ -15,4 +15,5 @@ class InvoiceItem extends Model
     ];
 
     protected $table = 'invoice_items';
+    public $timestamps = false;
 }
