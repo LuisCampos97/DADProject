@@ -28276,8 +28276,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vue_router__ = __webpack_require__(17);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_socket_io__ = __webpack_require__(50);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_vue_socket_io___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_1_vue_socket_io__);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__stores_global_store__ = __webpack_require__(51);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__routes__ = __webpack_require__(53);
+throw new Error("Cannot find module \"vue-js-modal\"");
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__stores_global_store__ = __webpack_require__(51);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__routes__ = __webpack_require__(53);
 /*jshint esversion: 6 */
 
 __webpack_require__(7);
@@ -28292,6 +28293,10 @@ Vue.use(new __WEBPACK_IMPORTED_MODULE_1_vue_socket_io___default.a({
     debug: true,
     connection: 'http://192.168.10.1:8080'
 }));
+
+
+
+Vue.use(__WEBPACK_IMPORTED_MODULE_2_vue_js_modal___default.a);
 
 
 
@@ -28313,7 +28318,7 @@ Vue.component('dashboard', __webpack_require__(20));
 Vue.component('dashboardWaiter', __webpack_require__(85));
 Vue.component('dashboardCook', __webpack_require__(88));
 Vue.component('dashboardCashier', __webpack_require__(91));
-Vue.component('dashboardManager', __webpack_require__(127));
+Vue.component('menuItemsManage', __webpack_require__(134));
 
 Vue.component('registerMeal', __webpack_require__(95));
 Vue.component('registerOrder', __webpack_require__(98));
@@ -28325,7 +28330,7 @@ Vue.component('pay-invoice', __webpack_require__(106));
 Vue.component('MealManage', __webpack_require__(131));
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
-    routes: __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */]
+    routes: __WEBPACK_IMPORTED_MODULE_4__routes__["a" /* default */]
 });
 
 /*router.beforeEach((to, from, next) => {
@@ -28343,7 +28348,7 @@ var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
 
 new Vue({
     router: router,
-    store: __WEBPACK_IMPORTED_MODULE_2__stores_global_store__["a" /* default */],
+    store: __WEBPACK_IMPORTED_MODULE_3__stores_global_store__["a" /* default */],
     created: function created() {
         this.$store.commit('loadTokenAndUserFromSession');
     },
@@ -52409,7 +52414,7 @@ var render = function() {
               : _vm._e(),
             _vm._v(" "),
             _vm.user.type == "manager"
-              ? _c("dashboardManager", { attrs: { currentUser: _vm.user } })
+              ? _c("menuItemsManage", { attrs: { currentUser: _vm.user } })
               : _vm._e()
           ],
           1
@@ -56424,152 +56429,8 @@ if (false) {
 /* 124 */,
 /* 125 */,
 /* 126 */,
-/* 127 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var disposed = false
-var normalizeComponent = __webpack_require__(0)
-/* script */
-var __vue_script__ = __webpack_require__(128)
-/* template */
-var __vue_template__ = __webpack_require__(130)
-/* template functional */
-var __vue_template_functional__ = false
-/* styles */
-var __vue_styles__ = null
-/* scopeId */
-var __vue_scopeId__ = null
-/* moduleIdentifier (server only) */
-var __vue_module_identifier__ = null
-var Component = normalizeComponent(
-  __vue_script__,
-  __vue_template__,
-  __vue_template_functional__,
-  __vue_styles__,
-  __vue_scopeId__,
-  __vue_module_identifier__
-)
-Component.options.__file = "resources/js/components/manager/DashboardManager.vue"
-
-/* hot reload */
-if (false) {(function () {
-  var hotAPI = require("vue-hot-reload-api")
-  hotAPI.install(require("vue"), false)
-  if (!hotAPI.compatible) return
-  module.hot.accept()
-  if (!module.hot.data) {
-    hotAPI.createRecord("data-v-45213a86", Component.options)
-  } else {
-    hotAPI.reload("data-v-45213a86", Component.options)
-  }
-  module.hot.dispose(function (data) {
-    disposed = true
-  })
-})()}
-
-module.exports = Component.exports
-
-
-/***/ }),
-/* 128 */
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuetable_2__ = __webpack_require__(129);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0_vuetable_2___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_0_vuetable_2__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-
-
-/* harmony default export */ __webpack_exports__["default"] = ({
-    components: {
-        Vuetable: __WEBPACK_IMPORTED_MODULE_0_vuetable_2__["Vuetable"],
-        VuetablePagination: __WEBPACK_IMPORTED_MODULE_0_vuetable_2__["VuetablePagination"]
-    },
-    props: ["currentUser"],
-    data: function data() {
-        return {
-            items: [],
-            meals: [],
-            tables: [],
-            showMessage: false,
-            message: ""
-        };
-    },
-
-    methods: {
-        getItems: function getItems() {
-            var _this = this;
-
-            axios.get("/api/items").then(function (response) {
-                _this.items = response.data.data;
-            });
-        },
-
-        getMeals: function getMeals() {
-            var _this2 = this;
-
-            axios.get("api/meals").then(function (response) {
-                _this2.meals = response.data.data;
-            });
-        },
-        notPaid: function notPaid() {
-            var _this3 = this;
-
-            axios.put("api/meals/notPaid/" + meal.id, meal).then(function (response) {
-                _this3.getMeals();
-            }).catch();
-            axios.put("api/invoices/notPaid/" + meal.id, meal).then(function (response) {}).catch();
-        },
-        updateItem: function updateItem(item) {},
-        deleteItem: function deleteItem(item) {
-            var _this4 = this;
-
-            axios.delete("api/invoices/" + item.id).then(function (response) {
-                _this4.showMessage = true;
-                _this4.message = "Item \"" + item.name + "\" deleted";
-                _this4.getItems();
-            });
-        }
-    },
-    mounted: function mounted() {
-        this.getItems();
-        this.getMeals();
-    }
-});
-
-/***/ }),
+/* 127 */,
+/* 128 */,
 /* 129 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -56577,125 +56438,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(48).setImmediate, __webpack_require__(48).clearImmediate))
 
 /***/ }),
-/* 130 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm.currentUser.type == "manager"
-    ? _c(
-        "div",
-        { staticClass: "jumbotron" },
-        [
-          _vm.showMessage
-            ? _c("div", { staticClass: "alert alert-success" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "close-btn",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.showMessage = false
-                      }
-                    }
-                  },
-                  [_vm._v("×")]
-                ),
-                _vm._v(" "),
-                _c("strong", [_vm._v(_vm._s(_vm.message))])
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c("h3", [_vm._v("Menu Items")]),
-          _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "table table-striped" },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._l(_vm.items, function(item) {
-                return _c("tbody", { key: item.id }, [
-                  _c("tr", [
-                    _c("td", [_vm._v(_vm._s(item.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.type))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-sm btn-info",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.updateItem(item)
-                            }
-                          }
-                        },
-                        [_vm._v("Edit")]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn-sm btn-danger",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.deleteItem(item)
-                            }
-                          }
-                        },
-                        [_vm._v("Delete")]
-                      )
-                    ])
-                  ])
-                ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c("MealManage")
-        ],
-        1
-      )
-    : _vm._e()
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "thead-dark" }, [
-      _c("tr", [
-        _c("th", [_vm._v("Item ID")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Type")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Actions")])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-45213a86", module.exports)
-  }
-}
-
-/***/ }),
+/* 130 */,
 /* 131 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -57022,6 +56765,606 @@ if (false) {
   module.hot.accept()
   if (module.hot.data) {
     require("vue-hot-reload-api")      .rerender("data-v-e5157156", module.exports)
+  }
+}
+
+/***/ }),
+/* 134 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(0)
+/* script */
+var __vue_script__ = __webpack_require__(135)
+/* template */
+var __vue_template__ = __webpack_require__(136)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/js/components/manager/MenuItemsManage.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-22631d2e", Component.options)
+  } else {
+    hotAPI.reload("data-v-22631d2e", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 135 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+  props: ["currentUser"],
+  data: function data() {
+    return {
+      items: [],
+      showMessage: false,
+      message: "",
+      options: [{ value: "Dish", key: "dish" }, { value: "Drink", key: "drink" }],
+      errors: {
+        type: [],
+        description: [],
+        photo: [],
+        price: []
+      },
+      currentItem: {}
+    };
+  },
+
+  methods: {
+    getItems: function getItems() {
+      var _this = this;
+
+      axios.get("/api/items").then(function (response) {
+        _this.items = response.data.data;
+      });
+    },
+    showUpdateModal: function showUpdateModal(item) {
+      this.currentItem = item;
+      this.$modal.show("modal-update");
+    },
+    deleteItem: function deleteItem(item) {
+      var _this2 = this;
+
+      axios.delete("api/items/" + item.id).then(function (response) {
+        _this2.showMessage = true;
+        _this2.message = "Item \"" + item.name + "\" deleted";
+        _this2.getItems();
+      });
+    },
+    updateItem: function updateItem(item) {
+      var _this3 = this;
+
+      axios.put("api/items/" + item.id, item).then(function (response) {
+        _this3.$modal.hide("modal-update");
+        _this3.showMessage = true;
+        _this3.message = "Item \"" + item.name + "\" updated";
+        Vue.set(_this3.currentItem, response.data.data);
+      });
+    },
+    cancelUpdate: function cancelUpdate() {
+      this.getItems();
+      this.$modal.hide("modal-update");
+    }
+  },
+  mounted: function mounted() {
+    this.getItems();
+  }
+});
+
+/***/ }),
+/* 136 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.currentUser.type == "manager"
+    ? _c(
+        "div",
+        { staticClass: "jumbotron" },
+        [
+          _vm.showMessage
+            ? _c("div", { staticClass: "alert alert-success" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "close-btn",
+                    attrs: { type: "button" },
+                    on: {
+                      click: function($event) {
+                        _vm.showMessage = false
+                      }
+                    }
+                  },
+                  [_vm._v("×")]
+                ),
+                _vm._v(" "),
+                _c("strong", [_vm._v(_vm._s(_vm.message))])
+              ])
+            : _vm._e(),
+          _vm._v(" "),
+          _c("h3", [_vm._v("Menu Items")]),
+          _vm._v(" "),
+          _c(
+            "table",
+            { staticClass: "table table-striped" },
+            [
+              _vm._m(0),
+              _vm._v(" "),
+              _vm._l(_vm.items, function(item) {
+                return _c("tbody", { key: item.id }, [
+                  _c("tr", [
+                    _c("td", [_vm._v(_vm._s(item.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.name))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(item.type))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn btn-info",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.showUpdateModal(item)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-edit" }),
+                          _vm._v(" Edit\n          ")
+                        ]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn btn-danger",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.deleteItem(item)
+                            }
+                          }
+                        },
+                        [
+                          _c("i", { staticClass: "fas fa-trash" }),
+                          _vm._v(" Delete\n          ")
+                        ]
+                      )
+                    ])
+                  ])
+                ])
+              })
+            ],
+            2
+          ),
+          _vm._v(" "),
+          _c(
+            "modal",
+            { attrs: { name: "modal-update", width: 600, height: 500 } },
+            [
+              _c(
+                "div",
+                { staticClass: "container", staticStyle: { padding: "25px" } },
+                [
+                  _c("h2", [_vm._v(_vm._s(_vm.currentItem.name))]),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", { attrs: { for: "inputName" } }, [
+                        _vm._v("Name")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.currentItem.name,
+                            expression: "currentItem.name"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "name",
+                          id: "inputName",
+                          placeholder: "Name"
+                        },
+                        domProps: { value: _vm.currentItem.name },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.currentItem,
+                              "name",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm._l(_vm.errors.name, function(error) {
+                        return _c(
+                          "p",
+                          { key: error, staticClass: "help-block" },
+                          [_vm._v(_vm._s(error))]
+                        )
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", { attrs: { for: "inputType" } }, [
+                        _vm._v("Type")
+                      ]),
+                      _vm._v(" "),
+                      _c(
+                        "select",
+                        {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.currentItem.type,
+                              expression: "currentItem.type"
+                            }
+                          ],
+                          staticClass: "form-control",
+                          attrs: { name: "inputType" },
+                          on: {
+                            change: function($event) {
+                              var $$selectedVal = Array.prototype.filter
+                                .call($event.target.options, function(o) {
+                                  return o.selected
+                                })
+                                .map(function(o) {
+                                  var val = "_value" in o ? o._value : o.value
+                                  return val
+                                })
+                              _vm.$set(
+                                _vm.currentItem,
+                                "type",
+                                $event.target.multiple
+                                  ? $$selectedVal
+                                  : $$selectedVal[0]
+                              )
+                            }
+                          }
+                        },
+                        _vm._l(_vm.options, function(option) {
+                          return _c(
+                            "option",
+                            {
+                              key: option.key,
+                              domProps: {
+                                selected: option.key == _vm.currentItem.type
+                              }
+                            },
+                            [_vm._v(_vm._s(option.key))]
+                          )
+                        })
+                      ),
+                      _vm._v(" "),
+                      _vm._l(_vm.errors.type, function(error) {
+                        return _c(
+                          "p",
+                          { key: error, staticClass: "help-block" },
+                          [_vm._v(_vm._s(error))]
+                        )
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", { attrs: { for: "inputDescription" } }, [
+                        _vm._v("Description")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.currentItem.description,
+                            expression: "currentItem.description"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "text",
+                          name: "description",
+                          id: "inputDescription",
+                          placeholder: "Description"
+                        },
+                        domProps: { value: _vm.currentItem.description },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.currentItem,
+                              "description",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm._l(_vm.errors.description, function(error) {
+                        return _c(
+                          "p",
+                          { key: error, staticClass: "help-block" },
+                          [_vm._v(_vm._s(error))]
+                        )
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "div",
+                    { staticClass: "form-group" },
+                    [
+                      _c("label", { attrs: { for: "inputPrice" } }, [
+                        _vm._v("Price")
+                      ]),
+                      _vm._v(" "),
+                      _c("input", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.currentItem.price,
+                            expression: "currentItem.price"
+                          }
+                        ],
+                        staticClass: "form-control",
+                        attrs: {
+                          type: "number",
+                          name: "price",
+                          id: "inputPrice",
+                          placeholder: "Price"
+                        },
+                        domProps: { value: _vm.currentItem.price },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.$set(
+                              _vm.currentItem,
+                              "price",
+                              $event.target.value
+                            )
+                          }
+                        }
+                      }),
+                      _vm._v(" "),
+                      _vm._l(_vm.errors.price, function(error) {
+                        return _c(
+                          "p",
+                          { key: error, staticClass: "help-block" },
+                          [_vm._v(_vm._s(error))]
+                        )
+                      })
+                    ],
+                    2
+                  ),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-group" }, [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-success",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.updateItem(_vm.currentItem)
+                          }
+                        }
+                      },
+                      [_vm._v("Save")]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn-danger",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.cancelUpdate()
+                          }
+                        }
+                      },
+                      [_vm._v("Cancel")]
+                    )
+                  ])
+                ]
+              )
+            ]
+          )
+        ],
+        1
+      )
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-dark" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Item ID")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Name")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Type")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-22631d2e", module.exports)
   }
 }
 

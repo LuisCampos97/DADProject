@@ -19,7 +19,7 @@ Route::get('items', 'ItemController@index');
 Route::get('items/{id}', 'ItemController@show');
 Route::post('items/register', 'ItemController@register');
 Route::put('items/{id}', 'ItemController@update');
-Route::delete('invoices/{id}', 'ItemController@destroy');
+Route::delete('items/{id}', 'ItemController@destroy');
 
 //Users
 Route::get('users', 'UserControllerAPI@index');

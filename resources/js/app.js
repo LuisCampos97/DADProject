@@ -11,7 +11,11 @@ import VueSocketio from 'vue-socket.io';
 Vue.use(new VueSocketio({
     debug: true,
     connection: 'http://192.168.10.1:8080'
-})); 
+}));
+
+import VModal from 'vue-js-modal';
+ 
+Vue.use(VModal);
 
 import store from './stores/global-store';
 import routes from './routes';
@@ -33,7 +37,7 @@ Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('dashboardWaiter', require('./components/waiter/dashboardWaiter.vue'));
 Vue.component('dashboardCook', require('./components/cook/DashboardCook.vue'));
 Vue.component('dashboardCashier', require('./components/cashier/DashboardCashier.vue'));
-Vue.component('dashboardManager', require('./components/manager/DashboardManager.vue'));
+Vue.component('menuItemsManage', require('./components/manager/MenuItemsManage.vue'));
 
 Vue.component('registerMeal', require('./components/waiter/registerMeal.vue'));
 Vue.component('registerOrder', require('./components/waiter/registerOrder.vue'));
