@@ -26,7 +26,6 @@
           </tr>
         </tbody>
       </table>
-      {{ invoices.links() }}
       <pay-invoice
         :invoice="invoice"
         :payingInvoice="payingInvoice"
@@ -46,7 +45,7 @@
         </tr>
       </thead>
       <tbody
-        v-for="invoice in paidInvoices.data"
+        v-for="invoice in paidInvoices"
         :key="invoice.id"
       >
         <tr>

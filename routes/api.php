@@ -19,7 +19,7 @@ Route::get('items', 'ItemController@index');
 Route::get('items/{id}', 'ItemController@show');
 Route::post('items/register', 'ItemController@register');
 Route::put('items/{id}', 'ItemController@update');
-Route::delete('invoices/{id}', 'ItemController@destroy');
+Route::delete('items/{id}', 'ItemController@destroy');
 
 //Users
 Route::get('users', 'UserControllerAPI@index');
@@ -46,7 +46,7 @@ Route::post('orders/register', 'OrderController@create');
 Route::get('orders', 'OrderController@index');
 Route::get('orders/{id}', 'OrderController@show');
 Route::get('ordersCook/{responsible_cook_id}', 'OrderController@ordersByCook');
-Route::put('orders/{id}', 'OrderController@updateState');
+Route::middleware('auth:api')->put('orders/{id}', 'OrderController@updateState');
 Route::put('orders/terminate/{id}', 'OrderController@terminate');
 Route::delete('orders/{id}', 'OrderController@destroy');
 
@@ -56,8 +56,9 @@ Route::get('invoices', 'InvoiceController@index');
 Route::get('invoices/{id}', 'InvoiceController@show');
 Route::get('mealForInvoice', 'InvoiceController@mealForInvoice');
 Route::get('invoiceDetails/{id}', 'InvoiceController@invoiceDetails');
+Route::put('invoices/notPaid/{id}', 'InvoiceController@notPaid');
 Route::get('invoiceItems/{id}', 'InvoiceController@invoiceItems');
-Route::put('invoices/{id}', 'InvoiceController@editInvoice');
+Route::put('invoices/{id}', 'InvoiceController@payInvoice');
 
 //RestaurantTable
 Route::get('restaurantTables', 'RestaurantTableController@index');

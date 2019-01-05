@@ -66,8 +66,7 @@ module.exports = {
             response.data.data.state
           }`;
           this.getOrders();
-        })
-        .catch();
+        });
     }
   },
   mounted() {
