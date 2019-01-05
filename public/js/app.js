@@ -54137,6 +54137,24 @@ module.exports = {
         };
     },
     methods: {
+        findItemName: function findItemName(itemId) {
+            try {
+                return this.items.find(function (x) {
+                    return x.id === itemId;
+                }).name;
+            } catch (err) {
+                return "No Longer Sold";
+            }
+        },
+        findItemPrice: function findItemPrice(itemId) {
+            try {
+                return this.items.find(function (x) {
+                    return x.id === itemId;
+                }).price;
+            } catch (err) {
+                return "No Longer Sold";
+            }
+        },
         registerMeal: function registerMeal() {
             this.registeringMeal = true;
         },
@@ -54293,9 +54311,9 @@ module.exports = {
 
     },
     mounted: function mounted() {
-        this.getMeals();
-        this.getOrders();
         this.getItems();
+        this.getOrders();
+        this.getMeals();
     }
 };
 
@@ -54400,9 +54418,7 @@ var render = function() {
                         return meal.id == order.meal_id
                           ? _c("tr", { key: order.id }, [
                               _c("td", [
-                                _vm._v(
-                                  _vm._s(_vm.items[order.item_id - 1].name)
-                                )
+                                _vm._v(_vm._s(_vm.findItemName(order.item_id)))
                               ]),
                               _vm._v(" "),
                               order.state == "confirmed"
@@ -54431,12 +54447,12 @@ var render = function() {
                                   )
                                 : _c("td", [_vm._v(_vm._s(order.state))]),
                               _vm._v(" "),
-                              _c("td", [_vm._v(_vm._s(order.start))]),
+                              _c("td", [_vm._v(_vm._s(order.item_id))]),
                               _vm._v(" "),
                               _c("td", [
                                 _vm._v(
                                   "Price: " +
-                                    _vm._s(_vm.items[order.item_id - 1].price) +
+                                    _vm._s(_vm.findItemPrice(order.item_id)) +
                                     " €"
                                 )
                               ]),
@@ -56494,21 +56510,6 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -56661,48 +56662,6 @@ var render = function() {
             2
           ),
           _vm._v(" "),
-          _c("h3", [_vm._v("Meals")]),
-          _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "table table-striped" },
-            _vm._l(_vm.meals, function(meal) {
-              return meal.state == "terminated"
-                ? _c("tbody", { key: meal.id }, [
-                    _c("tr", [
-                      _c("td", [_vm._v("Meal: " + _vm._s(meal.id))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v("Table: " + _vm._s(meal.table_number))]),
-                      _vm._v(" "),
-                      _c("td", [_vm._v(_vm._s(meal.start))]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _vm._v(
-                          "Total: " + _vm._s(meal.total_price_preview) + " €"
-                        )
-                      ]),
-                      _vm._v(" "),
-                      _c("td", [
-                        _c(
-                          "a",
-                          {
-                            staticClass: "btn btn-sm btn-danger",
-                            on: {
-                              click: function($event) {
-                                $event.preventDefault()
-                                _vm.notPaid(meal)
-                              }
-                            }
-                          },
-                          [_vm._v("Not Paid")]
-                        )
-                      ])
-                    ])
-                  ])
-                : _vm._e()
-            })
-          ),
-          _vm._v(" "),
           _c("MealManage")
         ],
         1
@@ -56819,6 +56778,19 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -56831,12 +56803,42 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
         return {
             meals: [],
             tables: [],
+            orders: [],
+            items: [],
+            invoices: [],
             showMessage: false,
             message: ""
         };
     },
 
     methods: {
+        findItemName: function findItemName(itemId) {
+            try {
+                return this.items.find(function (x) {
+                    return x.id === itemId;
+                }).name;
+            } catch (err) {
+                return "No Longer Sold";
+            }
+        },
+        findItemPrice: function findItemPrice(itemId) {
+            try {
+                return this.items.find(function (x) {
+                    return x.id === itemId;
+                }).price;
+            } catch (err) {
+                return "No Longer Sold";
+            }
+        },
+        findItemType: function findItemType(itemId) {
+            try {
+                return this.items.find(function (x) {
+                    return x.id === itemId;
+                }).type;
+            } catch (err) {
+                return "No Longer Sold";
+            }
+        },
         getMeals: function getMeals() {
             var _this = this;
 
@@ -56844,16 +56846,41 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.meals = response.data.data;
             });
         },
-        notPaid: function notPaid(meal) {
+        paidInvoice: function paidInvoice() {
             var _this2 = this;
 
+            axios.get("/api/invoices").then(function (response) {
+                _this2.invoices = response.data.data;
+            });
+        },
+
+        notPaid: function notPaid(meal) {
+            var _this3 = this;
+
             axios.put("api/invoices/notPaid/" + meal.id, meal).then(function (response) {
-                _this2.getMeals();
+                _this3.getMeals();
             }).catch();
+        },
+        getItems: function getItems() {
+            var _this4 = this;
+
+            axios.get("api/items").then(function (response) {
+                _this4.items = response.data.data;
+                console.log(_this4.items);
+            });
+        },
+        getOrders: function getOrders() {
+            var _this5 = this;
+
+            axios.get("api/orders").then(function (response) {
+                _this5.orders = response.data.data;
+            });
         }
     },
     mounted: function mounted() {
+        this.getItems();
         this.getMeals();
+        this.getOrders();
     }
 });
 
@@ -56875,34 +56902,91 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _vm._l(_vm.meals, function(meal) {
-          return meal.state == "terminated"
-            ? _c("tbody", { key: meal.id }, [
-                _c("tr", [
-                  _c("td", [_vm._v(_vm._s(meal.id))]),
+          return meal.state == "terminated" || meal.state == "active"
+            ? _c(
+                "tbody",
+                { key: meal.id },
+                [
+                  _c("tr", [
+                    _c("td", [_vm._v("Meal: " + _vm._s(meal.id))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v("Table: " + _vm._s(meal.table_number))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(meal.start))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(meal.responsible_waiter_id))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(
+                        "Total: " + _vm._s(meal.total_price_preview) + " €"
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      meal.state == "terminated"
+                        ? _c(
+                            "a",
+                            {
+                              staticClass: "btn btn-sm btn-danger",
+                              on: {
+                                click: function($event) {
+                                  $event.preventDefault()
+                                  _vm.notPaid(meal)
+                                }
+                              }
+                            },
+                            [_vm._v("Not Paid")]
+                          )
+                        : _vm._e()
+                    ])
+                  ]),
                   _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(meal.table_number))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(meal.start))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(meal.total_price_preview) + " €")]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-sm btn-danger",
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.notPaid(meal)
-                          }
-                        }
-                      },
-                      [_vm._v("Not Paid")]
-                    )
-                  ])
-                ])
-              ])
+                  _vm._l(_vm.orders, function(order) {
+                    return meal.id == order.meal_id
+                      ? _c("tr", { key: order.id }, [
+                          _c("td", [
+                            _vm._v(_vm._s(_vm.findItemName(order.item_id)))
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(_vm.findItemType(order.item_id)) + " "
+                            )
+                          ]),
+                          _vm._v(" "),
+                          order.state == "confirmed"
+                            ? _c("td", { staticStyle: { color: "#0062cc" } }, [
+                                _vm._v(_vm._s(order.state))
+                              ])
+                            : order.state == "pending"
+                            ? _c("td", { staticStyle: { color: "#38bdf1" } }, [
+                                _vm._v(_vm._s(order.state))
+                              ])
+                            : order.state == "prepared"
+                            ? _c("td", { staticStyle: { color: "#f08228" } }, [
+                                _vm._v(_vm._s(order.state))
+                              ])
+                            : order.state == "delivered"
+                            ? _c("td", { staticStyle: { color: "#2bb800" } }, [
+                                _vm._v(_vm._s(order.state))
+                              ])
+                            : _c("td", [_vm._v(_vm._s(order.state))]),
+                          _vm._v(" "),
+                          _c("td", [_vm._v(_vm._s(order.start))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              "Price: " +
+                                _vm._s(_vm.findItemPrice(order.item_id)) +
+                                " €"
+                            )
+                          ])
+                        ])
+                      : _vm._e()
+                  })
+                ],
+                2
+              )
             : _vm._e()
         })
       ],
@@ -56922,6 +57006,8 @@ var staticRenderFns = [
         _c("th", [_vm._v("Table")]),
         _vm._v(" "),
         _c("th", [_vm._v("Start")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Waiter Responsible")]),
         _vm._v(" "),
         _c("th", [_vm._v("Total")]),
         _vm._v(" "),

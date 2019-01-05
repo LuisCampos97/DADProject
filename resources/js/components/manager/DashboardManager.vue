@@ -26,21 +26,6 @@
             </tr>
         </tbody>
     </table>
-
-    <h3>Meals</h3>
-    <table class="table table-striped">
-        <tbody v-for="meal in meals" :key="meal.id" v-if="meal.state == 'terminated'">
-            <tr>
-                <td>Meal: {{ meal.id }}</td>
-                <td>Table: {{ meal.table_number }}</td>
-                <td>{{ meal.start }}</td>
-                <td>Total: {{ meal.total_price_preview }} €</td>
-                <td>
-                    <a class="btn btn-sm btn-danger" v-on:click.prevent="notPaid(meal)">Not Paid</a>
-                </td>
-            </tr>
-        </tbody>
-    </table>
     <MealManage></MealManage>
 </div>
 </template>
