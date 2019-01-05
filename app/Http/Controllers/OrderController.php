@@ -49,11 +49,13 @@ class OrderController extends Controller
     public function updateState(Request $request, $id)
     {
         $order = Order::findOrFail($id);
+        $user = $request->user();
         
         if($order->state == 'pending') {
             $order->state = 'confirmed';
         }else if($order->state == 'confirmed') {
             $order->state = 'in preparation';
+            $order->responsible_cook_id = $user->id;
         } else if($order->state == 'in preparation') {
             $order->state = 'prepared';
         } else if($order->state == 'prepared') {

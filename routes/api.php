@@ -46,7 +46,7 @@ Route::post('orders/register', 'OrderController@create');
 Route::get('orders', 'OrderController@index');
 Route::get('orders/{id}', 'OrderController@show');
 Route::get('ordersCook/{responsible_cook_id}', 'OrderController@ordersByCook');
-Route::put('orders/{id}', 'OrderController@updateState');
+Route::middleware('auth:api')->put('orders/{id}', 'OrderController@updateState');
 Route::put('orders/terminate/{id}', 'OrderController@terminate');
 Route::delete('orders/{id}', 'OrderController@destroy');
 

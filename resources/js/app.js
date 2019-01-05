@@ -16,6 +16,11 @@ Vue.use(new VueSocketio({
 import store from './stores/global-store';
 import routes from './routes';
 
+//config axios
+axios.defaults.headers.common['Accept'] = "application/json";
+axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('access_token');
+axios.defaults.headers.common['Content-Type'] = "application/json";
+
 Vue.component('master', require('./components/Master.vue'));
 Vue.component('item-list', require('./components/ItemList.vue'));
 

@@ -29,10 +29,12 @@
       </div>
     </div>
 
-    <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
-    <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
-    <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
-    <dashboardManager :currentUser="user" v-if="user.type == 'manager'"></dashboardManager>
+    <div v-if="user.shift_active == '1'">
+      <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
+      <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
+      <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
+      <dashboardManager :currentUser="user" v-if="user.type == 'manager'"></dashboardManager>
+    </div>
   </div>
 </template>
 
