@@ -28,7 +28,7 @@ Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('dashboardWaiter', require('./components/waiter/dashboardWaiter.vue'));
 Vue.component('dashboardCook', require('./components/cook/DashboardCook.vue'));
 Vue.component('dashboardCashier', require('./components/cashier/DashboardCashier.vue'));
-Vue.component('dashboardManager', require('./components/manager/DashboardManager.vue'));
+Vue.component('userManage', require('./components/manager/userManage.vue'));
 
 Vue.component('registerMeal', require('./components/waiter/registerMeal.vue'));
 Vue.component('registerOrder', require('./components/waiter/registerOrder.vue'));
