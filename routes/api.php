@@ -56,8 +56,9 @@ Route::get('invoices', 'InvoiceController@index');
 Route::get('invoices/{id}', 'InvoiceController@show');
 Route::get('mealForInvoice', 'InvoiceController@mealForInvoice');
 Route::get('invoiceDetails/{id}', 'InvoiceController@invoiceDetails');
+Route::put('invoices/notPaid/{id}', 'InvoiceController@notPaid');
 Route::get('invoiceItems/{id}', 'InvoiceController@invoiceItems');
-Route::put('invoices/{id}', 'InvoiceController@editInvoice');
+Route::put('invoices/{id}', 'InvoiceController@payInvoice');
 
 //RestaurantTable
 Route::get('restaurantTables', 'RestaurantTableController@index');

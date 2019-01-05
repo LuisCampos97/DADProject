@@ -63,7 +63,7 @@ class InvoiceController extends Controller
         return $invoiceItems;
     }
 
-    public function editInvoice(Request $request, $id)
+    public function payInvoice(Request $request, $id)
     {
         $request->validate([
             'nif' => 'required|digits:9',
@@ -78,6 +78,19 @@ class InvoiceController extends Controller
 
         $meal = Meal::findOrFail($id);
         $meal->state = 'paid';
+        $meal->save();
+
+        return new InvoiceResource($invoice);
+    }
+
+    public function notPaid(Request $request, $id)
+    {
+        $invoice = Invoice::findOrFail($id);
+        $invoice->state = 'not paid';
+        $invoice->save();
+
+        $meal = Meal::findOrFail($id);
+        $meal->state = 'not paid';
         $meal->save();
 
         return new InvoiceResource($invoice);
