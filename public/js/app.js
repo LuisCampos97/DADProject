@@ -51804,6 +51804,30 @@ module.exports = function listToStyles (parentId, list) {
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 module.exports = {
   data: function data() {
@@ -51838,13 +51862,17 @@ var render = function() {
     _c("div", { staticClass: "content-header" }, [
       _c("div", { staticClass: "row mb-2" }, [
         _c("div", { staticClass: "col-sm-6" }, [
-          _c("h1", { staticClass: "text-dark" }, [_vm._v(_vm._s(_vm.title))])
+          _c("h1", { staticClass: "text-dark" }, [
+            _vm._v(_vm._s(_vm.title) + " ")
+          ])
         ])
       ])
     ]),
     _vm._v(" "),
+    _vm._m(0),
+    _vm._v(" "),
     _c("table", { staticClass: "table table-striped" }, [
-      _vm._m(0),
+      _vm._m(1),
       _vm._v(" "),
       _c(
         "tbody",
@@ -51868,6 +51896,77 @@ var render = function() {
   ])
 }
 var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "album py-5 bg-light" }, [
+      _c("div", { staticClass: "container" }, [
+        _c("div", { staticClass: "row" }, [
+          _c("div", { staticClass: "col-md-4" }, [
+            _c("div", { staticClass: "card mb-4 box-shadow" }, [
+              _c("img", {
+                staticClass: "card-img-top",
+                staticStyle: {
+                  height: "225px",
+                  width: "100%",
+                  display: "block"
+                },
+                attrs: {
+                  "data-src":
+                    "holder.js/100px225?theme=thumb&bg=55595c&fg=eceeef&text=Thumbnail",
+                  alt: "Thumbnail [100%x225]",
+                  src: "data:image/",
+                  "data-holder-rendered": "true"
+                }
+              }),
+              _vm._v(" "),
+              _c("div", { staticClass: "card-body" }, [
+                _c("p", { staticClass: "card-text" }, [
+                  _vm._v(
+                    "This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer."
+                  )
+                ]),
+                _vm._v(" "),
+                _c(
+                  "div",
+                  {
+                    staticClass:
+                      "d-flex justify-content-between align-items-center"
+                  },
+                  [
+                    _c("div", { staticClass: "btn-group" }, [
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-outline-secondary",
+                          attrs: { type: "button" }
+                        },
+                        [_vm._v("View")]
+                      ),
+                      _vm._v(" "),
+                      _c(
+                        "button",
+                        {
+                          staticClass: "btn btn-sm btn-outline-secondary",
+                          attrs: { type: "button" }
+                        },
+                        [_vm._v("Edit")]
+                      )
+                    ]),
+                    _vm._v(" "),
+                    _c("small", { staticClass: "text-muted" }, [
+                      _vm._v("9 mins")
+                    ])
+                  ]
+                )
+              ])
+            ])
+          ])
+        ])
+      ])
+    ])
+  },
   function() {
     var _vm = this
     var _h = _vm.$createElement
