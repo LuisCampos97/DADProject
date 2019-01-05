@@ -38,7 +38,7 @@ class ItemController extends Controller
     {
         $item = Item::findOrFail($id);
         $item->update($request->all());
-        return new ItemResource($user);
+        return new ItemResource($item);
     }
 
     public function destroy($id)

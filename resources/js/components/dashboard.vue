@@ -33,7 +33,7 @@
       <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
       <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
       <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
-      <dashboardManager :currentUser="user" v-if="user.type == 'manager'"></dashboardManager>
+      <menuItemsManage :currentUser="user" v-if="user.type == 'manager'"></menuItemsManage>
     </div>
   </div>
 </template>

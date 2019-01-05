@@ -13,7 +13,7 @@ class ItemRequest extends FormRequest
      */
     public function authorize()
     {
-        return false;
+        return true;
     }
 
     /**
@@ -26,8 +26,8 @@ class ItemRequest extends FormRequest
         return [
             'name' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
             'type' => 'required',
-            'description' => 'required|min:3|regex:/^[A-Za-záàâãéèêíóôõúçÁÀÂÃÉÈÍÓÔÕÚÇ ]+$/',
-            'photo_url' => 'nullable|file|mimes:jpeg,png,jpg|max:3000',
+            'description' => 'required|min:3',
+            //'photo_url' => 'nullable|file|mimes:jpeg,png,jpg|max:3000',
             'price' => 'required|numeric'
         ];
     }
