@@ -51733,7 +51733,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\nimg[data-v-e04d3988] {\r\n  border-radius: 3px;\r\n  width: 125px;\n}\r\n", ""]);
+exports.push([module.i, "\n.card-img-top[data-v-e04d3988] {\r\n  width: 100%;\r\n  height: 15vw;\r\n  -o-object-fit: cover;\r\n     object-fit: cover;\n}\r\n", ""]);
 
 // exports
 
@@ -51805,11 +51805,6 @@ module.exports = function listToStyles (parentId, list) {
 //
 //
 //
-//
-//
-//
-//
-//
 
 module.exports = {
   data: function data() {
@@ -51849,50 +51844,56 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _c("table", { staticClass: "table table-striped" }, [
-      _vm._m(0),
-      _vm._v(" "),
-      _c(
-        "tbody",
-        _vm._l(_vm.items, function(item) {
-          return _c("tr", { key: item.id }, [
-            _c("td", [
-              _c("img", { attrs: { src: "/storage/items/" + item.photo_url } })
-            ]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(item.name))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(item.type))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(item.description))]),
-            _vm._v(" "),
-            _c("td", [_vm._v(_vm._s(item.price))])
-          ])
-        })
-      )
+    _c("div", { staticClass: "container" }, [
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "card-deck" },
+          _vm._l(_vm.items, function(item) {
+            return _c(
+              "div",
+              {
+                key: item.id,
+                staticClass: "col-lg-4 d-flex align-items-stretch"
+              },
+              [
+                _c("div", { staticClass: "card bg-light mt-4" }, [
+                  _c("img", {
+                    staticClass: "card-img-top img-fluid",
+                    attrs: {
+                      src: "/storage/items/" + item.photo_url,
+                      alt: "Thumbnail [100px180]",
+                      "data-holder-rendered": "true"
+                    }
+                  }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h4", { staticClass: "card-title" }, [
+                      _vm._v(_vm._s(item.name))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "card-text" }, [
+                      _vm._v(_vm._s(item.description))
+                    ]),
+                    _vm._v(" "),
+                    _c("p", { staticClass: "card-text" }, [
+                      _vm._v(_vm._s(item.type))
+                    ]),
+                    _vm._v(" "),
+                    _c("small", { staticClass: "text-muted" }, [
+                      _vm._v(_vm._s(item.price) + "€")
+                    ])
+                  ])
+                ])
+              ]
+            )
+          })
+        )
+      ])
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Photo")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Type")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Description")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Price")])
-      ])
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {

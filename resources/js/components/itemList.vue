@@ -8,28 +8,23 @@
       </div>
     </div>
 
-    <table class="table table-striped">
-      <thead>
-        <tr>
-          <th>Photo</th>
-          <th>Name</th>
-          <th>Type</th>
-          <th>Description</th>
-          <th>Price</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr v-for="item in items" :key="item.id">
-          <td>
-            <img :src="'/storage/items/' + item.photo_url">
-          </td>
-          <td>{{ item.name }}</td>
-          <td>{{ item.type }}</td>
-          <td>{{ item.description }}</td>
-          <td>{{ item.price }}</td>
-        </tr>
-      </tbody>
-    </table>
+    <div class="container">
+      <div class="row">
+        <div class="card-deck">
+          <div v-for="item in items" :key="item.id" class="col-lg-4 d-flex align-items-stretch">
+            <div class="card bg-light mt-4">
+              <img class="card-img-top img-fluid" :src="'/storage/items/' + item.photo_url" alt="Thumbnail [100px180]" data-holder-rendered="true">
+              <div class="card-body">
+                <h4 class="card-title">{{ item.name }}</h4>
+                <p class="card-text">{{ item.description }}</p>
+                <p class="card-text">{{ item.type }}</p>
+                <small class="text-muted">{{ item.price }}€</small>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -55,9 +50,10 @@ module.exports = {
 </script>
 
 <style scoped>
-img {
-  border-radius: 3px;
-  width: 125px;
+.card-img-top {
+  width: 100%;
+  height: 15vw;
+  object-fit: cover;
 }
 </style>
 
