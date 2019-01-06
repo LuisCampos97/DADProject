@@ -14,17 +14,7 @@ class UserControllerAPI extends Controller
 {
     public function index(Request $request)
     {
-        if ($request->has('page')) {
-            return UserResource::collection(User::paginate(5));
-        } else {
-            return UserResource::collection(User::all());
-        }
-        /*Caso não se pretenda fazer uso de Eloquent API Resources (https://laravel.com/docs/5.5/eloquent-resources), é possível implementar com esta abordagem:
-    if ($request->has('page')) {
-    return User::with('department')->paginate(5);;
-    } else {
-    return User::with('department')->get();;
-    }*/
+        return UserResource::collection(User::paginate(5));
     }
     public function show($id)
     {
@@ -64,14 +54,19 @@ class UserControllerAPI extends Controller
         $user->save();
         return new UserResource($user);
     }
+
+    public function editBlock($id)
+    {
+        $user = User::findOrFail($id);
+        $user->blocked = !$user->blocked;
+        $user->save();
+        return new UserResource($user);
+    }
+
     public function destroy($id)
     {
         $user = User::findOrFail($id);
-        try {
-            $user->forceDelete();
-        } catch (\Exception $e) {
-            $user->delete();
-        }
+        $user->delete();
 
         return response()->json(null, 204);
     }
@@ -89,6 +84,33 @@ class UserControllerAPI extends Controller
     public function myProfile(Request $request)
     {
         return new UserResource($request->user());
+    }
+
+    public function changePassword(Request $request, $id) {
+        $request->validate([
+            'old_password' => 'required|min:3',
+            'new_password' => 'required|min:3',
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $check_password_match = !Hash::check($request->old_password, $user->password);
+        if ($check_password_match) {
+            return response()->json(array('error'=>'Password not correct.', 400));
+        }
+
+        $check_password_match = Hash::check($user->password, $request->new_password);
+        if ($check_password_match) {
+            return response()->json(array('error'=>'New password cannot be the same', 400));
+        }
+
+        $user->password = Hash::make($request->new_password);
+
+        if (!$user->save()) {
+            return response()->json(array('error'=>'Password change failed', 400));
+        }
+        
+        return response()->json(array('msg'=>'Password changed sucessfully.', 200));
     }
 
     public function postPhoto(Request $request, $id)

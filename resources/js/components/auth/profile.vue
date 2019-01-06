@@ -37,48 +37,58 @@
             </div>
           </div>
         </div>
-        <div class="col-md-6">
-          <div class="profile-head">
-            <h3>{{ user.name }}</h3>
-            <h4>{{ user.type.charAt(0).toUpperCase() + user.type.slice(1) }}</h4>
-            <ul class="nav nav-tabs"></ul>
+        <div class="row col-md-8">
+          <div class="col-md-6">
+            <div class="profile-head">
+              <h3>{{ user.name }}</h3>
+              <h4>{{ user.type.charAt(0).toUpperCase() + user.type.slice(1) }}</h4>
+              <ul class="nav nav-tabs"></ul>
+            </div>
           </div>
-        </div>
-        <div class="col-md-2">
+          <div class="col-md-4" style="text-align: right">
           <input
             type="submit"
-            class="profile-edit-btn"
             name="btnAddMore"
+            class="profile-edit-btn"
             value="Edit Profile"
+            style="height: 40px"
             v-on:click.prevent="editUser(user)"
           >
-        </div>
-        <div class="col-md-8 profile-info">
-          <div class="row">
-            <div class="col-md-6">
-              <label>User Id</label>
-            </div>
-            <div class="col-md-6">
-              <p class="edit-label">{{ user.username }}</p>
-              <input type="text" v-model="user.username" class="edit-input" style="display:none">
-            </div>
           </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label>Name</label>
+          <div class="col-md-12 profile-info">
+            <div class="row">
+              <div class="col-md-6">
+                <label>User Id</label>
+              </div>
+              <div class="col-md-6">
+                <p class="edit-label">{{ user.username }}</p>
+                <input type="text" v-model="user.username" class="edit-input" style="display:none">
+              </div>
             </div>
-            <div class="col-md-6">
-              <p class="edit-label">{{ user.name }}</p>
-              <input type="text" v-model="user.name" class="edit-input" style="display:none">
+            <div class="row">
+              <div class="col-md-6">
+                <label>Name</label>
+              </div>
+              <div class="col-md-6">
+                <p class="edit-label">{{ user.name }}</p>
+                <input type="text" v-model="user.name" class="edit-input" style="display:none">
+              </div>
             </div>
-          </div>
-          <div class="row">
-            <div class="col-md-6">
-              <label>Email</label>
+            <div class="row">
+              <div class="col-md-6">
+                <label>Email</label>
+              </div>
+              <div class="col-md-6">
+                <p>{{ user.email }}</p>
+              </div>
             </div>
-            <div class="col-md-6">
-              <p>{{ user.email }}</p>
-            </div>
+            <edit-user
+              :current-user="currentUser"
+              :editing-user="editingUser"
+              v-on:cancel-edit="cancelEdit"
+              v-on:save-user="saveUser"
+              v-on:submit-file="submitFile"
+            ></edit-user>
           </div>
         </div>
       </div>
@@ -96,14 +106,6 @@
       >&times;</button>
       <strong>{{(showSuccess)?successMessage:failMessage}}</strong>
     </div>
-
-    <edit-user
-      :current-user="currentUser"
-      :editing-user="editingUser"
-      v-on:cancel-edit="cancelEdit"
-      v-on:save-user="saveUser"
-      v-on:submit-file="submitFile"
-    ></edit-user>
   </div>
 </template>
 

@@ -82,6 +82,7 @@ export default {
             } catch (err) {
                 return "No Longer Sold";
             }
+            
         },
         getMeals: function () {
             axios.get("api/meals").then(response => {

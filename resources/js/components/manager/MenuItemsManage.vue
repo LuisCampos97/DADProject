@@ -1,5 +1,5 @@
 <template>
-  <div class="jumbotron" v-if="currentUser.type == 'manager'">
+  <div class="jumbotron">
     <div class="alert alert-success" v-if="showMessage">
       <button type="button" class="close-btn" v-on:click="showMessage=false">&times;</button>
       <strong>{{ message }}</strong>
@@ -14,8 +14,6 @@
     ></add-menuitem>
     <br>
     <br>
-    <InvoiceManage></InvoiceManage>
-    <MealManage></MealManage>
     <h3>Menu Items</h3>
     <table class="table table-striped">
       <thead class="thead-dark">
@@ -56,7 +54,6 @@
 
 <script>
 export default {
-  props: ["currentUser"],
   data() {
     return {
       items: {},
