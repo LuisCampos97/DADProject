@@ -2,7 +2,7 @@
   <!-- template só pode ter um unico root element -->
   <div class="jumbotron" v-if="editingUser">
     <div class="row">
-      <div class="col-md-2">
+      <div class="col-md-2" style="padding-left: 35%">
         <button
           class="profile-edit-btn"
           style="float: right"
