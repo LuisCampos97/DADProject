@@ -15,6 +15,7 @@ import MenuItemsManage from './components/manager/MenuItemsManage.vue';
 import TablesManage from './components/manager/TablesManage.vue';
 import InvoiceManage from './components/manager/InvoiceManage.vue';
 import MealManage from './components/manager/MealManage.vue';
+import UserManage from './components/manager/UserManage.vue';
 
 const routes = [{
         path: '/',
@@ -76,6 +77,11 @@ const routes = [{
         path: '/mealManage',
         component: MealManage,
         name: 'mealManage'
+    },
+    {
+        path: '/userManage',
+        component: UserManage,
+        name: 'userManage'
     }
 ];
 

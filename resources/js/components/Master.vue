@@ -18,7 +18,7 @@
           <a class="dropdown-item"><router-link to="/menuItemsManage">Menu Items</router-link></a>
           <a class="dropdown-item"><router-link to="/invoiceManage">Invoices</router-link></a>
           <a class="dropdown-item"><router-link to="/mealManage">Meals</router-link></a>
-          <a class="dropdown-item">Users</a>
+          <a class="dropdown-item"><router-link to="/userManage">Users</router-link></a>
         </div>
       </li>
         <li>

@@ -33,11 +33,12 @@ Vue.component('dashboard', require('./components/Dashboard.vue'));
 Vue.component('dashboardWaiter', require('./components/waiter/dashboardWaiter.vue'));
 Vue.component('dashboardCook', require('./components/cook/DashboardCook.vue'));
 Vue.component('dashboardCashier', require('./components/cashier/DashboardCashier.vue'));
-Vue.component('userManage', require('./components/manager/userManage.vue'));
+Vue.component('userManage', require('./components/manager/UserManage.vue'));
 Vue.component('menuItemsManage', require('./components/manager/MenuItemsManage.vue'));
 Vue.component('edit-menuitem', require('./components/manager/MenuItemEdit.vue'));
 Vue.component('add-menuitem', require('./components/manager/MenuItemAdd.vue'));
 Vue.component('tablesManage', require('./components/manager/TablesManage.vue'));
+Vue.component('user-editManager', require('./components/manager/UserEditManager.vue'));
 
 Vue.component('registerMeal', require('./components/waiter/registerMeal.vue'));
 Vue.component('registerOrder', require('./components/waiter/registerOrder.vue'));

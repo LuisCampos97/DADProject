@@ -34,6 +34,7 @@ Route::put('users/{id}/shift', 'UserControllerAPI@invertShift');
 Route::delete('users/{id}', 'UserControllerAPI@destroy');
 Route::get('profiles', 'UserControllerAPI@index')->name('profile');
 Route::get('profile/{id}', 'UserControllerAPI@getProfile')->name('profile');
+Route::put('users/{id}/editBlock', 'UserControllerAPI@editBlock');
 
 //Meals
 Route::post('meals/register', 'MealController@create');
