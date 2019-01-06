@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Http\Resources\OrderResource;
 use App\Order;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class OrderController extends Controller
 {
@@ -25,7 +26,10 @@ class OrderController extends Controller
     public function ordersByCook($responsible_cook_id)
     {
         //Get orders
-        $orders = Order::where('responsible_cook_id', $responsible_cook_id)
+        $orders = DB::table('orders')
+            ->where('responsible_cook_id', '$responsible_cook_id')
+            ->select("orders.*", "items.name as item_name")
+            ->leftjoin('items', 'orders.item_id', '=', 'items.id')
             ->orderBy('start', 'asc')
             ->orderBy('state', 'desc')
             ->where('state', 'in preparation')
@@ -33,7 +37,7 @@ class OrderController extends Controller
             ->get();
 
         //Return collection of orders as a resource
-        return OrderResource::collection($orders);
+        return $orders;
     }
 
     public function create(Request $request)
@@ -50,18 +54,17 @@ class OrderController extends Controller
     {
         $order = Order::findOrFail($id);
         $user = $request->user();
-        
-        if($order->state == 'pending') {
+
+        if ($order->state == 'pending') {
             $order->state = 'confirmed';
-        }else if($order->state == 'confirmed') {
+        } else if ($order->state == 'confirmed') {
             $order->state = 'in preparation';
             $order->responsible_cook_id = $user->id;
-        } else if($order->state == 'in preparation') {
+        } else if ($order->state == 'in preparation') {
             $order->state = 'prepared';
-        } else if($order->state == 'prepared') {
+        } else if ($order->state == 'prepared') {
             $order->state = 'delivered';
         }
-
 
         $order->save();
 
@@ -79,10 +82,10 @@ class OrderController extends Controller
     {
         $orders = Order::where('meal_id', $id)
             ->get();
-            
-            foreach ($orders as &$order) {
-                $order->state = 'not delivered';
-                $order->save();
-            }
+
+        foreach ($orders as &$order) {
+            $order->state = 'not delivered';
+            $order->save();
+        }
     }
 }

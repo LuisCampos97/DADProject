@@ -18,7 +18,7 @@ class InvoiceController extends Controller
         ->leftjoin('users', 'users.id', '=', 'meals.responsible_waiter_id')
         ->where('invoices.state', 'paid')
         ->orderBy('date', 'desc')
-        ->paginate(15);
+        ->paginate(10);
 
         return $invoices;
     }

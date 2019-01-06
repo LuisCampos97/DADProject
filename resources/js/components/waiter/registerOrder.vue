@@ -4,7 +4,7 @@
     <div class="col-md-8 profile-info">
         <div class="row">
             <div class="col-md-6">
-                <orderItems v-on:register-order="registerOrder"></orderItems>>
+                <orderItems v-on:register-order="registerOrder"></orderItems>
             </div>
         </div>
     </div>

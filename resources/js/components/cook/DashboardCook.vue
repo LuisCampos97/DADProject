@@ -8,15 +8,15 @@
     <table v-else class="table table-striped">
       <thead class="thead-dark">
         <tr>
-          <th>Order ID</th>
+          <th>Item to prepare</th>
           <th>State</th>
           <th>Start</th>
           <th>Actions</th>
         </tr>
       </thead>
       <tbody v-for="order in orders" :key="order.id" :class="{active: currentOrder === order}">
-        <tr v-if="order.state == 'confirmed'" style="color: #2bb800">
-          <td>{{ order.id }}</td>
+        <tr class="table-success" v-if="order.state == 'confirmed'">
+          <td>{{ order.item_name }}</td>
           <td>{{ order.state }}</td>
           <td>{{ order.start }}</td>
           <td>
@@ -26,8 +26,8 @@
             >In Preparation</a>
           </td>
         </tr>
-        <tr v-if="order.state == 'in preparation'" style="color: #0062cc">
-          <td>{{ order.id }}</td>
+        <tr class="table-primary" v-if="order.state == 'in preparation'" >
+          <td>{{ order.item_name }}</td>
           <td>{{ order.state }}</td>
           <td>{{ order.start }}</td>
           <td>
@@ -53,7 +53,7 @@ module.exports = {
   methods: {
     getOrders() {
       axios.get("api/ordersCook/" + this.currentUser.id).then(response => {
-        this.orders = response.data.data;
+        this.orders = response.data;
       });
     },
     setOrderState(order) {
