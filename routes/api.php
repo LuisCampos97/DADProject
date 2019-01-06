@@ -54,6 +54,7 @@ Route::delete('orders/{id}', 'OrderController@destroy');
 //Invoices
 Route::post('invoices/register', 'InvoiceController@create');
 Route::get('invoices', 'InvoiceController@index');
+Route::get('invoices/all', 'InvoiceController@indexAll');
 Route::get('invoices/{id}', 'InvoiceController@show');
 Route::get('mealForInvoice', 'InvoiceController@mealForInvoice');
 Route::get('invoiceDetails/{id}', 'InvoiceController@invoiceDetails');
@@ -67,6 +68,7 @@ Route::post('restaurantTables/register', 'RestaurantTableController@register');
 Route::delete('restaurantTables/{id}', 'RestaurantTableController@delete');
 //Invoice Items
 Route::post('invoiceItems/register', 'InvoiceItemController@create');
+Route::get('invoiceItems', 'InvoiceItemController@index');
 
 //Authentication
 Route::post('login', 'LoginControllerAPI@login')->name('login');

@@ -11,7 +11,11 @@ class ItemController extends Controller
 {
     public function index(Request $request)
     {
-        return ItemResource::collection(Item::all());
+         if ($request->has('page')) {
+             return ItemResource::collection(Item::paginate(5));
+         } else {
+             return ItemResource::collection(Item::all());
+         }
     }
 
     public function indexPaginate(Request $request)

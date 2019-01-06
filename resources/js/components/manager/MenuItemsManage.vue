@@ -14,6 +14,8 @@
     ></add-menuitem>
     <br>
     <br>
+    <InvoiceManage></InvoiceManage>
+    <MealManage></MealManage>
     <h3>Menu Items</h3>
     <table class="table table-striped">
       <thead class="thead-dark">

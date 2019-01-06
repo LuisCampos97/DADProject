@@ -15,14 +15,14 @@
                     <a class="btn btn-sm btn-primary" @click.prevent="terminate(meal)">Terminate</a></td>
             </tr>
             <tr v-for="order in orders" :key="order.id " v-if="meal.id == order.meal_id">
-                <td>{{items[order.item_id - 1].name }}</td>
+                <td>{{findItemName(order.item_id)}}</td>
                 <td v-if="order.state == 'confirmed'" style="color: #0062cc">{{ order.state }}</td>
                 <td v-else-if="order.state == 'pending'" style="color: #38bdf1">{{ order.state }}</td>
                 <td v-else-if="order.state == 'prepared'" style="color: #f08228">{{ order.state }}</td>
                 <td v-else-if="order.state == 'delivered'" style="color: #2bb800">{{ order.state }}</td>
                 <td v-else>{{ order.state }}</td>
-                <td>{{ order.start }}</td>
-                <td>Price: {{ items[order.item_id - 1].price }} €</td>
+                <td>{{ order.item_id }}</td>
+                <td>Price: {{findItemPrice(order.item_id)}} €</td>
                 <td><a class="btn btn-sm btn-success" @click.prevent="setOrderState(order)" v-if="order.state == 'prepared'" >Deliver</a>
                     <a class="btn btn-sm btn-danger" @click.prevent="cancelOrder(order)" v-if=" plusFiveSeconds(order.start) >= currentDate">Cancel</a>
                 </td>
@@ -62,6 +62,20 @@ module.exports = {
         };
     },
     methods: {
+        findItemName: function (itemId) {
+            try {
+                return this.items.find(x => x.id === itemId).name;
+            } catch (err) {
+                return "No Longer Sold";
+            }
+        },
+        findItemPrice: function (itemId) {
+            try {
+                return this.items.find(x => x.id === itemId).price;
+            } catch (err) {
+                return "No Longer Sold";
+            }
+        },
         registerMeal: function () {
             this.registeringMeal = true;
         },
@@ -187,9 +201,9 @@ module.exports = {
 
     },
     mounted() {
-        this.getMeals();
-        this.getOrders();
         this.getItems();
+        this.getOrders();
+        this.getMeals();
     }
 };
 </script>
