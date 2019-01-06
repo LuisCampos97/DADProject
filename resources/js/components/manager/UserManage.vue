@@ -26,12 +26,84 @@
           <td>{{ user.email }}</td>
           <img class="rounded mx-auto d-block" :src="'/storage/profiles/' + user.photo_url" alt="Thumbnail [100px180]" data-holder-rendered="true">
           <td>
-            <a class="btn btn-sm btn-info" v-on:click.prevent="updateUser(user)">Edit</a>
-            <a class="btn btn-sm btn-danger" v-on:click.prevent="deleteUser(user)">Delete</a>
+            <a class="btn btn-sm btn-info" v-on:click.prevent="updateUser(user)"><i class="fas fa-edit"></i> Edit</a>
+            <a class="btn btn-sm btn-danger" v-on:click.prevent="deleteUser(user)"><i class="fas fa-trash"></i> Delete</a>
           </td>
         </tr>
       </tbody>
     </table>
+
+    <!--______________________TODO______________________-->
+
+    <modal name="modal-update" :width="600" :height="500">
+      <div class="container" style="padding: 25px;">
+        <h2>{{ currentItem.name }}</h2>
+        <div class="form-group">
+          <label for="inputName">Name</label>
+          <input
+            type="text"
+            class="form-control"
+            v-model="currentItem.name"
+            name="name"
+            id="inputName"
+            placeholder="Name"
+          >
+          <p class="help-block" v-for="error in errors.name" v-bind:key="error">{{ error }}</p>
+        </div>
+        <div class="form-group">
+          <label for="inputType">Type</label>
+          <select class="form-control" name="inputType" v-model="currentItem.type">
+            <option
+              v-for="option in options"
+              v-bind:key="option.key"
+              :selected="option.key == currentItem.type"
+            >{{ option.key }}</option>
+          </select>
+          <p class="help-block" v-for="error in errors.type" v-bind:key="error">{{ error }}</p>
+        </div>
+        <div class="form-group">
+          <label for="inputDescription">Description</label>
+          <input
+            type="text"
+            class="form-control"
+            v-model="currentItem.description"
+            name="description"
+            id="inputDescription"
+            placeholder="Description"
+          >
+          <p class="help-block" v-for="error in errors.description" v-bind:key="error">{{ error }}</p>
+        </div>
+        <!-- <div class="form-group">
+          <label for="inputPhoto">Photo</label>
+          <input
+            type="file"
+            class="form-control"
+            ref="file"
+            name="photo"
+            id="inputPhoto"
+          >
+          <p class="help-block" v-for="error in errors.photo" v-bind:key="error">{{ error }}</p>
+        </div>-->
+        <div class="form-group">
+          <label for="inputPrice">Price</label>
+          <input
+            type="number"
+            class="form-control"
+            v-model="currentItem.price"
+            name="price"
+            id="inputPrice"
+            placeholder="Price"
+          >
+          <p class="help-block" v-for="error in errors.price" v-bind:key="error">{{ error }}</p>
+        </div>
+
+        <div class="form-group">
+          <a class="btn btn-success" v-on:click.prevent="updateItem(currentItem)">Save</a>
+          <a class="btn btn-danger" v-on:click.prevent="cancelUpdate()">Cancel</a>
+        </div>
+      </div>
+    </modal>
+
     </div>
   </div>
 </template>
@@ -58,7 +130,8 @@ export default {
       });
     },
     updateUser(user) {
-        
+        this.currentUser = user;
+        this.$modal.show("modal-update");
     },
     deleteUser(user) {
       axios.delete("api/users/" + user.id).then(response => {
