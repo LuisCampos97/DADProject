@@ -13,16 +13,15 @@
       <a v-if="loggedIn && currentUser.shift_active == '0'" class="far fa-clock col-md-4" style="text-align: center">
         <router-link to="/dashboard">Off Shift</router-link>
       </a>
+
       <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Management</button>
-      
+      <li class="nav-item dropdown">
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-          </li>
-        </ul>
+            <a class="dropdown-item waves-light"><router-link class="col-md-2" to="/profile">Profile</router-link></a>
+            <a class="dropdown-item waves-light"><router-link class="col-md-2" to="/profile">Profile</router-link></a>
       </div>
+      </li>
+
       <li>
         <router-link to="/">Menu</router-link>
       </li>
