@@ -7,7 +7,7 @@ Vue.use(VueRouter);
 
 import ItemList from './components/itemList.vue';
 import Login from './components/auth/login.vue';
-import Dashboard from './components/Dashboard.vue';
+import Dashboard from './components/dashboard.vue';
 import Profile from './components/auth/profile.vue';
 import RegisterWorker from './components/auth/RegisterWorker.vue';
 import InvoiceDetails from './components/cashier/InvoiceDetails.vue';
