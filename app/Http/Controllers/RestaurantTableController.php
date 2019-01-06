@@ -18,10 +18,12 @@ class RestaurantTableController extends Controller
         }
     }
 
-    public function register(Request $request)
+    public function register()
     {
+        $tables = DB::table('restaurant_tables')->orderBy('table_number', 'desc')->get()->toArray();
+        $lastId = $tables[0]->table_number;
         $table = RestaurantTable::create([
-            'table_number' => $request['table_number'],
+            'table_number' => $lastId+1,
         ]);
 
         return new RestaurantTableResource($table);
@@ -29,14 +31,8 @@ class RestaurantTableController extends Controller
 
     public function delete($table_number)
     {
-        $meals = DB::table('meals')->where('table_number', $table_number)->get()->toArray();
-
-        //VER CHAVES ESTRANGEIRAS NAS TABELAS PARA APAGAR
-        foreach($meals as $meal) {
-            DB::table('meals')->where('table_number', $meal->table_number)->delete();
-        }
-
-        DB::table('restaurant_tables')->where('table_number', $table_number)->delete();
+        $table = RestaurantTable::where('table_number', $table_number);
+        $table->delete();
 
         return response()->json(null, 204);
     }

@@ -1,5 +1,9 @@
 <template>
-  <div class="container">
+  <div class="container" style="padding: 25px;">
+    <h3>Restaurant Tables Manage</h3>
+    <a class="btn btn btn-info" v-on:click.prevent="addRestaurantTables()">
+      <i class="fas fa-plus"></i> Add Table
+    </a>
     <div class="row">
       <div class="card-deck">
         <div
@@ -35,10 +39,17 @@ export default {
       });
     },
     deleteTable(table) {
-      axios.delete("/api/restaurantTables/" + table.table_number).then(response => {
+      axios
+        .delete("/api/restaurantTables/" + table.table_number)
+        .then(response => {
+          this.getTables();
+        });
+    },
+    addRestaurantTables() {
+      axios.post("/api/restaurantTables/register").then(response => {
         this.getTables();
-      });
-    }
+      })
+    },
   },
   mounted() {
     this.getTables();
