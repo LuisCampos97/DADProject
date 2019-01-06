@@ -45,22 +45,16 @@
               <ul class="nav nav-tabs"></ul>
             </div>
           </div>
+          <div class="col-md-4" style="text-align: right">
           <input
             type="submit"
-            class="profile-edit-btn"
             name="btnAddMore"
-            value="Change Password"
-            style="height: 40px"
-            v-on:click.prevent="editUser(user)"
-          >
-          <input
-            type="submit"
             class="profile-edit-btn"
-            name="btnAddMore"
             value="Edit Profile"
             style="height: 40px"
             v-on:click.prevent="editUser(user)"
           >
+          </div>
           <div class="col-md-12 profile-info">
             <div class="row">
               <div class="col-md-6">

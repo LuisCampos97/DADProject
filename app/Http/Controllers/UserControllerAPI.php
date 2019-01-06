@@ -86,6 +86,33 @@ class UserControllerAPI extends Controller
         return new UserResource($request->user());
     }
 
+    public function changePassword(Request $request, $id) {
+        $request->validate([
+            'old_password' => 'required|min:3',
+            'new_password' => 'required|min:3',
+        ]);
+
+        $user = User::findOrFail($id);
+
+        $check_password_match = !Hash::check($request->old_password, $user->password);
+        if ($check_password_match) {
+            return response()->json(array('error'=>'Password not correct.', 400));
+        }
+
+        $check_password_match = Hash::check($user->password, $request->new_password);
+        if ($check_password_match) {
+            return response()->json(array('error'=>'New password cannot be the same', 400));
+        }
+
+        $user->password = Hash::make($request->new_password);
+
+        if (!$user->save()) {
+            return response()->json(array('error'=>'Password change failed', 400));
+        }
+        
+        return response()->json(array('msg'=>'Password changed sucessfully.', 200));
+    }
+
     public function postPhoto(Request $request, $id)
     {
         $request->validate([

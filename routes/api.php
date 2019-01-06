@@ -30,6 +30,7 @@ Route::get('users/{id}', 'UserControllerAPI@show');
 Route::post('users', 'UserControllerAPI@store');
 Route::post('users/{id}', 'UserControllerAPI@postPhoto');
 Route::put('users/{id}', 'UserControllerAPI@update');
+Route::put('users/{id}/changePassword', 'UserControllerAPI@changePassword');
 Route::put('users/{id}/shift', 'UserControllerAPI@invertShift');
 Route::delete('users/{id}', 'UserControllerAPI@destroy');
 Route::get('profiles', 'UserControllerAPI@index')->name('profile');
