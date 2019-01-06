@@ -3,6 +3,18 @@
     <nav>
         <a v-if="loggedIn && currentUser.shift_active == '1'" class="fas fa-clock col-md-4" style="text-align: center"><router-link to="/dashboard">On Shift {{ shiftTime }}</router-link></a>
         <a v-if="loggedIn && currentUser.shift_active == '0'" class="far fa-clock col-md-4" style="text-align: center"><router-link to="/dashboard">Off Shift</router-link></a>
+        <li class="nav-item dropdown" v-if="loggedIn && currentUser.type == 'manager'">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Manage
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item"><router-link to="/tablesManage">Restaurant Tables</router-link></a>
+          <a class="dropdown-item"><router-link to="/menuItemsManage">Menu Items</router-link></a>
+          <a class="dropdown-item"><router-link to="/invoiceManage">Invoices</router-link></a>
+          <a class="dropdown-item"><router-link to="/mealManage">Meals</router-link></a>
+          <a class="dropdown-item">Users</a>
+        </div>
+      </li>
         <li>
             <router-link to="/">Menu</router-link>
         </li>
@@ -94,7 +106,7 @@ nav {
 }
 
 nav a {
-    color: white;
+    color: black;
     padding: 0 25px;
     font-size: 14px;
     font-weight: 600;
@@ -115,4 +127,5 @@ a:active,
 a:hover {
     text-decoration: none;
 }
+
 </style>
