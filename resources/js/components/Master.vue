@@ -7,35 +7,33 @@
       </div>
     </div>
     <nav>
-      <a v-if="loggedIn && currentUser.shift_active == '1'" class="fas fa-clock col-md-4" style="text-align: center">
-        <router-link to="/dashboard">On Shift {{ shiftTime }}</router-link>
-      </a>
-      <a v-if="loggedIn && currentUser.shift_active == '0'" class="far fa-clock col-md-4" style="text-align: center">
-        <router-link to="/dashboard">Off Shift</router-link>
-      </a>
-      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Management</button>
-      
-      <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-          <li class="nav-item dropdown">
-            <a class="dropdown-item" href="#">Action</a>
-            <a class="dropdown-item" href="#">Another action</a>
-          </li>
-        </ul>
-      </div>
-      <li>
-        <router-link to="/">Menu</router-link>
+        <a v-if="loggedIn && currentUser.shift_active == '1'" class="fas fa-clock col-md-4" style="text-align: center"><router-link to="/dashboard">On Shift {{ shiftTime }}</router-link></a>
+        <a v-if="loggedIn && currentUser.shift_active == '0'" class="far fa-clock col-md-4" style="text-align: center"><router-link to="/dashboard">Off Shift</router-link></a>
+        <li class="nav-item dropdown" v-if="loggedIn && currentUser.type == 'manager'">
+        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+          Manage
+        </a>
+        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+          <a class="dropdown-item"><router-link to="/tablesManage">Restaurant Tables</router-link></a>
+          <a class="dropdown-item"><router-link to="/menuItemsManage">Menu Items</router-link></a>
+          <a class="dropdown-item"><router-link to="/invoiceManage">Invoices</router-link></a>
+          <a class="dropdown-item"><router-link to="/mealManage">Meals</router-link></a>
+          <a class="dropdown-item">Users</a>
+        </div>
       </li>
-      <li v-if="loggedIn && currentUser.type == 'manager'">
-        <router-link class="col-md-2" to="/registerWorker">Register</router-link>
-      </li>
-      <li v-if="loggedIn">
-        <router-link class="col-md-2" to="/profile">Profile</router-link>
-      </li>
-      <li v-if="!loggedIn">
-        <router-link class="col-md-2" to="/login">Login</router-link>
-      </li>
-      <a v-if="loggedIn" v-on:click.prevent="logout()" class="col-md-2">Logout</a>
+        <li>
+            <router-link to="/">Menu</router-link>
+        </li>
+        <li v-if="loggedIn && currentUser.type == 'manager'">
+            <router-link class="col-md-2" to="/registerWorker">Register</router-link>
+        </li>
+        <li v-if="loggedIn">
+            <router-link class="col-md-2" to="/profile">Profile</router-link>
+        </li>
+        <li v-if="!loggedIn">
+            <router-link class="col-md-2" to="/login">Login</router-link>
+        </li>
+        <a v-if="loggedIn" v-on:click.prevent="logout()" class="col-md-2">Logout</a>
     </nav>
     <div class="container">
       <router-view></router-view>
@@ -120,13 +118,13 @@ nav {
 }
 
 nav a {
-  color: white;
-  padding: 0 25px;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.1rem;
-  text-decoration: none;
-  text-transform: none;
+    color: black;
+    padding: 0 25px;
+    font-size: 14px;
+    font-weight: 600;
+    letter-spacing: 0.1rem;
+    text-decoration: none;
+    text-transform: none;
 }
 
 a {
@@ -141,4 +139,5 @@ a:active,
 a:hover {
   text-decoration: none;
 }
+
 </style>

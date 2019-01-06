@@ -11,48 +11,72 @@ import Dashboard from './components/Dashboard.vue';
 import Profile from './components/auth/Profile.vue';
 import RegisterWorker from './components/auth/RegisterWorker.vue';
 import InvoiceDetails from './components/cashier/InvoiceDetails.vue';
+import MenuItemsManage from './components/manager/MenuItemsManage.vue';
+import TablesManage from './components/manager/TablesManage.vue';
+import InvoiceManage from './components/manager/InvoiceManage.vue';
+import MealManage from './components/manager/MealManage.vue';
 
 const routes = [{
-    path: '/',
-    component: ItemList,
-    name: 'home'
-},
-{
-    path: '/login',
-    component: Login,
-    name: 'login',
-    meta: {
-        requiresAuth: false
+        path: '/',
+        component: ItemList,
+        name: 'home'
+    },
+    {
+        path: '/login',
+        component: Login,
+        name: 'login',
+        meta: {
+            requiresAuth: false
+        }
+    },
+    {
+        path: '/dashboard',
+        component: Dashboard,
+        name: 'dashboard',
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/profile',
+        component: Profile,
+        name: 'profile',
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/registerWorker',
+        component: RegisterWorker,
+        name: 'registerWorker',
+        meta: {
+            requiresAuth: true
+        }
+    },
+    {
+        path: '/invoices/:id',
+        component: InvoiceDetails,
+    },
+    {
+        path: '/tablesManage',
+        component: TablesManage,
+        name: 'tablesManage'
+    },
+    {
+        path: '/menuItemsManage',
+        component: MenuItemsManage,
+        name: 'menuItemsManage'
+    },
+    {
+        path: '/invoiceManage',
+        component: InvoiceManage,
+        name: 'invoiceManage'
+    },
+    {
+        path: '/mealManage',
+        component: MealManage,
+        name: 'mealManage'
     }
-},
-{
-    path: '/dashboard',
-    component: Dashboard,
-    name: 'dashboard',
-    meta: {
-        requiresAuth: true
-    }
-},
-{
-    path: '/profile',
-    component: Profile,
-    name: 'profile',
-    meta: {
-        requiresAuth: true
-    }
-},
-{
-    path: '/registerWorker',
-    component: RegisterWorker,
-    name: 'registerWorker',
-    meta: {
-        requiresAuth: true
-    }
-},
-{
-    path: '/invoices/:id',
-    component: InvoiceDetails,
-}
 ];
 
 export default routes;

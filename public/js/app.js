@@ -51661,12 +51661,24 @@ var index_esm = {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__components_auth_RegisterWorker_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_5__components_auth_RegisterWorker_vue__);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_cashier_InvoiceDetails_vue__ = __webpack_require__(25);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__components_cashier_InvoiceDetails_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_6__components_cashier_InvoiceDetails_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_manager_MenuItemsManage_vue__ = __webpack_require__(101);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__components_manager_MenuItemsManage_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_7__components_manager_MenuItemsManage_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_manager_TablesManage_vue__ = __webpack_require__(116);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__components_manager_TablesManage_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_8__components_manager_TablesManage_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_manager_InvoiceManage_vue__ = __webpack_require__(138);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_manager_InvoiceManage_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_9__components_manager_InvoiceManage_vue__);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_manager_MealManage_vue__ = __webpack_require__(135);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__components_manager_MealManage_vue___default = __webpack_require__.n(__WEBPACK_IMPORTED_MODULE_10__components_manager_MealManage_vue__);
 /*jshint esversion: 6 */
 __webpack_require__(9);
 
 window.Vue = __webpack_require__(6);
 
 Vue.use(__WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]);
+
+
+
+
 
 
 
@@ -51710,6 +51722,22 @@ var routes = [{
 }, {
     path: '/invoices/:id',
     component: __WEBPACK_IMPORTED_MODULE_6__components_cashier_InvoiceDetails_vue___default.a
+}, {
+    path: '/tablesManage',
+    component: __WEBPACK_IMPORTED_MODULE_8__components_manager_TablesManage_vue___default.a,
+    name: 'tablesManage'
+}, {
+    path: '/menuItemsManage',
+    component: __WEBPACK_IMPORTED_MODULE_7__components_manager_MenuItemsManage_vue___default.a,
+    name: 'menuItemsManage'
+}, {
+    path: '/invoiceManage',
+    component: __WEBPACK_IMPORTED_MODULE_9__components_manager_InvoiceManage_vue___default.a,
+    name: 'invoiceManage'
+}, {
+    path: '/mealManage',
+    component: __WEBPACK_IMPORTED_MODULE_10__components_manager_MealManage_vue___default.a,
+    name: 'mealManage'
 }];
 
 /* harmony default export */ __webpack_exports__["a"] = (routes);
@@ -52199,8 +52227,6 @@ exports.push([module.i, "\ninput[type=\"text\"] {\r\n  width: 80%;\r\n  padding:
 //
 //
 //
-//
-//
 
 module.exports = {
   data: function data() {
@@ -52283,155 +52309,144 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "div",
-    { staticClass: "jumbotron" },
-    [
-      _c(
-        "div",
-        { staticClass: "row", staticStyle: { "text-align": "center" } },
-        [
-          _c("div", { staticClass: "col-md-3" }, [
-            _c("p", [_vm._v("Shift")]),
-            _vm._v(" "),
-            _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _vm.user.shift_active == "0"
-              ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _vm.user.shift_active == "0"
-              ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
-              : _vm._e(),
-            _vm._v(" "),
-            _c("br"),
-            _vm._v(" "),
-            _vm.user.shift_active == "0"
-              ? _c(
-                  "button",
-                  {
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.invertShift()
-                      }
-                    }
-                  },
-                  [_vm._v("Start")]
-                )
-              : _vm._e(),
-            _vm._v(" "),
-            _vm.user.shift_active == "1"
-              ? _c(
-                  "button",
-                  {
-                    on: {
-                      click: function($event) {
-                        $event.preventDefault()
-                        _vm.invertShift()
-                      }
-                    }
-                  },
-                  [_vm._v("Quit")]
-                )
-              : _vm._e()
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col-md-9" }, [
-            _c("p", [_vm._v("Message to all managers:")]),
-            _vm._v(" "),
-            _c("div", [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.msgGlobalText,
-                    expression: "msgGlobalText"
-                  }
-                ],
-                staticClass: "inputchat",
-                attrs: { type: "text", id: "inputGlobal" },
-                domProps: { value: _vm.msgGlobalText },
+  return _c("div", { staticClass: "jumbotron" }, [
+    _c("div", { staticClass: "row", staticStyle: { "text-align": "center" } }, [
+      _c("div", { staticClass: "col-md-3" }, [
+        _c("p", [_vm._v("Shift")]),
+        _vm._v(" "),
+        _c("a", [_vm._v("Start: " + _vm._s(_vm.user.last_shift_start))]),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _vm.user.shift_active == "0"
+          ? _c("a", [_vm._v("End: " + _vm._s(_vm.user.last_shift_end))])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _vm.user.shift_active == "0"
+          ? _c("a", [_vm._v("Time: " + _vm._s(_vm.timePassed))])
+          : _vm._e(),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _vm.user.shift_active == "0"
+          ? _c(
+              "button",
+              {
                 on: {
-                  keypress: function($event) {
-                    if (
-                      !("button" in $event) &&
-                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                    ) {
-                      return null
-                    }
-                    return _vm.sendGlobalMsg($event)
-                  },
-                  input: function($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.msgGlobalText = $event.target.value
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.invertShift()
                   }
                 }
-              }),
-              _vm._v(" "),
-              _c("br"),
-              _vm._v(" "),
-              _c(
-                "textarea",
-                {
-                  directives: [
-                    {
-                      name: "model",
-                      rawName: "v-model",
-                      value: _vm.msgGlobalTextArea,
-                      expression: "msgGlobalTextArea"
-                    }
-                  ],
-                  staticClass: "inputchat",
-                  attrs: { id: "textGlobal" },
-                  domProps: { value: _vm.msgGlobalTextArea },
-                  on: {
-                    input: function($event) {
-                      if ($event.target.composing) {
-                        return
-                      }
-                      _vm.msgGlobalTextArea = $event.target.value
-                    }
+              },
+              [_vm._v("Start")]
+            )
+          : _vm._e(),
+        _vm._v(" "),
+        _vm.user.shift_active == "1"
+          ? _c(
+              "button",
+              {
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.invertShift()
                   }
-                },
-                [_vm._v("Global Chat")]
-              )
-            ])
-          ])
-        ]
-      ),
+                }
+              },
+              [_vm._v("Quit")]
+            )
+          : _vm._e()
+      ]),
       _vm._v(" "),
-      _vm.user.type == "waiter"
-        ? _c("dashboardWaiter", { attrs: { currentUser: _vm.user } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.user.type == "cook"
-        ? _c("dashboardCook", { attrs: { currentUser: _vm.user } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.user.type == "cashier"
-        ? _c("dashboardCashier", { attrs: { currentUser: _vm.user } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.user.type == "manager"
-        ? _c("userManage", { attrs: { currentUser: _vm.user } })
-        : _vm._e(),
-      _vm._v(" "),
-      _vm.user.type == "manager"
-        ? _c("menuItemsManage", { attrs: { currentUser: _vm.user } })
-        : _vm._e(),
-      _vm._v(" "),
-      _c("tablesManage")
-    ],
-    1
-  )
+      _c("div", { staticClass: "col-md-9" }, [
+        _c("p", [_vm._v("Message to all managers:")]),
+        _vm._v(" "),
+        _c("div", [
+          _c("input", {
+            directives: [
+              {
+                name: "model",
+                rawName: "v-model",
+                value: _vm.msgGlobalText,
+                expression: "msgGlobalText"
+              }
+            ],
+            staticClass: "inputchat",
+            attrs: { type: "text", id: "inputGlobal" },
+            domProps: { value: _vm.msgGlobalText },
+            on: {
+              keypress: function($event) {
+                if (
+                  !("button" in $event) &&
+                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                ) {
+                  return null
+                }
+                return _vm.sendGlobalMsg($event)
+              },
+              input: function($event) {
+                if ($event.target.composing) {
+                  return
+                }
+                _vm.msgGlobalText = $event.target.value
+              }
+            }
+          }),
+          _vm._v(" "),
+          _c("br"),
+          _vm._v(" "),
+          _c(
+            "textarea",
+            {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: _vm.msgGlobalTextArea,
+                  expression: "msgGlobalTextArea"
+                }
+              ],
+              staticClass: "inputchat",
+              attrs: { id: "textGlobal" },
+              domProps: { value: _vm.msgGlobalTextArea },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.msgGlobalTextArea = $event.target.value
+                }
+              }
+            },
+            [_vm._v("Global Chat")]
+          )
+        ])
+      ])
+    ]),
+    _vm._v(" "),
+    _vm.user.shift_active == "1"
+      ? _c(
+          "div",
+          [
+            _vm.user.type == "waiter"
+              ? _c("dashboardWaiter", { attrs: { currentUser: _vm.user } })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.user.type == "cook"
+              ? _c("dashboardCook", { attrs: { currentUser: _vm.user } })
+              : _vm._e(),
+            _vm._v(" "),
+            _vm.user.type == "cashier"
+              ? _c("dashboardCashier", { attrs: { currentUser: _vm.user } })
+              : _vm._e()
+          ],
+          1
+        )
+      : _vm._e()
+  ])
 }
 var staticRenderFns = []
 render._withStripped = true
@@ -53678,7 +53693,7 @@ exports = module.exports = __webpack_require__(2)(false);
 
 
 // module
-exports.push([module.i, "\n* {\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  margin: 0;\r\n  padding: 0;\n}\n#app {\r\n  font-family: \"Avenir\", Helvetica, Arial, sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  color: #2c3e50;\r\n  font-size: 24px;\r\n  height: 100vh;\n}\n.flex-center {\r\n  display: -webkit-box;\r\n  display: -ms-flexbox;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n      -ms-flex-pack: center;\r\n          justify-content: center;\n}\nnav {\r\n  display: -webkit-box;\r\n  display: -ms-flexbox;\r\n  display: flex;\r\n  list-style: none;\r\n  padding: 15px 0;\r\n  margin: 0;\r\n  -webkit-box-pack: center;\r\n      -ms-flex-pack: center;\r\n          justify-content: center;\r\n  background: #18bc9c;\r\n  margin-bottom: 24px;\n}\nnav a {\r\n  color: white;\r\n  padding: 0 25px;\r\n  font-size: 14px;\r\n  font-weight: 600;\r\n  letter-spacing: 0.1rem;\r\n  text-decoration: none;\r\n  text-transform: none;\n}\na {\r\n  text-decoration: none;\r\n  color: black;\r\n  font-weight: bold;\r\n  size: 35px;\r\n  cursor: pointer;\n}\na:active,\r\na:hover {\r\n  text-decoration: none;\n}\r\n", ""]);
+exports.push([module.i, "\n* {\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  margin: 0;\r\n  padding: 0;\n}\n#app {\r\n  font-family: \"Avenir\", Helvetica, Arial, sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  color: #2c3e50;\r\n  font-size: 24px;\r\n  height: 100vh;\n}\n.flex-center {\r\n  display: -webkit-box;\r\n  display: -ms-flexbox;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n      -ms-flex-pack: center;\r\n          justify-content: center;\n}\nnav {\r\n  display: -webkit-box;\r\n  display: -ms-flexbox;\r\n  display: flex;\r\n  list-style: none;\r\n  padding: 15px 0;\r\n  margin: 0;\r\n  -webkit-box-pack: center;\r\n      -ms-flex-pack: center;\r\n          justify-content: center;\r\n  background: #18bc9c;\r\n  margin-bottom: 24px;\n}\nnav a {\r\n    color: black;\r\n    padding: 0 25px;\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    letter-spacing: 0.1rem;\r\n    text-decoration: none;\r\n    text-transform: none;\n}\na {\r\n  text-decoration: none;\r\n  color: black;\r\n  font-weight: bold;\r\n  size: 35px;\r\n  cursor: pointer;\n}\na:active,\r\na:hover {\r\n  text-decoration: none;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -53687,8 +53702,6 @@ exports.push([module.i, "\n* {\r\n  -webkit-box-sizing: border-box;\r\n         
 /* 81 */
 /***/ (function(module, exports) {
 
-//
-//
 //
 //
 //
@@ -53819,23 +53832,80 @@ var render = function() {
           )
         : _vm._e(),
       _vm._v(" "),
-      _c(
-        "button",
-        {
-          staticClass: "navbar-toggler",
-          attrs: {
-            type: "button",
-            "data-toggle": "collapse",
-            "data-target": "#navbarSupportedContent",
-            "aria-controls": "navbarSupportedContent",
-            "aria-expanded": "false",
-            "aria-label": "Toggle navigation"
-          }
-        },
-        [_vm._v("Management")]
-      ),
-      _vm._v(" "),
-      _vm._m(1),
+      _vm.loggedIn && _vm.currentUser.type == "manager"
+        ? _c("li", { staticClass: "nav-item dropdown" }, [
+            _c(
+              "a",
+              {
+                staticClass: "nav-link dropdown-toggle",
+                attrs: {
+                  href: "#",
+                  id: "navbarDropdown",
+                  role: "button",
+                  "data-toggle": "dropdown",
+                  "aria-haspopup": "true",
+                  "aria-expanded": "false"
+                }
+              },
+              [_vm._v("\n        Manage\n      ")]
+            ),
+            _vm._v(" "),
+            _c(
+              "div",
+              {
+                staticClass: "dropdown-menu",
+                attrs: { "aria-labelledby": "navbarDropdown" }
+              },
+              [
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item" },
+                  [
+                    _c("router-link", { attrs: { to: "/tablesManage" } }, [
+                      _vm._v("Restaurant Tables")
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item" },
+                  [
+                    _c("router-link", { attrs: { to: "/menuItemsManage" } }, [
+                      _vm._v("Menu Items")
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item" },
+                  [
+                    _c("router-link", { attrs: { to: "/invoiceManage" } }, [
+                      _vm._v("Invoices")
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c(
+                  "a",
+                  { staticClass: "dropdown-item" },
+                  [
+                    _c("router-link", { attrs: { to: "/mealManage" } }, [
+                      _vm._v("Meals")
+                    ])
+                  ],
+                  1
+                ),
+                _vm._v(" "),
+                _c("a", { staticClass: "dropdown-item" }, [_vm._v("Users")])
+              ]
+            )
+          ])
+        : _vm._e(),
       _vm._v(" "),
       _c(
         "li",
@@ -53931,31 +54001,6 @@ var staticRenderFns = [
           _vm._v(" "),
           _c("span", { staticClass: "text-muted" }, [
             _vm._v("Toggleable via the navbar brand.")
-          ])
-        ])
-      ]
-    )
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c(
-      "div",
-      {
-        staticClass: "collapse navbar-collapse",
-        attrs: { id: "navbarSupportedContent" }
-      },
-      [
-        _c("ul", { staticClass: "navbar-nav mr-auto" }, [
-          _c("li", { staticClass: "nav-item dropdown" }, [
-            _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-              _vm._v("Action")
-            ]),
-            _vm._v(" "),
-            _c("a", { staticClass: "dropdown-item", attrs: { href: "#" } }, [
-              _vm._v("Another action")
-            ])
           ])
         ])
       ]
@@ -56639,11 +56684,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: ["currentUser"],
   data: function data() {
     return {
       items: {},
@@ -56702,157 +56744,145 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm.currentUser.type == "manager"
-    ? _c(
-        "div",
-        { staticClass: "jumbotron" },
-        [
-          _vm.showMessage
-            ? _c("div", { staticClass: "alert alert-success" }, [
-                _c(
-                  "button",
-                  {
-                    staticClass: "close-btn",
-                    attrs: { type: "button" },
-                    on: {
-                      click: function($event) {
-                        _vm.showMessage = false
-                      }
-                    }
-                  },
-                  [_vm._v("×")]
-                ),
-                _vm._v(" "),
-                _c("strong", [_vm._v(_vm._s(_vm.message))])
-              ])
-            : _vm._e(),
-          _vm._v(" "),
-          _c(
-            "a",
-            {
-              staticClass: "btn btn btn-info",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.openMenuItemAddComponent()
+  return _c(
+    "div",
+    { staticClass: "jumbotron" },
+    [
+      _vm.showMessage
+        ? _c("div", { staticClass: "alert alert-success" }, [
+            _c(
+              "button",
+              {
+                staticClass: "close-btn",
+                attrs: { type: "button" },
+                on: {
+                  click: function($event) {
+                    _vm.showMessage = false
+                  }
                 }
-              }
-            },
-            [
-              _c("i", { staticClass: "fas fa-plus" }),
-              _vm._v(" Add Menu Item\n  ")
-            ]
-          ),
-          _vm._v(" "),
-          _c("add-menuitem", {
-            attrs: { addingMenuItem: _vm.addingMenuItem },
-            on: {
-              "cancel-add": function($event) {
-                _vm.closeMenuItemAddComponent()
               },
-              "edit-menuitem": function($event) {
-                _vm.closeMenuItemAddComponent()
-              }
+              [_vm._v("×")]
+            ),
+            _vm._v(" "),
+            _c("strong", [_vm._v(_vm._s(_vm.message))])
+          ])
+        : _vm._e(),
+      _vm._v(" "),
+      _c(
+        "a",
+        {
+          staticClass: "btn btn btn-info",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.openMenuItemAddComponent()
             }
-          }),
+          }
+        },
+        [_c("i", { staticClass: "fas fa-plus" }), _vm._v(" Add Menu Item\n  ")]
+      ),
+      _vm._v(" "),
+      _c("add-menuitem", {
+        attrs: { addingMenuItem: _vm.addingMenuItem },
+        on: {
+          "cancel-add": function($event) {
+            _vm.closeMenuItemAddComponent()
+          },
+          "edit-menuitem": function($event) {
+            _vm.closeMenuItemAddComponent()
+          }
+        }
+      }),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("br"),
+      _vm._v(" "),
+      _c("h3", [_vm._v("Menu Items")]),
+      _vm._v(" "),
+      _c(
+        "table",
+        { staticClass: "table table-striped" },
+        [
+          _vm._m(0),
           _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("InvoiceManage"),
-          _vm._v(" "),
-          _c("MealManage"),
-          _vm._v(" "),
-          _c("h3", [_vm._v("Menu Items")]),
-          _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "table table-striped" },
-            [
-              _vm._m(0),
-              _vm._v(" "),
-              _vm._l(_vm.items.data, function(item) {
-                return _c("tbody", { key: item.id }, [
-                  _c("tr", [
-                    _c("td", [_vm._v(_vm._s(item.id))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.name))]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(item.type))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn btn-info",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.openMenuItemEditComponent(item)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "fas fa-edit" }),
-                          _vm._v(" Edit\n          ")
-                        ]
-                      ),
-                      _vm._v(" "),
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn btn-danger",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.deleteItem(item)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "fas fa-trash" }),
-                          _vm._v(" Delete\n          ")
-                        ]
-                      )
-                    ])
-                  ])
+          _vm._l(_vm.items.data, function(item) {
+            return _c("tbody", { key: item.id }, [
+              _c("tr", [
+                _c("td", [_vm._v(_vm._s(item.id))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.name))]),
+                _vm._v(" "),
+                _c("td", [_vm._v(_vm._s(item.type))]),
+                _vm._v(" "),
+                _c("td", [
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn btn-info",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.openMenuItemEditComponent(item)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-edit" }),
+                      _vm._v(" Edit\n          ")
+                    ]
+                  ),
+                  _vm._v(" "),
+                  _c(
+                    "a",
+                    {
+                      staticClass: "btn btn btn-danger",
+                      on: {
+                        click: function($event) {
+                          $event.preventDefault()
+                          _vm.deleteItem(item)
+                        }
+                      }
+                    },
+                    [
+                      _c("i", { staticClass: "fas fa-trash" }),
+                      _vm._v(" Delete\n          ")
+                    ]
+                  )
                 ])
-              })
-            ],
-            2
-          ),
-          _vm._v(" "),
-          _c(
-            "div",
-            { staticClass: "pagination" },
-            [
-              _c("pagination", {
-                attrs: { data: _vm.items },
-                on: { "pagination-change-page": _vm.getItems }
-              })
-            ],
-            1
-          ),
-          _vm._v(" "),
-          _c("edit-menuitem", {
-            attrs: {
-              item: _vm.currentItem,
-              editingMenuItem: _vm.editingMenuItem
-            },
-            on: {
-              "cancel-edit": function($event) {
-                _vm.closeMenuItemEditComponent()
-              },
-              "edit-menuitem": function($event) {
-                _vm.closeMenuItemEditComponent()
-              }
-            }
+              ])
+            ])
+          })
+        ],
+        2
+      ),
+      _vm._v(" "),
+      _c(
+        "div",
+        { staticClass: "pagination" },
+        [
+          _c("pagination", {
+            attrs: { data: _vm.items },
+            on: { "pagination-change-page": _vm.getItems }
           })
         ],
         1
-      )
-    : _vm._e()
+      ),
+      _vm._v(" "),
+      _c("edit-menuitem", {
+        attrs: { item: _vm.currentItem, editingMenuItem: _vm.editingMenuItem },
+        on: {
+          "cancel-edit": function($event) {
+            _vm.closeMenuItemEditComponent()
+          },
+          "edit-menuitem": function($event) {
+            _vm.closeMenuItemEditComponent()
+          }
+        }
+      })
+    ],
+    1
+  )
 }
 var staticRenderFns = [
   function() {
@@ -57921,6 +57951,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
@@ -57943,6 +57977,13 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       axios.delete("/api/restaurantTables/" + table.table_number).then(function (response) {
         _this2.getTables();
       });
+    },
+    addRestaurantTables: function addRestaurantTables() {
+      var _this3 = this;
+
+      axios.post("/api/restaurantTables/register").then(function (response) {
+        _this3.getTables();
+      });
     }
   },
   mounted: function mounted() {
@@ -57958,46 +57999,66 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c("div", { staticClass: "container" }, [
-    _c("div", { staticClass: "row" }, [
+  return _c(
+    "div",
+    { staticClass: "container", staticStyle: { padding: "25px" } },
+    [
+      _c("h3", [_vm._v("Restaurant Tables Manage")]),
+      _vm._v(" "),
       _c(
-        "div",
-        { staticClass: "card-deck" },
-        _vm._l(_vm.tables, function(table) {
-          return _c(
-            "div",
-            {
-              key: table.table_number,
-              staticClass: "col-lg-3 d-flex align-items-stretch"
-            },
-            [
-              _c("div", { staticClass: "card bg-light mt-3" }, [
-                _c("div", { staticClass: "card-body" }, [
-                  _c("h4", { staticClass: "card-title" }, [
-                    _vm._v("Table " + _vm._s(table.table_number))
-                  ]),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn btn-danger",
-                      on: {
-                        click: function($event) {
-                          $event.preventDefault()
-                          _vm.deleteTable(table)
+        "a",
+        {
+          staticClass: "btn btn btn-info",
+          on: {
+            click: function($event) {
+              $event.preventDefault()
+              _vm.addRestaurantTables()
+            }
+          }
+        },
+        [_c("i", { staticClass: "fas fa-plus" }), _vm._v(" Add Table\n  ")]
+      ),
+      _vm._v(" "),
+      _c("div", { staticClass: "row" }, [
+        _c(
+          "div",
+          { staticClass: "card-deck" },
+          _vm._l(_vm.tables, function(table) {
+            return _c(
+              "div",
+              {
+                key: table.table_number,
+                staticClass: "col-lg-3 d-flex align-items-stretch"
+              },
+              [
+                _c("div", { staticClass: "card bg-light mt-3" }, [
+                  _c("div", { staticClass: "card-body" }, [
+                    _c("h4", { staticClass: "card-title" }, [
+                      _vm._v("Table " + _vm._s(table.table_number))
+                    ]),
+                    _vm._v(" "),
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn btn-danger",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.deleteTable(table)
+                          }
                         }
-                      }
-                    },
-                    [_c("i", { staticClass: "fas fa-trash" })]
-                  )
+                      },
+                      [_c("i", { staticClass: "fas fa-trash" })]
+                    )
+                  ])
                 ])
-              ])
-            ]
-          )
-        })
-      )
-    ])
-  ])
+              ]
+            )
+          })
+        )
+      ])
+    ]
+  )
 }
 var staticRenderFns = []
 render._withStripped = true
