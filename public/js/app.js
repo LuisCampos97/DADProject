@@ -28654,7 +28654,6 @@ Vue.component('InvoiceManage', __webpack_require__(27));
 Vue.component('pagination', __webpack_require__(148));
 
 var router = new __WEBPACK_IMPORTED_MODULE_0_vue_router__["a" /* default */]({
-    mode: 'history',
     routes: __WEBPACK_IMPORTED_MODULE_3__routes__["a" /* default */]
 });
 
@@ -56723,7 +56722,7 @@ module.exports = {
       var _this = this;
 
       axios.get("api/ordersCook/" + this.currentUser.id).then(function (response) {
-        _this.orders = response.data.data;
+        _this.orders = response.data;
       });
     },
     setOrderState: function setOrderState(order) {
@@ -56789,8 +56788,8 @@ var render = function() {
                     },
                     [
                       order.state == "confirmed"
-                        ? _c("tr", { staticStyle: { color: "#2bb800" } }, [
-                            _c("td", [_vm._v(_vm._s(order.id))]),
+                        ? _c("tr", { staticClass: "table-success" }, [
+                            _c("td", [_vm._v(_vm._s(order.item_name))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(order.state))]),
                             _vm._v(" "),
@@ -56815,8 +56814,8 @@ var render = function() {
                         : _vm._e(),
                       _vm._v(" "),
                       order.state == "in preparation"
-                        ? _c("tr", { staticStyle: { color: "#0062cc" } }, [
-                            _c("td", [_vm._v(_vm._s(order.id))]),
+                        ? _c("tr", { staticClass: "table-primary" }, [
+                            _c("td", [_vm._v(_vm._s(order.item_name))]),
                             _vm._v(" "),
                             _c("td", [_vm._v(_vm._s(order.state))]),
                             _vm._v(" "),
@@ -56855,7 +56854,7 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", { staticClass: "thead-dark" }, [
       _c("tr", [
-        _c("th", [_vm._v("Order ID")]),
+        _c("th", [_vm._v("Item to prepare")]),
         _vm._v(" "),
         _c("th", [_vm._v("State")]),
         _vm._v(" "),
@@ -56880,17 +56879,21 @@ if (false) {
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
+function injectStyle (ssrContext) {
+  if (disposed) return
+  __webpack_require__(165)
+}
 var normalizeComponent = __webpack_require__(0)
 /* script */
 var __vue_script__ = __webpack_require__(114)
 /* template */
-var __vue_template__ = __webpack_require__(116)
+var __vue_template__ = __webpack_require__(167)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
-var __vue_styles__ = null
+var __vue_styles__ = injectStyle
 /* scopeId */
-var __vue_scopeId__ = null
+var __vue_scopeId__ = "data-v-5e32ad74"
 /* moduleIdentifier (server only) */
 var __vue_module_identifier__ = null
 var Component = normalizeComponent(
@@ -56995,6 +56998,11 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -57004,7 +57012,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       invoices: [],
       paidInvoices: {},
       payingInvoice: false,
-      currentInvoiceItems: []
+      currentInvoiceItems: [],
+      currentInvoice: {}
     };
   },
   methods: {
@@ -57016,6 +57025,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
       });
     },
     openPayInvoiceComponent: function openPayInvoiceComponent(invoice) {
+      this.currentInvoice = invoice;
       this.payingInvoice = true;
     },
     closePayInvoiceComponent: function closePayInvoiceComponent() {
@@ -57025,57 +57035,51 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     paidInvoice: function paidInvoice() {
       var _this2 = this;
 
-      axios.get("/api/invoices").then(function (response) {
-        _this2.paidInvoices = response.data.data;
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+      axios.get("/api/invoices?page=" + page).then(function (response) {
+        _this2.paidInvoices = response.data;
       });
     },
     exportPdf: function exportPdf(invoice) {
       var _this3 = this;
 
-      //Talvez por ser assincrono, primeiro corre o código do PDF 
+      //Talvez por ser assincrono, primeiro corre o código do PDF
       //e só a seguir corre a chamada à API
       axios.get("api/invoiceItems/" + invoice.id).then(function (response) {
         _this3.currentInvoiceItems = response.data;
+        var doc = new __WEBPACK_IMPORTED_MODULE_0_jspdf___default.a();
+
+        doc.setFontSize(20);
+        doc.text("Restaurant Management", 10, 30);
+
+        doc.text("Invoice", 10, 40);
+
+        doc.setFontSize(12);
+        doc.text("Invoice ID: " + invoice.id, 13, 45);
+        doc.text("Name: " + invoice.name, 13, 49);
+        doc.text("NIF: " + invoice.nif, 13, 53);
+        doc.text("Date: " + invoice.date, 13, 57);
+
+        doc.addPage();
+        doc.setFontSize(17);
+        doc.text("List of items:", 10, 20);
+
+        var y = 30;
+        doc.setFontSize(12);
+        _this3.currentInvoiceItems.forEach(function (element) {
+          doc.text(element.name, 13, y);
+          doc.text("x" + element.quantity, 20, y += 5);
+          doc.text(element.unit_price + " €", 40, y);
+          doc.text(element.sub_total_price + " €", 65, y);
+          y += 10;
+        });
+
+        doc.setFontSize(18);
+        doc.text("TOTAL: " + invoice.total_price + " €", 40, y += 10);
+
+        doc.save("invoice_" + invoice.id + ".pdf");
       }).catch(function (error) {});
-
-      return new Promise(function (resolve) {
-        axios.get("/api/meals/" + meal.id + "/notDeliveredOrders").then(function (response) {
-          _this3.notDeliveredOrdersOfMeal = response.data.data;
-          resolve(response);
-        }).catch(function (error) {});
-      });
-
-      var doc = new __WEBPACK_IMPORTED_MODULE_0_jspdf___default.a();
-
-      doc.setFontSize(20);
-      doc.text("Restaurant Management", 10, 30);
-
-      doc.text("Invoice", 10, 40);
-
-      doc.setFontSize(12);
-      doc.text("Invoice ID: " + invoice.id, 13, 45);
-      doc.text("Name: " + invoice.name, 13, 49);
-      doc.text("NIF: " + invoice.nif, 13, 53);
-      doc.text("Date: " + invoice.date, 13, 57);
-
-      doc.addPage();
-      doc.setFontSize(17);
-      doc.text("List of items:", 10, 20);
-
-      var y = 30;
-      doc.setFontSize(12);
-      this.currentInvoiceItems.forEach(function (element) {
-        doc.text(element.name, 13, y);
-        doc.text("x" + element.quantity, 20, y += 5);
-        doc.text(element.unit_price + " €", 40, y);
-        doc.text(element.sub_total_price + " €", 65, y);
-        y += 10;
-      });
-
-      doc.setFontSize(18);
-      doc.text("TOTAL: " + invoice.total_price + " €", 40, y += 10);
-
-      doc.save("invoice_" + invoice.id + ".pdf");
     }
   },
   mounted: function mounted() {
@@ -57382,204 +57386,7 @@ var Pt=function(){function t(){this.pos=0,this.bufferLength=0,this.eof=!1,this.b
 /* WEBPACK VAR INJECTION */}.call(exports, __webpack_require__(4)))
 
 /***/ }),
-/* 116 */
-/***/ (function(module, exports, __webpack_require__) {
-
-var render = function() {
-  var _vm = this
-  var _h = _vm.$createElement
-  var _c = _vm._self._c || _h
-  return _vm.currentUser.type == "cashier"
-    ? _c(
-        "div",
-        { staticClass: "jumbotron" },
-        [
-          _vm.invoices.length <= 0
-            ? _c("h3", [_vm._v("You don't have any pending invoices!")])
-            : _vm._l(_vm.invoices, function(invoice) {
-                return _c(
-                  "div",
-                  { key: invoice.id },
-                  [
-                    _c("h2", { staticStyle: { "font-weight": "bold" } }, [
-                      _vm._v("Pending Invoices")
-                    ]),
-                    _vm._v(" "),
-                    _c("table", { staticClass: "table table-striped" }, [
-                      _vm._m(0, true),
-                      _vm._v(" "),
-                      _c("tbody", [
-                        _c("tr", [
-                          _c("td", [_vm._v(_vm._s(invoice.table_number))]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(
-                              _vm._s(invoice.responsible_waiter_id) +
-                                " : " +
-                                _vm._s(invoice.responsible_waiter_name)
-                            )
-                          ]),
-                          _vm._v(" "),
-                          _c("td", [
-                            _vm._v(_vm._s(invoice.total_price) + " €")
-                          ]),
-                          _vm._v(" "),
-                          _c(
-                            "td",
-                            [
-                              _c(
-                                "router-link",
-                                {
-                                  attrs: {
-                                    to: { path: "/invoices/" + invoice.id }
-                                  }
-                                },
-                                [
-                                  _c(
-                                    "a",
-                                    { staticClass: "btn btn-sm btn-info" },
-                                    [_vm._v("Details")]
-                                  )
-                                ]
-                              ),
-                              _vm._v(" "),
-                              _c(
-                                "a",
-                                {
-                                  staticClass: "btn btn-sm btn-warning",
-                                  on: {
-                                    click: function($event) {
-                                      $event.preventDefault()
-                                      _vm.openPayInvoiceComponent()
-                                    }
-                                  }
-                                },
-                                [_vm._v("Pay")]
-                              )
-                            ],
-                            1
-                          )
-                        ])
-                      ])
-                    ]),
-                    _vm._v(" "),
-                    _c("pay-invoice", {
-                      attrs: {
-                        invoice: invoice,
-                        payingInvoice: _vm.payingInvoice
-                      },
-                      on: {
-                        "cancel-pay": function($event) {
-                          _vm.closePayInvoiceComponent()
-                        },
-                        "save-invoice": function($event) {
-                          _vm.closePayInvoiceComponent()
-                        }
-                      }
-                    })
-                  ],
-                  1
-                )
-              }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c("h2", [_vm._v("Paid Invoices")]),
-          _vm._v(" "),
-          _c(
-            "table",
-            { staticClass: "table table-striped", attrs: { id: "table" } },
-            [
-              _vm._m(1),
-              _vm._v(" "),
-              _vm._l(_vm.paidInvoices, function(invoice) {
-                return _c("tbody", { key: invoice.id }, [
-                  _c("tr", [
-                    _c("td", [_vm._v(_vm._s(invoice.table_number))]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _vm._v(
-                        _vm._s(invoice.responsible_waiter_id) +
-                          " : " +
-                          _vm._s(invoice.responsible_waiter_name)
-                      )
-                    ]),
-                    _vm._v(" "),
-                    _c("td", [_vm._v(_vm._s(invoice.total_price) + " €")]),
-                    _vm._v(" "),
-                    _c("td", [
-                      _c(
-                        "a",
-                        {
-                          staticClass: "btn btn btn-warning",
-                          on: {
-                            click: function($event) {
-                              $event.preventDefault()
-                              _vm.exportPdf(invoice)
-                            }
-                          }
-                        },
-                        [
-                          _c("i", { staticClass: "far fa-file-pdf" }),
-                          _vm._v(" Export to PDF\n          ")
-                        ]
-                      )
-                    ])
-                  ])
-                ])
-              })
-            ],
-            2
-          )
-        ],
-        2
-      )
-    : _vm._e()
-}
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "thead-dark" }, [
-      _c("tr", [
-        _c("th", [_vm._v("Table No")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Responsible Waiter")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Total Price")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Actions")])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", { staticClass: "thead-dark" }, [
-      _c("tr", [
-        _c("th", [_vm._v("Table No")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Responsible Waiter")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Total Price")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Actions")])
-      ])
-    ])
-  }
-]
-render._withStripped = true
-module.exports = { render: render, staticRenderFns: staticRenderFns }
-if (false) {
-  module.hot.accept()
-  if (module.hot.data) {
-    require("vue-hot-reload-api")      .rerender("data-v-5e32ad74", module.exports)
-  }
-}
-
-/***/ }),
+/* 116 */,
 /* 117 */
 /***/ (function(module, exports, __webpack_require__) {
 
@@ -59348,8 +59155,7 @@ var render = function() {
               [
                 _c("orderItems", {
                   on: { "register-order": _vm.registerOrder }
-                }),
-                _vm._v(">\r\n            ")
+                })
               ],
               1
             )
@@ -59376,6 +59182,7 @@ var disposed = false
 function injectStyle (ssrContext) {
   if (disposed) return
   __webpack_require__(139)
+  __webpack_require__(168)
 }
 var normalizeComponent = __webpack_require__(0)
 /* script */
@@ -59454,7 +59261,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\nimg[data-v-21f97bb8] {\r\n    border-radius: 3px;\r\n    width: 125px;\n}\r\n", ""]);
+exports.push([module.i, "\nimg[data-v-21f97bb8] {\r\n  border-radius: 3px;\r\n  width: 125px;\n}\r\n", ""]);
 
 // exports
 
@@ -59499,30 +59306,38 @@ exports.push([module.i, "\nimg[data-v-21f97bb8] {\r\n    border-radius: 3px;\r\n
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 module.exports = {
-    data: function data() {
-        return {
-            items: [],
-            title: "Menu"
-        };
-    },
-    methods: {
-        getItems: function getItems() {
-            var _this = this;
+  data: function data() {
+    return {
+      items: {},
+      title: "Menu"
+    };
+  },
+  methods: {
+    getItems: function getItems() {
+      var _this = this;
 
-            axios.get("api/items").then(function (response) {
-                _this.items = response.data.data;
-            });
-        },
-        registerOrder: function registerOrder(id) {
-            console.dir(id);
-            this.$emit("register-order", id);
-        }
+      var page = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : 1;
+
+      axios.get("api/itemsPaginate?page=" + page).then(function (response) {
+        _this.items = response.data;
+      });
     },
-    mounted: function mounted() {
-        this.getItems();
+    registerOrder: function registerOrder(id) {
+      console.dir(id);
+      this.$emit("register-order", id);
     }
+  },
+  mounted: function mounted() {
+    this.getItems();
+  }
 };
 
 /***/ }),
@@ -59547,7 +59362,7 @@ var render = function() {
       _vm._v(" "),
       _c(
         "tbody",
-        _vm._l(_vm.items, function(item) {
+        _vm._l(_vm.items.data, function(item) {
           return _c("tr", { key: item.id }, [
             _c("td", [
               _c("img", { attrs: { src: "/storage/items/" + item.photo_url } })
@@ -59572,13 +59387,25 @@ var render = function() {
                     }
                   }
                 },
-                [_vm._v("add")]
+                [_vm._v("Add")]
               )
             ])
           ])
         })
       )
-    ])
+    ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      { staticClass: "pagination" },
+      [
+        _c("pagination", {
+          attrs: { data: _vm.items },
+          on: { "pagination-change-page": _vm.getItems }
+        })
+      ],
+      1
+    )
   ])
 }
 var staticRenderFns = [
@@ -59596,7 +59423,9 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Description")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Price")])
+        _c("th", [_vm._v("Price")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
       ])
     ])
   }
@@ -61229,6 +61058,316 @@ module.exports = '\x09\x0A\x0B\x0C\x0D\x20\xA0\u1680\u180E\u2000\u2001\u2002\u20
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 150 */,
+/* 151 */,
+/* 152 */,
+/* 153 */,
+/* 154 */,
+/* 155 */,
+/* 156 */,
+/* 157 */,
+/* 158 */,
+/* 159 */,
+/* 160 */,
+/* 161 */,
+/* 162 */,
+/* 163 */,
+/* 164 */,
+/* 165 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(166);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("5b0d9faa", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5e32ad74\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DashboardCashier.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-5e32ad74\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=0!./DashboardCashier.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 166 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.pagination[data-v-5e32ad74] {\r\n  -webkit-box-pack: center !important;\r\n      -ms-flex-pack: center !important;\r\n          justify-content: center !important;\n}\r\n", ""]);
+
+// exports
+
+
+/***/ }),
+/* 167 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _vm.currentUser.type == "cashier"
+    ? _c("div", { staticClass: "jumbotron" }, [
+        _vm.invoices.length <= 0
+          ? _c("h3", [_vm._v("You don't have any pending invoices!")])
+          : _c(
+              "div",
+              [
+                _c("h2", { staticStyle: { "font-weight": "bold" } }, [
+                  _vm._v("Pending Invoices")
+                ]),
+                _vm._v(" "),
+                _c(
+                  "table",
+                  { staticClass: "table table-striped" },
+                  [
+                    _vm._m(0),
+                    _vm._v(" "),
+                    _vm._l(_vm.invoices, function(invoice) {
+                      return _c("tbody", { key: invoice.id }, [
+                        _c("tr", [
+                          _c("td", [_vm._v(_vm._s(invoice.table_number))]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(
+                              _vm._s(invoice.responsible_waiter_id) +
+                                " : " +
+                                _vm._s(invoice.responsible_waiter_name)
+                            )
+                          ]),
+                          _vm._v(" "),
+                          _c("td", [
+                            _vm._v(_vm._s(invoice.total_price) + " €")
+                          ]),
+                          _vm._v(" "),
+                          _c(
+                            "td",
+                            [
+                              _c(
+                                "router-link",
+                                {
+                                  attrs: {
+                                    to: { path: "/invoices/" + invoice.id }
+                                  }
+                                },
+                                [
+                                  _c(
+                                    "a",
+                                    { staticClass: "btn btn-sm btn-info" },
+                                    [_vm._v("Details")]
+                                  )
+                                ]
+                              ),
+                              _vm._v(" "),
+                              _c(
+                                "a",
+                                {
+                                  staticClass: "btn btn-sm btn-warning",
+                                  on: {
+                                    click: function($event) {
+                                      $event.preventDefault()
+                                      _vm.openPayInvoiceComponent(invoice)
+                                    }
+                                  }
+                                },
+                                [_vm._v("Pay")]
+                              )
+                            ],
+                            1
+                          )
+                        ])
+                      ])
+                    })
+                  ],
+                  2
+                ),
+                _vm._v(" "),
+                _c("pay-invoice", {
+                  attrs: {
+                    invoice: _vm.currentInvoice,
+                    payingInvoice: _vm.payingInvoice
+                  },
+                  on: {
+                    "cancel-pay": function($event) {
+                      _vm.closePayInvoiceComponent()
+                    },
+                    "save-invoice": function($event) {
+                      _vm.closePayInvoiceComponent()
+                    }
+                  }
+                })
+              ],
+              1
+            ),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("br"),
+        _vm._v(" "),
+        _c("h2", { staticStyle: { "font-weight": "bold" } }, [
+          _vm._v("Paid Invoices")
+        ]),
+        _vm._v(" "),
+        _c(
+          "table",
+          { staticClass: "table table-striped", attrs: { id: "table" } },
+          [
+            _vm._m(1),
+            _vm._v(" "),
+            _vm._l(_vm.paidInvoices.data, function(invoice) {
+              return _c("tbody", { key: invoice.id }, [
+                _c("tr", [
+                  _c("td", [_vm._v(_vm._s(invoice.table_number))]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _vm._v(
+                      _vm._s(invoice.responsible_waiter_id) +
+                        " : " +
+                        _vm._s(invoice.responsible_waiter_name)
+                    )
+                  ]),
+                  _vm._v(" "),
+                  _c("td", [_vm._v(_vm._s(invoice.total_price) + " €")]),
+                  _vm._v(" "),
+                  _c("td", [
+                    _c(
+                      "a",
+                      {
+                        staticClass: "btn btn btn-warning",
+                        on: {
+                          click: function($event) {
+                            $event.preventDefault()
+                            _vm.exportPdf(invoice)
+                          }
+                        }
+                      },
+                      [
+                        _c("i", { staticClass: "far fa-file-pdf" }),
+                        _vm._v(" Export to PDF\n          ")
+                      ]
+                    )
+                  ])
+                ])
+              ])
+            })
+          ],
+          2
+        ),
+        _vm._v(" "),
+        _c(
+          "div",
+          { staticClass: "pagination" },
+          [
+            _c("pagination", {
+              attrs: { limit: 3, data: _vm.paidInvoices },
+              on: { "pagination-change-page": _vm.paidInvoice }
+            })
+          ],
+          1
+        )
+      ])
+    : _vm._e()
+}
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-dark" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Table No")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Responsible Waiter")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Total Price")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("thead", { staticClass: "thead-dark" }, [
+      _c("tr", [
+        _c("th", [_vm._v("Table No")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Responsible Waiter")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Total Price")]),
+        _vm._v(" "),
+        _c("th", [_vm._v("Actions")])
+      ])
+    ])
+  }
+]
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-5e32ad74", module.exports)
+  }
+}
+
+/***/ }),
+/* 168 */
+/***/ (function(module, exports, __webpack_require__) {
+
+// style-loader: Adds some css to the DOM by adding a <style> tag
+
+// load the styles
+var content = __webpack_require__(169);
+if(typeof content === 'string') content = [[module.i, content, '']];
+if(content.locals) module.exports = content.locals;
+// add the styles to the DOM
+var update = __webpack_require__(2)("5b59b3d7", content, false, {});
+// Hot Module Replacement
+if(false) {
+ // When the styles change, update the <style> tags
+ if(!content.locals) {
+   module.hot.accept("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-21f97bb8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./orderItems.vue", function() {
+     var newContent = require("!!../../../../node_modules/css-loader/index.js!../../../../node_modules/vue-loader/lib/style-compiler/index.js?{\"vue\":true,\"id\":\"data-v-21f97bb8\",\"scoped\":true,\"hasInlineConfig\":true}!../../../../node_modules/vue-loader/lib/selector.js?type=styles&index=1!./orderItems.vue");
+     if(typeof newContent === 'string') newContent = [[module.id, newContent, '']];
+     update(newContent);
+   });
+ }
+ // When the module is disposed, remove the <style> tags
+ module.hot.dispose(function() { update(); });
+}
+
+/***/ }),
+/* 169 */
+/***/ (function(module, exports, __webpack_require__) {
+
+exports = module.exports = __webpack_require__(1)(false);
+// imports
+
+
+// module
+exports.push([module.i, "\n.pagination[data-v-21f97bb8] {\r\n  -webkit-box-pack: center !important;\r\n      -ms-flex-pack: center !important;\r\n          justify-content: center !important;\n}\r\n", ""]);
+
+// exports
+
 
 /***/ })
 /******/ ]);
