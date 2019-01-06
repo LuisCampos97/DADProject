@@ -16,6 +16,7 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 //Items
 Route::get('items', 'ItemController@index');
+Route::get('itemsPaginate', 'ItemController@indexPaginate');
 Route::get('items/{id}', 'ItemController@show');
 Route::post('items/register', 'ItemController@register');
 Route::put('items/{id}', 'ItemController@update');
@@ -53,6 +54,7 @@ Route::delete('orders/{id}', 'OrderController@destroy');
 //Invoices
 Route::post('invoices/register', 'InvoiceController@create');
 Route::get('invoices', 'InvoiceController@index');
+Route::get('invoices/all', 'InvoiceController@indexAll');
 Route::get('invoices/{id}', 'InvoiceController@show');
 Route::get('mealForInvoice', 'InvoiceController@mealForInvoice');
 Route::get('invoiceDetails/{id}', 'InvoiceController@invoiceDetails');
@@ -63,8 +65,10 @@ Route::put('invoices/{id}', 'InvoiceController@payInvoice');
 //RestaurantTable
 Route::get('restaurantTables', 'RestaurantTableController@index');
 Route::post('restaurantTables/register', 'RestaurantTableController@register');
+Route::delete('restaurantTables/{id}', 'RestaurantTableController@delete');
 //Invoice Items
 Route::post('invoiceItems/register', 'InvoiceItemController@create');
+Route::get('invoiceItems', 'InvoiceItemController@index');
 
 //Authentication
 Route::post('login', 'LoginControllerAPI@login')->name('login');

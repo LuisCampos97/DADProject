@@ -23,6 +23,15 @@ class InvoiceController extends Controller
         return $invoices;
     }
 
+    public function indexAll(Request $request)
+    {        
+        if ($request->has('page')) {
+            return InvoiceResource::collection(Invoice::paginate(5));
+        } else {
+            return InvoiceResource::collection(Invoice::all());
+        }
+    }
+
     public function show($id)
     {
         return new InvoiceResource(Invoice::find($id));

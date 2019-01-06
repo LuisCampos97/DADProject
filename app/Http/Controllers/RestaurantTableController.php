@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Http\Resources\RestaurantTableResource;
 use App\RestaurantTable;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class RestaurantTableController extends Controller
 {
@@ -24,5 +25,19 @@ class RestaurantTableController extends Controller
         ]);
 
         return new RestaurantTableResource($table);
+    }
+
+    public function delete($table_number)
+    {
+        $meals = DB::table('meals')->where('table_number', $table_number)->get()->toArray();
+
+        //VER CHAVES ESTRANGEIRAS NAS TABELAS PARA APAGAR
+        foreach($meals as $meal) {
+            DB::table('meals')->where('table_number', $meal->table_number)->delete();
+        }
+
+        DB::table('restaurant_tables')->where('table_number', $table_number)->delete();
+
+        return response()->json(null, 204);
     }
 }

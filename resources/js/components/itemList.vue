@@ -52,7 +52,7 @@ module.exports = {
 <style scoped>
 .card-img-top {
   width: 100%;
-  height: 15vw;
+  height: 25vw;
   object-fit: cover;
 }
 </style>

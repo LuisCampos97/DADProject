@@ -12,9 +12,9 @@ class InvoiceItemController extends Controller
     public function index(Request $request)
     {
         if ($request->has('page')) {
-            return InvoiceItem::collection(InvoiceItem::paginate(5));
+            return InvoiceItemResource::collection(InvoiceItem::paginate(5));
         } else {
-            return InvoiceItem::collection(InvoiceItem::all());
+            return InvoiceItemResource::collection(InvoiceItem::all());
         }
     }
 

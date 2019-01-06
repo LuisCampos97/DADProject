@@ -28,6 +28,7 @@
     <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
     <userManage :currentUser="user" v-if="user.type == 'manager'"></userManage>
     <menuItemsManage :currentUser="user" v-if="user.type == 'manager'"></menuItemsManage>
+    <tablesManage></tablesManage>
     
   </div>
 </template>
