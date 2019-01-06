@@ -34,6 +34,7 @@
       <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
       <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
       <menuItemsManage :currentUser="user" v-if="user.type == 'manager'"></menuItemsManage>
+      <tablesManage></tablesManage>
     </div>
   </div>
 </template>

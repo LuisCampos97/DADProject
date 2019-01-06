@@ -13,10 +13,6 @@ Vue.use(new VueSocketio({
     connection: 'http://192.168.10.1:8080'
 }));
 
-import VModal from 'vue-js-modal';
- 
-Vue.use(VModal);
-
 import store from './stores/global-store';
 import routes from './routes';
 
@@ -38,6 +34,9 @@ Vue.component('dashboardWaiter', require('./components/waiter/dashboardWaiter.vu
 Vue.component('dashboardCook', require('./components/cook/DashboardCook.vue'));
 Vue.component('dashboardCashier', require('./components/cashier/DashboardCashier.vue'));
 Vue.component('menuItemsManage', require('./components/manager/MenuItemsManage.vue'));
+Vue.component('edit-menuitem', require('./components/manager/MenuItemEdit.vue'));
+Vue.component('add-menuitem', require('./components/manager/MenuItemAdd.vue'));
+Vue.component('tablesManage', require('./components/manager/TablesManage.vue'));
 
 Vue.component('registerMeal', require('./components/waiter/registerMeal.vue'));
 Vue.component('registerOrder', require('./components/waiter/registerOrder.vue'));
@@ -47,6 +46,8 @@ Vue.component('invoiceDetails', require('./components/cashier/InvoiceDetails.vue
 Vue.component('pay-invoice', require('./components/cashier/PayInvoice.vue'));
 
 Vue.component('MealManage', require('./components/manager/MealManage.vue'));
+
+Vue.component('pagination', require('laravel-vue-pagination'));
 
 const router = new VueRouter({
     routes
