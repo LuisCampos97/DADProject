@@ -4,6 +4,8 @@
       <button type="button" class="close-btn" v-on:click="showMessage=false">&times;</button>
       <strong>{{ message }}</strong>
     </div>
+    <InvoiceManage></InvoiceManage>
+    <MealManage></MealManage>
     <h3>Menu Items</h3>
     <table class="table table-striped">
       <thead class="thead-dark">

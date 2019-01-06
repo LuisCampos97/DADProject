@@ -53,6 +53,7 @@ Route::delete('orders/{id}', 'OrderController@destroy');
 //Invoices
 Route::post('invoices/register', 'InvoiceController@create');
 Route::get('invoices', 'InvoiceController@index');
+Route::get('invoices/all', 'InvoiceController@indexAll');
 Route::get('invoices/{id}', 'InvoiceController@show');
 Route::get('mealForInvoice', 'InvoiceController@mealForInvoice');
 Route::get('invoiceDetails/{id}', 'InvoiceController@invoiceDetails');

@@ -47,6 +47,7 @@ Vue.component('invoiceDetails', require('./components/cashier/InvoiceDetails.vue
 Vue.component('pay-invoice', require('./components/cashier/PayInvoice.vue'));
 
 Vue.component('MealManage', require('./components/manager/MealManage.vue'));
+Vue.component('InvoiceManage', require('./components/manager/InvoiceManage.vue'));
 
 const router = new VueRouter({
     routes

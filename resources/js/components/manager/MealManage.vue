@@ -104,7 +104,6 @@ export default {
         getItems: function () {
             axios.get("api/items").then(response => {
                 this.items = response.data.data;
-                console.log(this.items);
             });
         },
         getOrders: function () {
