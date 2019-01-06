@@ -53,7 +53,7 @@
           <td>{{ invoice.responsible_waiter_id }} : {{ invoice.responsible_waiter_name }}</td>
           <td>{{ invoice.total_price }} €</td>
           <td>
-            <a class="btn btn-sm btn-warning" v-on:click.prevent="exportPdf(invoice)">
+            <a class="btn btn btn-warning" v-on:click.prevent="exportPdf(invoice)">
               <i class="far fa-file-pdf"></i> Export to PDF
             </a>
           </td>
@@ -90,7 +90,7 @@ export default {
     },
     paidInvoice() {
       axios.get("/api/invoices").then(response => {
-        this.paidInvoices = response.data;
+        this.paidInvoices = response.data.data;
       });
     },
     exportPdf(invoice) {
@@ -102,6 +102,16 @@ export default {
           this.currentInvoiceItems = response.data;
         })
         .catch(error => {});
+
+         return new Promise(resolve => {
+        axios
+          .get("/api/meals/" + meal.id + "/notDeliveredOrders")
+          .then(response => {
+            this.notDeliveredOrdersOfMeal = response.data.data;
+            resolve(response);
+          })
+          .catch(error => {});
+      });
 
       var doc = new jsPDF();
 

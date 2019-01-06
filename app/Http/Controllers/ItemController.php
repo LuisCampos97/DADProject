@@ -18,6 +18,11 @@ class ItemController extends Controller
          }
     }
 
+    public function indexPaginate(Request $request)
+    {
+        return ItemResource::collection(Item::paginate(5));
+    }
+
     public function show($id)
     {
         return new ItemResource(Item::find($id));

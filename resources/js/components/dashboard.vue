@@ -16,25 +16,20 @@
         <p>Message to all managers:</p>
 
         <div>
-          <input
-            type="text"
-            id="inputGlobal"
-            class="inputchat"
-            v-model="msgGlobalText"
-            @keypress.enter="sendGlobalMsg"
-          >
+          <input type="text" id="inputGlobal" class="inputchat" v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
           <br>
           <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
         </div>
       </div>
     </div>
 
-    <div v-if="user.shift_active == '1'">
-      <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
-      <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
-      <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
-      <menuItemsManage :currentUser="user" v-if="user.type == 'manager'"></menuItemsManage>
-    </div>
+    <dashboardWaiter :currentUser="user" v-if="user.type == 'waiter'"></dashboardWaiter>
+    <dashboardCook :currentUser="user" v-if="user.type == 'cook'"></dashboardCook>
+    <dashboardCashier :currentUser="user" v-if="user.type == 'cashier'"></dashboardCashier>
+    <userManage :currentUser="user" v-if="user.type == 'manager'"></userManage>
+    <menuItemsManage :currentUser="user" v-if="user.type == 'manager'"></menuItemsManage>
+    <tablesManage></tablesManage>
+    
   </div>
 </template>
 
