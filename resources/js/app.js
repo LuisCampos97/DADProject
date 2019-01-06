@@ -22,14 +22,14 @@ axios.defaults.headers.common['Authorization'] = sessionStorage.getItem('access_
 axios.defaults.headers.common['Content-Type'] = "application/json";
 
 Vue.component('master', require('./components/Master.vue'));
-Vue.component('item-list', require('./components/ItemList.vue'));
+Vue.component('item-list', require('./components/itemList.vue'));
 
-Vue.component('login', require('./components/auth/Login.vue'));
+Vue.component('login', require('./components/auth/login.vue'));
 Vue.component('registerWorker', require('./components/auth/RegisterWorker.vue'));
-Vue.component('profile', require('./components/auth/Profile.vue'));
-Vue.component('edit-user', require('./components/auth/UserEdit.vue'));
+Vue.component('profile', require('./components/auth/profile.vue'));
+Vue.component('edit-user', require('./components/auth/userEdit.vue'));
 
-Vue.component('dashboard', require('./components/Dashboard.vue'));
+Vue.component('dashboard', require('./components/dashboard.vue'));
 Vue.component('dashboardWaiter', require('./components/waiter/dashboardWaiter.vue'));
 Vue.component('dashboardCook', require('./components/cook/DashboardCook.vue'));
 Vue.component('dashboardCashier', require('./components/cashier/DashboardCashier.vue'));

@@ -5,10 +5,10 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
-import ItemList from './components/ItemList.vue';
-import Login from './components/auth/Login.vue';
-import Dashboard from './components/Dashboard.vue';
-import Profile from './components/auth/Profile.vue';
+import ItemList from './components/itemList.vue';
+import Login from './components/auth/login.vue';
+import Dashboard from './components/dashboard.vue';
+import Profile from './components/auth/profile.vue';
 import RegisterWorker from './components/auth/RegisterWorker.vue';
 import InvoiceDetails from './components/cashier/InvoiceDetails.vue';
 import MenuItemsManage from './components/manager/MenuItemsManage.vue';
