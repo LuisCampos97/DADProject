@@ -57463,6 +57463,12 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
@@ -57475,12 +57481,32 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
             meals: [],
             tables: [],
             invoices: [],
+            items: [],
+            invoiceItems: [],
             showMessage: false,
             message: ""
         };
     },
 
     methods: {
+        findItemName: function findItemName(itemId) {
+            try {
+                return this.items.find(function (x) {
+                    return x.id === itemId;
+                }).name;
+            } catch (err) {
+                return "Error";
+            }
+        },
+        findItemType: function findItemType(itemId) {
+            try {
+                return this.items.find(function (x) {
+                    return x.id === itemId;
+                }).type;
+            } catch (err) {
+                return "Error";
+            }
+        },
         findMealTable: function findMealTable(itemId) {
             try {
                 return this.meals.find(function (x) {
@@ -57506,24 +57532,40 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
                 _this.meals = response.data.data;
             });
         },
-        getInvoices: function getInvoices() {
+        getItems: function getItems() {
             var _this2 = this;
 
+            axios.get("api/items").then(function (response) {
+                _this2.items = response.data.data;
+            });
+        },
+        getInvoices: function getInvoices() {
+            var _this3 = this;
+
             axios.get("api/invoices/all").then(function (response) {
-                _this2.invoices = response.data.data;
+                _this3.invoices = response.data.data;
+            });
+        },
+        getInvoiceItems: function getInvoiceItems() {
+            var _this4 = this;
+
+            axios.get("api/invoiceItems").then(function (response) {
+                _this4.invoiceItems = response.data.data;
             });
         },
         notPaid: function notPaid(meal) {
-            var _this3 = this;
+            var _this5 = this;
 
             axios.put("api/invoices/notPaid/" + meal.id, meal).then(function (response) {
-                _this3.getMeals();
-                _this3.getInvoices();
+                _this5.getMeals();
+                _this5.getInvoices();
             }).catch();
         }
     },
     mounted: function mounted() {
+        this.getItems();
         this.getMeals();
+        this.getInvoiceItems();
         this.getInvoices();
     }
 });
@@ -57546,41 +57588,71 @@ var render = function() {
         _vm._m(0),
         _vm._v(" "),
         _vm._l(_vm.invoices, function(invoice) {
-          return _c("tbody", { key: invoice.id }, [
-            invoice.state == "pending"
-              ? _c("tr", [
-                  _c("td", [_vm._v(_vm._s(invoice.id))]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(_vm._s(_vm.findMealTable(invoice.meal_id)))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _vm._v(_vm._s(_vm.findMealWaiter(invoice.meal_id)))
-                  ]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(invoice.date))]),
-                  _vm._v(" "),
-                  _c("td", [_vm._v(_vm._s(invoice.total_price) + " €")]),
-                  _vm._v(" "),
-                  _c("td", [
-                    _c(
-                      "a",
-                      {
-                        staticClass: "btn btn-sm btn-danger",
-                        on: {
-                          click: function($event) {
-                            $event.preventDefault()
-                            _vm.notPaid(invoice)
+          return _c(
+            "tbody",
+            { key: invoice.id },
+            [
+              invoice.state == "pending"
+                ? _c("tr", [
+                    _c("td", [_vm._v(_vm._s(invoice.id))]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm.findMealTable(invoice.meal_id)))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _vm._v(_vm._s(_vm.findMealWaiter(invoice.meal_id)))
+                    ]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(invoice.date))]),
+                    _vm._v(" "),
+                    _c("td", [_vm._v(_vm._s(invoice.total_price) + " €")]),
+                    _vm._v(" "),
+                    _c("td", [
+                      _c(
+                        "a",
+                        {
+                          staticClass: "btn btn-sm btn-danger",
+                          on: {
+                            click: function($event) {
+                              $event.preventDefault()
+                              _vm.notPaid(invoice)
+                            }
                           }
-                        }
-                      },
-                      [_vm._v("Not Paid")]
-                    )
+                        },
+                        [_vm._v("Not Paid")]
+                      )
+                    ])
                   ])
-                ])
-              : _vm._e()
-          ])
+                : _vm._e(),
+              _vm._v(" "),
+              _vm._l(_vm.invoiceItems, function(invoiceItem) {
+                return invoiceItem.invoice_id == invoice.id &&
+                  invoice.state == "pending"
+                  ? _c("tr", [
+                      _c("td", [
+                        _vm._v(_vm._s(_vm.findItemName(invoiceItem.item_id)))
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(
+                          _vm._s(_vm.findItemType(invoiceItem.item_id)) + " "
+                        )
+                      ]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(invoiceItem.quantity))]),
+                      _vm._v(" "),
+                      _c("td", [_vm._v(_vm._s(invoiceItem.unit_price) + " €")]),
+                      _vm._v(" "),
+                      _c("td", [
+                        _vm._v(_vm._s(invoiceItem.sub_total_price) + " €")
+                      ])
+                    ])
+                  : _vm._e()
+              })
+            ],
+            2
+          )
         })
       ],
       2
@@ -57602,9 +57674,7 @@ var staticRenderFns = [
         _vm._v(" "),
         _c("th", [_vm._v("Date")]),
         _vm._v(" "),
-        _c("th", [_vm._v("Total")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Actions")])
+        _c("th", [_vm._v("Total")])
       ])
     ])
   }
