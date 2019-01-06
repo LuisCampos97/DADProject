@@ -16,13 +16,7 @@
         <p>Message to all managers:</p>
 
         <div>
-          <input
-            type="text"
-            id="inputGlobal"
-            class="inputchat"
-            v-model="msgGlobalText"
-            @keypress.enter="sendGlobalMsg"
-          >
+          <input type="text" id="inputGlobal" class="inputchat" v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
           <br>
           <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
         </div>
