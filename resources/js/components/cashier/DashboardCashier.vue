@@ -1,5 +1,5 @@
 <template>
-  <div class="jumbotron" v-if="currentUser.type == 'cashier'">
+  <div class="container" v-if="currentUser.type == 'cashier'">
     <h3 v-if="invoices.length <= 0">You don't have any pending invoices!</h3>
     <div v-else>
       <h2 style="font-weight: bold">Pending Invoices</h2>
@@ -96,13 +96,11 @@ export default {
       this.payingInvoice = false;
     },
     paidInvoice(page = 1) {
-      axios.get("/api/invoices?page=" + page).then(response => {
+      axios.get("/api/paidInvoices?page=" + page).then(response => {
         this.paidInvoices = response.data;
       });
     },
     exportPdf(invoice) {
-      //Talvez por ser assincrono, primeiro corre o código do PDF
-      //e só a seguir corre a chamada à API
       axios
         .get("api/invoiceItems/" + invoice.id)
         .then(response => {

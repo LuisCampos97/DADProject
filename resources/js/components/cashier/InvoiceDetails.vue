@@ -1,12 +1,12 @@
 <template>
-  <div class="jumbotron">
+  <div class="container">
     <h2>Invoice Details</h2>
     <p><b>Id:</b> {{ this.currentInvoice.id }}</p>
     <p><b>Date:</b> {{ this.currentInvoice.date }}</p>
     <p><b>Table Number:</b> {{ this.currentInvoice.table_number }}</p>
     <p><b>Total Price:</b> {{ this.currentInvoice.total_price }} €</p>
     <br>
-    <p style="font-weight: b;">List of items:</p>
+    <p style="font-weight: bold;">List of items:</p>
     <div v-for="item in currentInvoiceItems" v-bind:key="item.id">
       <p>&emsp;<b>Name:</b> {{ item.name }}</p>
       <p>&emsp;<b>Quantity:</b> {{ item.quantity }}</p>

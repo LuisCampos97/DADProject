@@ -10,13 +10,26 @@ use Illuminate\Support\Facades\DB;
 
 class InvoiceController extends Controller
 {
-    public function index(Request $request)
+    public function paidInvoices(Request $request)
     {
         $invoices = DB::table('meals')
         ->select("invoices.*","meals.table_number","meals.responsible_waiter_id", "users.name as responsible_waiter_name")
         ->leftjoin('invoices', 'invoices.meal_id', '=', 'meals.id')
         ->leftjoin('users', 'users.id', '=', 'meals.responsible_waiter_id')
         ->where('invoices.state', 'paid')
+        ->orderBy('date', 'desc')
+        ->paginate(10);
+
+        return $invoices;
+    }
+
+    public function index(Request $request)
+    {
+        $invoices = DB::table('meals')
+        ->select("invoices.*","meals.table_number","meals.responsible_waiter_id", "users.name as responsible_waiter_name")
+        ->leftjoin('invoices', 'invoices.meal_id', '=', 'meals.id')
+        ->leftjoin('users', 'users.id', '=', 'meals.responsible_waiter_id')
+
         ->orderBy('date', 'desc')
         ->paginate(10);
 

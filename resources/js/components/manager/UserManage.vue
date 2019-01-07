@@ -107,7 +107,6 @@ export default {
       this.editingUser = false;
     },
     search: function() {
-      // Declare variables
       var input, filter, table, tr, td, i, txtValue;
       input = document.getElementById("searchInput");
       filter = input.value.toUpperCase();
