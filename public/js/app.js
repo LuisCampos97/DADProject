@@ -55427,7 +55427,7 @@ exports = module.exports = __webpack_require__(1)(false);
 
 
 // module
-exports.push([module.i, "\n* {\r\n  -webkit-box-sizing: border-box;\r\n          box-sizing: border-box;\r\n  margin: 0;\r\n  padding: 0;\n}\n#app {\r\n  font-family: \"Avenir\", Helvetica, Arial, sans-serif;\r\n  -webkit-font-smoothing: antialiased;\r\n  -moz-osx-font-smoothing: grayscale;\r\n  color: #2c3e50;\r\n  font-size: 24px;\r\n  height: 100vh;\n}\n.flex-center {\r\n  display: -webkit-box;\r\n  display: -ms-flexbox;\r\n  display: flex;\r\n  -webkit-box-pack: center;\r\n      -ms-flex-pack: center;\r\n          justify-content: center;\n}\nnav {\r\n  display: -webkit-box;\r\n  display: -ms-flexbox;\r\n  display: flex;\r\n  list-style: none;\r\n  padding: 15px 0;\r\n  margin: 0;\r\n  -webkit-box-pack: center;\r\n      -ms-flex-pack: center;\r\n          justify-content: center;\r\n  background: #18bc9c;\r\n  margin-bottom: 24px;\n}\nnav a {\r\n    color: black;\r\n    padding: 0 25px;\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    letter-spacing: 0.1rem;\r\n    text-decoration: none;\r\n    text-transform: none;\n}\na {\r\n  text-decoration: none;\r\n  color: black;\r\n  font-weight: bold;\r\n  size: 35px;\r\n  cursor: pointer;\n}\na:active,\r\na:hover {\r\n  text-decoration: none;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n* {\r\n    -webkit-box-sizing: border-box;\r\n            box-sizing: border-box;\r\n    margin: 0;\r\n    padding: 0;\n}\n#app {\r\n    font-family: \"Avenir\", Helvetica, Arial, sans-serif;\r\n    -webkit-font-smoothing: antialiased;\r\n    -moz-osx-font-smoothing: grayscale;\r\n    color: #2c3e50;\r\n    font-size: 24px;\r\n    height: 100vh;\n}\n.flex-center {\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    -webkit-box-pack: center;\r\n        -ms-flex-pack: center;\r\n            justify-content: center;\n}\nnav {\r\n    display: -webkit-box;\r\n    display: -ms-flexbox;\r\n    display: flex;\r\n    list-style: none;\r\n    padding: 15px 0;\r\n    margin: 0;\r\n    -webkit-box-pack: center;\r\n        -ms-flex-pack: center;\r\n            justify-content: center;\r\n    background: #18bc9c;\r\n    margin-bottom: 24px;\n}\nnav a {\r\n    color: black;\r\n    padding: 0 25px;\r\n    font-size: 14px;\r\n    font-weight: 600;\r\n    letter-spacing: 0.1rem;\r\n    text-decoration: none;\r\n    text-transform: none;\n}\na {\r\n    text-decoration: none;\r\n    color: black;\r\n    font-weight: bold;\r\n    size: 35px;\r\n    cursor: pointer;\n}\na:active,\r\na:hover {\r\n    text-decoration: none;\n}\r\n", ""]);
 
 // exports
 
@@ -55486,45 +55486,41 @@ exports.push([module.i, "\n* {\r\n  -webkit-box-sizing: border-box;\r\n         
 //
 //
 //
-//
-//
-//
-//
 
 module.exports = {
-  computed: {
-    loggedIn: function loggedIn() {
-      return this.$store.getters.loggedIn;
+    computed: {
+        loggedIn: function loggedIn() {
+            return this.$store.getters.loggedIn;
+        },
+        shiftTime: function shiftTime() {
+            var diff = new Date() - new Date(this.$store.state.user.last_shift_start);
+            var hours = Math.floor(diff / 1000 / 60 / 60);
+            var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
+            if (hours == 0) {
+                return minutes + " m";
+            } else {
+                return hours + " h : " + minutes + " m";
+            }
+        },
+        currentUser: function currentUser() {
+            return this.$store.state.user;
+        }
     },
-    shiftTime: function shiftTime() {
-      var diff = new Date() - new Date(this.$store.state.user.last_shift_start);
-      var hours = Math.floor(diff / 1000 / 60 / 60);
-      var minutes = Math.floor(diff / 1000 / 60) - hours * 60;
-      if (hours == 0) {
-        return minutes + " m";
-      } else {
-        return hours + " h : " + minutes + " m";
-      }
-    },
-    currentUser: function currentUser() {
-      return this.$store.state.user;
-    }
-  },
-  methods: {
-    logout: function logout() {
-      var _this = this;
+    methods: {
+        logout: function logout() {
+            var _this = this;
 
-      axios.post("api/logout").then(function (response) {
-        _this.$store.commit("clearUserAndToken");
-        _this.$router.push({
-          name: "home"
-        });
-      }).catch(function (error) {
-        _this.$store.commit("clearUserAndToken");
-        console.log(error);
-      });
+            axios.post("api/logout").then(function (response) {
+                _this.$store.commit("clearUserAndToken");
+                _this.$router.push({
+                    name: "home"
+                });
+            }).catch(function (error) {
+                _this.$store.commit("clearUserAndToken");
+                console.log(error);
+            });
+        }
     }
-  }
 };
 
 /***/ }),
@@ -55543,8 +55539,8 @@ var render = function() {
         ? _c(
             "a",
             {
-              staticClass: "fas fa-clock col-md-4",
-              staticStyle: { "text-align": "center" }
+              staticClass: "fas fa-clock col-md-4 ",
+              staticStyle: { "text-align": "center", "padding-top": "0.4%" }
             },
             [
               _c("router-link", { attrs: { to: "/dashboard" } }, [
@@ -55560,7 +55556,7 @@ var render = function() {
             "a",
             {
               staticClass: "far fa-clock col-md-4",
-              staticStyle: { "text-align": "center" }
+              staticStyle: { "text-align": "center", "padding-top": "0.4%" }
             },
             [
               _c("router-link", { attrs: { to: "/dashboard" } }, [
@@ -55577,6 +55573,11 @@ var render = function() {
               "button",
               {
                 staticClass: "navbar-toggler",
+                staticStyle: {
+                  "font-size": "inherit",
+                  "letter-spacing": "0.1rem",
+                  "font-weight": "600"
+                },
                 attrs: {
                   type: "button",
                   "data-toggle": "collapse",
@@ -55704,19 +55705,21 @@ var render = function() {
         : _vm._e(),
       _vm._v(" "),
       _vm.loggedIn
-        ? _c(
-            "a",
-            {
-              staticClass: "col-md-2",
-              on: {
-                click: function($event) {
-                  $event.preventDefault()
-                  _vm.logout()
+        ? _c("li", [
+            _c(
+              "a",
+              {
+                staticClass: "col-md-2",
+                on: {
+                  click: function($event) {
+                    $event.preventDefault()
+                    _vm.logout()
+                  }
                 }
-              }
-            },
-            [_vm._v("Logout")]
-          )
+              },
+              [_vm._v("Logout")]
+            )
+          ])
         : _vm._e()
     ]),
     _vm._v(" "),
