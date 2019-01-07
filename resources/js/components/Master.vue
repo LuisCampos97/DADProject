@@ -15,7 +15,7 @@
       </a>
 
         <li class="nav-item dropdown" v-if="loggedIn && currentUser.type == 'manager'">
-            <button class="navbar-toggler" style="font-size: inherit; letter-spacing: 0.1rem; font-weight: 600;" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Management</button>
+            <button class="navbar-toggler" style="color: white;font-size: inherit; letter-spacing: 0.1rem; font-weight: 600;" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Management</button>
             <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <a class="dropdown-item"><router-link to="/tablesManage">Restaurant Tables</router-link></a>
                 <a class="dropdown-item"><router-link to="/menuItemsManage">Menu Items</router-link></a>
@@ -38,7 +38,7 @@
             <router-link class="col-md-2" to="/login">Login</router-link>
         </li>
         <li v-if="loggedIn">
-            <a v-on:click.prevent="logout()" class="col-md-2">Logout</a>
+            <a v-on:click.prevent="logout()" class="col-md-2" style="color:white;">Logout</a>
         </li>
     </nav>
     <div class="container">
@@ -98,7 +98,7 @@ module.exports = {
     font-family: "Avenir", Helvetica, Arial, sans-serif;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    color: #2c3e50;
+    color: white;
     font-size: 24px;
     height: 100vh;
 }
@@ -114,12 +114,12 @@ nav {
     padding: 15px 0;
     margin: 0;
     justify-content: center;
-    background: #18bc9c;
+    background: #8B0000;
     margin-bottom: 24px;
 }
 
 nav a {
-    color: black;
+    color: white;
     padding: 0 25px;
     font-size: 14px;
     font-weight: 600;
@@ -130,7 +130,7 @@ nav a {
 
 a {
     text-decoration: none;
-    color: black;
+    color: white;
     font-weight: bold;
     size: 35px;
     cursor: pointer;
