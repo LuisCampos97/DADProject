@@ -27,9 +27,9 @@ class OrderController extends Controller
     {
         //Get orders
         $orders = DB::table('orders')
-            ->where('responsible_cook_id', '$responsible_cook_id')
+            ->where('responsible_cook_id', $responsible_cook_id)
             ->select("orders.*", "items.name as item_name")
-            ->leftjoin('items', 'orders.item_id', '=', 'items.id')
+            ->join('items', 'orders.item_id', '=', 'items.id')
             ->orderBy('start', 'asc')
             ->orderBy('state', 'desc')
             ->where('state', 'in preparation')

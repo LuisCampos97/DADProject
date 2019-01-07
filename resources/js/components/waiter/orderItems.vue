@@ -14,8 +14,6 @@
           <th>Photo</th>
           <th>Name</th>
           <th>Type</th>
-          <th>Description</th>
-          <th>Price</th>
           <th>Actions</th>
         </tr>
       </thead>
@@ -26,8 +24,6 @@
           </td>
           <td>{{ item.name }}</td>
           <td>{{ item.type }}</td>
-          <td>{{ item.description }}</td>
-          <td>{{ item.price }}</td>
           <td>
             <button @click.prevent="registerOrder(item.id)">Add</button>
           </td>
@@ -55,7 +51,6 @@ module.exports = {
       });
     },
     registerOrder: function(id) {
-      console.dir(id);
       this.$emit("register-order", id);
     }
   },
@@ -70,9 +65,7 @@ img {
   border-radius: 3px;
   width: 125px;
 }
-</style>
 
-<style scoped>
 .pagination {
   justify-content: center !important;
 }

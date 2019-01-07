@@ -43,6 +43,7 @@ Route::get('meals', 'MealController@index');
 Route::put('meals/terminate/{id}', 'MealController@terminate');
 Route::get('meals/{id}', 'MealController@show');
 Route::put('meals/{id}/{total}', 'MealController@updateTotal');
+Route::get('tablesWitoutActiveMeals', 'MealController@tablesWitoutActiveMeals');
 
 //Orders
 Route::post('orders/register', 'OrderController@create');

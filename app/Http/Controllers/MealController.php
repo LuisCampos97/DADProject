@@ -4,7 +4,6 @@ namespace App\Http\Controllers;
 
 use App\Http\Resources\MealResource;
 use App\Meal;
-use Hash;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -26,6 +25,9 @@ class MealController extends Controller
 
     public function create(Request $request)
     {
+        $request->validate([
+            'table_number' => 'required',
+        ]);
         Meal::create([
             'state' => $request['state'],
             'table_number' => $request['table_number'],
@@ -38,7 +40,7 @@ class MealController extends Controller
     public function updateTotal(Request $request, $id, $total)
     {
         $meal = Meal::findOrFail($id);
-        
+
         $meal->total_price_preview += $total;
 
         $meal->save();
@@ -49,11 +51,25 @@ class MealController extends Controller
     public function terminate(Request $request, $id)
     {
         $meal = Meal::findOrFail($id);
-        
+
         $meal->state = "terminated";
 
         $meal->save();
 
         return new MealResource($meal);
+    }
+
+    public function tablesWitoutActiveMeals()
+    {
+        $tablesWithActiveMeals = DB::table('restaurant_tables')
+            ->whereNotIn('table_number', function ($q) {
+                $q->select('table_number')
+                    ->from('meals')
+                    ->where('state', 'active');
+            })
+            ->select('table_number')
+            ->get();
+
+        return response()->json($tablesWithActiveMeals, 200);
     }
 }
