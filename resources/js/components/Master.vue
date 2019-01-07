@@ -7,20 +7,25 @@
       </div>
     </div>
     <nav>
-        <a v-if="loggedIn && currentUser.shift_active == '1'" class="fas fa-clock col-md-4" style="text-align: center"><router-link to="/dashboard">On Shift {{ shiftTime }}</router-link></a>
-        <a v-if="loggedIn && currentUser.shift_active == '0'" class="far fa-clock col-md-4" style="text-align: center"><router-link to="/dashboard">Off Shift</router-link></a>
-        <li class="nav-item dropdown" v-if="loggedIn && currentUser.type == 'manager'">
-        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-          Manage
-        </a>
-        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <a class="dropdown-item"><router-link to="/tablesManage">Restaurant Tables</router-link></a>
-          <a class="dropdown-item"><router-link to="/menuItemsManage">Menu Items</router-link></a>
-          <a class="dropdown-item"><router-link to="/invoiceManage">Invoices</router-link></a>
-          <a class="dropdown-item"><router-link to="/mealManage">Meals</router-link></a>
-          <a class="dropdown-item"><router-link to="/userManage">Users</router-link></a>
-        </div>
-      </li>
+      <a v-if="loggedIn && currentUser.shift_active == '1'" class="fas fa-clock col-md-4" style="text-align: center">
+        <router-link to="/dashboard">On Shift {{ shiftTime }}</router-link>
+      </a>
+      <a v-if="loggedIn && currentUser.shift_active == '0'" class="far fa-clock col-md-4" style="text-align: center">
+        <router-link to="/dashboard">Off Shift</router-link>
+      </a>
+
+
+      <li class="nav-item dropdown" v-if="loggedIn && currentUser.type == 'manager'">
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">Management</button>
+          <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <a class="dropdown-item"><router-link to="/tablesManage">Restaurant Tables</router-link></a>
+            <a class="dropdown-item"><router-link to="/menuItemsManage">Menu Items</router-link></a>
+            <a class="dropdown-item"><router-link to="/invoiceManage">Invoices</router-link></a>
+            <a class="dropdown-item"><router-link to="/mealManage">Meals</router-link></a>
+            <a class="dropdown-item"><router-link to="/userManage">Users</router-link></a>
+          </div>
+        </li>
+
         <li>
             <router-link to="/">Menu</router-link>
         </li>

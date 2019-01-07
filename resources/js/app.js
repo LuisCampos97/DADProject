@@ -53,7 +53,6 @@ Vue.component('InvoiceManage', require('./components/manager/InvoiceManage.vue')
 Vue.component('pagination', require('laravel-vue-pagination'));
 
 const router = new VueRouter({
-    mode: 'history',
     routes
 });
 

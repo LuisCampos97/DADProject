@@ -13,12 +13,13 @@
         <button v-if="user.shift_active == '1'" @click.prevent="invertShift()">Quit</button>
       </div>
       <div class="col-md-9">
-        <p>Message to all managers:</p>
+        
 
-        <div>
+        <div v-if="user.shift_active == '1'">
+          <p>Message to all managers:</p>
           <input type="text" id="inputGlobal" class="inputchat" v-model="msgGlobalText" @keypress.enter="sendGlobalMsg">
           <br>
-          <textarea id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
+          <textarea v-if="user.type == 'manager'" id="textGlobal" class="inputchat" v-model="msgGlobalTextArea">Global Chat</textarea>
         </div>
       </div>
     </div>
@@ -64,7 +65,7 @@ module.exports = {
       axios
         .put("/api/users/" + user.id + "/shift", user)
         .then(response => {
-          if (user.shift_active == "0") {
+          if (user.shift_active == "1") {
             this.$socket.emit("user_exit", this.$store.state.user);
           } else {
             this.$socket.emit("user_enter", response.data.data);
@@ -72,7 +73,7 @@ module.exports = {
           Vue.set(this.user, response.data.data);
           this.$store.commit("setUser", response.data.data);
           this.$router.push({
-            name: "profile"
+            name: "dashboard"
           });
         })
         .catch(error => {
@@ -106,9 +107,7 @@ module.exports = {
       console.log("socket connected (socket ID = " + this.$socket.id + ")");
     },
     msg_from_server(dataFromServer) {
-      console.log(
-        'Receiving this message from Server: "' + dataFromServer + '"'
-      );
+      console.log('Receiving this message from Server: "' + dataFromServer + '"');
       this.msgGlobalTextArea = dataFromServer + "\n" + this.msgGlobalTextArea;
     }
   }
