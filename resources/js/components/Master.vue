@@ -139,5 +139,7 @@ a {
 a:active,
 a:hover {
     text-decoration: none;
+    color: white;
 }
+
 </style>

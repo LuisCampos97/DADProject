@@ -1,10 +1,10 @@
 <template>
-  <div class="jumbotron">
+  <div class="container">
     <div class="alert alert-success" v-if="showMessage">
       <button type="button" class="close-btn" v-on:click="showMessage=false">&times;</button>
       <strong>{{ message }}</strong>
     </div>
-    <a class="btn btn btn-info" v-on:click.prevent="openMenuItemAddComponent()">
+    <a class="btn btn btn-success" v-on:click.prevent="openMenuItemAddComponent()">
       <i class="fas fa-plus"></i> Add Menu Item
     </a>
     <add-menuitem
@@ -30,7 +30,7 @@
           <td>{{ item.name }}</td>
           <td>{{ item.type }}</td>
           <td>
-            <a class="btn btn btn-info" v-on:click.prevent="openMenuItemEditComponent(item)">
+            <a class="btn btn btn-warning" v-on:click.prevent="openMenuItemEditComponent(item)">
               <i class="fas fa-edit"></i> Edit
             </a>
             <a class="btn btn btn-danger" v-on:click.prevent="deleteItem(item)">

@@ -57,10 +57,17 @@ const router = new VueRouter({
 });
 
 router.beforeEach((to, from, next) => {
-    if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (to.meta.requiresAuth) {
         //Check if logged in
         if (!store.getters.loggedIn) {
             next("/login");
+            return;
+        } else {
+            next();
+        }
+    } else if(to.meta.requireManager){
+        if(store.state.user.type != 'manager') {
+            next("/dashboard");
         } else {
             next();
         }
@@ -68,7 +75,6 @@ router.beforeEach((to, from, next) => {
         next();
     }
 }); 
-
 
 new Vue({
     router,

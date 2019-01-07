@@ -57,31 +57,49 @@ const routes = [{
     {
         path: '/invoices/:id',
         component: InvoiceDetails,
+        meta: {
+            requiresAuth: true
+        }
     },
     {
         path: '/tablesManage',
         component: TablesManage,
-        name: 'tablesManage'
+        name: 'tablesManage',
+        meta: {
+            requireManager: true
+        }
     },
     {
         path: '/menuItemsManage',
         component: MenuItemsManage,
-        name: 'menuItemsManage'
+        name: 'menuItemsManage',
+        meta: {
+            requireManager: true
+        }
     },
     {
         path: '/invoiceManage',
         component: InvoiceManage,
-        name: 'invoiceManage'
+        name: 'invoiceManage',
+        meta: {
+            requireManager: true
+        }
     },
     {
         path: '/mealManage',
         component: MealManage,
-        name: 'mealManage'
+        name: 'mealManage',
+        meta: {
+            requireManager: true
+        }
     },
     {
         path: '/userManage',
         component: UserManage,
-        name: 'userManage'
+        name: 'userManage',
+        meta: {
+            requireManager: true     
+        }
     }
 ];
 

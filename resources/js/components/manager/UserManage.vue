@@ -103,6 +103,7 @@ export default {
       this.editingUser = true;
     },
     closeUserEditComponent() {
+      this.getUsers();
       this.editingUser = false;
     },
     search: function() {
