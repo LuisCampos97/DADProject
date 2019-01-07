@@ -52479,6 +52479,7 @@ exports.push([module.i, "\ninput[type=\"text\"] {\r\n  width: 80%;\r\n  padding:
 //
 //
 //
+//
 
 module.exports = {
   data: function data() {
@@ -52512,7 +52513,7 @@ module.exports = {
 
       var user = this.$store.state.user;
       axios.put("/api/users/" + user.id + "/shift", user).then(function (response) {
-        if (user.shift_active == "0") {
+        if (user.shift_active == "1") {
           _this.$socket.emit("user_exit", _this.$store.state.user);
         } else {
           _this.$socket.emit("user_enter", response.data.data);
@@ -52520,7 +52521,7 @@ module.exports = {
         Vue.set(_this.user, response.data.data);
         _this.$store.commit("setUser", response.data.data);
         _this.$router.push({
-          name: "profile"
+          name: "dashboard"
         });
       }).catch(function (error) {
         if (user.shift_active == "0") {
@@ -52614,68 +52615,72 @@ var render = function() {
       ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-9" }, [
-        _c("p", [_vm._v("Message to all managers:")]),
-        _vm._v(" "),
-        _c("div", [
-          _c("input", {
-            directives: [
-              {
-                name: "model",
-                rawName: "v-model",
-                value: _vm.msgGlobalText,
-                expression: "msgGlobalText"
-              }
-            ],
-            staticClass: "inputchat",
-            attrs: { type: "text", id: "inputGlobal" },
-            domProps: { value: _vm.msgGlobalText },
-            on: {
-              keypress: function($event) {
-                if (
-                  !("button" in $event) &&
-                  _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
-                ) {
-                  return null
-                }
-                return _vm.sendGlobalMsg($event)
-              },
-              input: function($event) {
-                if ($event.target.composing) {
-                  return
-                }
-                _vm.msgGlobalText = $event.target.value
-              }
-            }
-          }),
-          _vm._v(" "),
-          _c("br"),
-          _vm._v(" "),
-          _c(
-            "textarea",
-            {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: _vm.msgGlobalTextArea,
-                  expression: "msgGlobalTextArea"
-                }
-              ],
-              staticClass: "inputchat",
-              attrs: { id: "textGlobal" },
-              domProps: { value: _vm.msgGlobalTextArea },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+        _vm.user.shift_active == "1"
+          ? _c("div", [
+              _c("p", [_vm._v("Message to all managers:")]),
+              _vm._v(" "),
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: _vm.msgGlobalText,
+                    expression: "msgGlobalText"
                   }
-                  _vm.msgGlobalTextArea = $event.target.value
+                ],
+                staticClass: "inputchat",
+                attrs: { type: "text", id: "inputGlobal" },
+                domProps: { value: _vm.msgGlobalText },
+                on: {
+                  keypress: function($event) {
+                    if (
+                      !("button" in $event) &&
+                      _vm._k($event.keyCode, "enter", 13, $event.key, "Enter")
+                    ) {
+                      return null
+                    }
+                    return _vm.sendGlobalMsg($event)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.msgGlobalText = $event.target.value
+                  }
                 }
-              }
-            },
-            [_vm._v("Global Chat")]
-          )
-        ])
+              }),
+              _vm._v(" "),
+              _c("br"),
+              _vm._v(" "),
+              _vm.user.type == "manager"
+                ? _c(
+                    "textarea",
+                    {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.msgGlobalTextArea,
+                          expression: "msgGlobalTextArea"
+                        }
+                      ],
+                      staticClass: "inputchat",
+                      attrs: { id: "textGlobal" },
+                      domProps: { value: _vm.msgGlobalTextArea },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.msgGlobalTextArea = $event.target.value
+                        }
+                      }
+                    },
+                    [_vm._v("Global Chat")]
+                  )
+                : _vm._e()
+            ])
+          : _vm._e()
       ])
     ]),
     _vm._v(" "),
