@@ -39,6 +39,23 @@ class OrderController extends Controller
         //Return collection of orders as a resource
         return $orders;
     }
+    
+    public function ordersByDay($responsible_cook_id)
+    {
+        //Get orders
+        $orders = DB::table('orders')
+            ->where('responsible_cook_id', '$responsible_cook_id')
+            ->select("orders.*", "items.name as item_name")
+            ->leftjoin('items', 'orders.item_id', '=', 'items.id')
+            ->orderBy('start', 'asc')
+            ->orderBy('state', 'desc')
+            ->where('state', 'in preparation')
+            ->orWhere('state', 'confirmed')
+            ->get();
+
+        //Return collection of orders as a resource
+        return $orders;
+    }
 
     public function create(Request $request)
     {
